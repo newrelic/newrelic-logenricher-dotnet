@@ -19,6 +19,7 @@ steps:
 # Copy files
 # Copy files from a source folder to a target folder using patterns matching file paths (not folder paths)
 - task: CopyFiles@2
+  condition: succeeded()
   inputs:
     #sourceFolder: # Optional
     contents: 'src/Serilog/NewRelic.Logging.Serilog/**/*.nupkg' 
@@ -32,6 +33,7 @@ steps:
 # Publish build artifacts
 # Publish build artifacts to Azure Pipelines or a Windows file share
 - task: PublishBuildArtifacts@1
+  condition: succeeded()
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'lic-drop' 
@@ -48,4 +50,4 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'NuGet'
+    publishFeedCredentials: 'mock-nuget'

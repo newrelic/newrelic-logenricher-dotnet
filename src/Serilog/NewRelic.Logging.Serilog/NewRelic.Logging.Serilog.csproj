@@ -11,8 +11,9 @@
     <Company>New Relic</Company>
     <Authors>New Relic</Authors>
     <Description>New Relic Logging Extension for Serilog</Description>
-    <Copyright>2019</Copyright>
+    <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
     <RepositoryUrl>https://github.com/newrelic/newrelic-logging-dotnet</RepositoryUrl>
+    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logging-dotnet</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

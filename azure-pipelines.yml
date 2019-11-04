@@ -12,7 +12,7 @@ steps:
   displayName: 'Build (configuration=$(buildConfiguration))'
 
 - script: dotnet test src/Serilog/NewRelic.Logging.Serilog.Tests --no-build --no-restore --configuration $(buildConfiguration) --logger trx
-  displayName: ' Run Serilog Unit Tests'
+  displayName: 'Run Serilog Unit Tests'
 
 - task: PublishTestResults@2
   displayName: 'Publish All Test Results'

@@ -7,6 +7,12 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>NewRelic.Logging.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>New Relic</Company>
+    <Authors>New Relic</Authors>
+    <Description>New Relic Logging Extension for Serilog</Description>
+    <Copyright>2019</Copyright>
+    <RepositoryUrl>https://github.com/newrelic/newrelic-logging-dotnet</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

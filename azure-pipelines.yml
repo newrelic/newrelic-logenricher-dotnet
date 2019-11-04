@@ -19,6 +19,7 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
 
 - task: CopyFiles@2
   condition: succeeded()

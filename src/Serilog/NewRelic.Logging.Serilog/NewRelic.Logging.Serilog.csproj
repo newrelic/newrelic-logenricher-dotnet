@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CreateGitVersion">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
@@ -31,5 +31,35 @@
     <Compile Include="..\..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
     <Compile Include="..\..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <VersionFile Include="version.txt" />
+  </ItemGroup>
+
+  <Target Name="CreateGitVersion">
+    <!-- Get current working branch-->
+    <Exec Command="git rev-parse --abbrev-ref HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranchName" />
+    </Exec>
+    <!-- Get current hash-->
+    <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+    </Exec>
+
+    <ReadLinesFromFile File="@(VersionFile)">
+      <Output TaskParameter="Lines" PropertyName="GitVersion" />
+    </ReadLinesFromFile>
+    <Message Importance="high" Text="$(GitVersion)" />
+
+    <PropertyGroup>
+      <Version>$(GitVersion)</Version>
+      <PackageVersion>$(GitVersion)-beta</PackageVersion>
+      <AssemblyFileVersion>$(GitVersion)</AssemblyFileVersion>
+      <AssemblyVersion>$(GitVersion)</AssemblyVersion>
+
+      <GitBranchNameSanitized Condition="'$(GitBranchName)' != 'HEAD'">.branch.$(GitBranchName.Replace('/','-'))</GitBranchNameSanitized>
+      <InformationalVersion>$(GitVersion)+sha.$(GitHash)$(GitBranchNameSanitized)</InformationalVersion>
+    </PropertyGroup>
+  </Target>
 
 </Project>

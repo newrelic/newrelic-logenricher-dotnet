@@ -1,6 +1,5 @@
 ﻿using System;
 using NewRelic.Api.Agent;
-using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 

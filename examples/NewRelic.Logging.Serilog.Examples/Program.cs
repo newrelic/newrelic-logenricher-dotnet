@@ -3,7 +3,6 @@ using Serilog;
 using Serilog.Core;
 using NewRelic.Api.Agent;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace NewRelic.Logging.Serilog.Examples

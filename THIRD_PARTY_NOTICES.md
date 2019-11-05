@@ -6,6 +6,7 @@ In the event that a required notice is missing or incorrect, please notify
 us by e-mailing open-source@newrelic.com.
 
 ---
+
 ### Serilog
 This product includes 'Serilog' (http://www.serilog.net/), which 
 is released under the following license(s):

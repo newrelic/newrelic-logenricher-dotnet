@@ -1,10 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Serilog;
+﻿using Serilog;
 using Serilog.Configuration;
-using Serilog.Core;
-using Serilog.Events;
 
 namespace NewRelic.Logging.Serilog
 {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NewRelic.Logging;
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Json;

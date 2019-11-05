@@ -1,24 +1,43 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CreateGitVersion">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <LangVersion>7.1</LangVersion>
     <RootNamespace>NewRelic.Logging.Serilog</RootNamespace>
     <AssemblyName>NewRelic.Logging.Serilog</AssemblyName>
+
+    <Title>New Relic Logging Extension for Serilog</Title>
+    <Description>.NET library for sending logging context data to New Relic</Description>
+    <Authors>newrelic</Authors>
+
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIconUrl>https://newrelic.com/images/avatar-newrelic.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/newrelic/newrelic-logging-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/newrelic/newrelic-logging-dotnet</RepositoryUrl>
+    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logging-dotnet/CHANGELOG.md</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <Major>1</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+    <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+    <PackageVersion>$(Major).$(Minor).$(Build)</PackageVersion>
+    <AssemblyVersion>$(Major).0.0.0</AssemblyVersion>
+    <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
+    
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>NewRelic.Logging.StrongNameKey.snk</AssemblyOriginatorKeyFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Company>New Relic</Company>
-    <Authors>New Relic</Authors>
-    <Description>New Relic Logging Extension for Serilog</Description>
     <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
-    <RepositoryUrl>https://github.com/newrelic/newrelic-logging-dotnet</RepositoryUrl>
-    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logging-dotnet</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NewRelic.Agent.Api" Version="8.20.262" />
     <PackageReference Include="Serilog" Version="2.5.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19554-01" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,36 +49,7 @@
   <ItemGroup>
     <Compile Include="..\..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
     <Compile Include="..\..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
+    <None Include="..\..\..\LICENSE" Pack="true" PackagePath=""/>
   </ItemGroup>
-
-  <ItemGroup>
-    <VersionFile Include="version.txt" />
-  </ItemGroup>
-
-  <Target Name="CreateGitVersion">
-    <!-- Get current working branch-->
-    <Exec Command="git rev-parse --abbrev-ref HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranchName" />
-    </Exec>
-    <!-- Get current hash-->
-    <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
-    </Exec>
-
-    <ReadLinesFromFile File="@(VersionFile)">
-      <Output TaskParameter="Lines" PropertyName="GitVersion" />
-    </ReadLinesFromFile>
-    <Message Importance="high" Text="$(GitVersion)" />
-
-    <PropertyGroup>
-      <Version>$(GitVersion)</Version>
-      <PackageVersion>$(GitVersion)-beta</PackageVersion>
-      <AssemblyFileVersion>$(GitVersion)</AssemblyFileVersion>
-      <AssemblyVersion>$(GitVersion)</AssemblyVersion>
-
-      <GitBranchNameSanitized Condition="'$(GitBranchName)' != 'HEAD'">.branch.$(GitBranchName.Replace('/','-'))</GitBranchNameSanitized>
-      <InformationalVersion>$(GitVersion)+sha.$(GitHash)$(GitBranchNameSanitized)</InformationalVersion>
-    </PropertyGroup>
-  </Target>
 
 </Project>

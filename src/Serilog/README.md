@@ -170,3 +170,76 @@ For exmple, the following log message template will result in the custom propert
 ```csharp
     log.Debug("Hello {FirstName}, you are number {nbr} on my list", "Bob", 32);
 ```
+<br/>
+
+## File-based Configuration
+Configuration of the New Relic extensions for Serilog may be accomplished with file based configuration providers.
+
+#### AppSettings Based Configuration
+The example code below creates a logger based on settings contained in an `appSettings.json` file.
+
+The following NuGet Packages are required:
+* <a href="https://www.nuget.org/packages/Microsoft.Extensions.Configuration/" target="_blank">Microsoft.Extensions.Configuration</a>
+* <a href="https://www.nuget.org/packages/Serilog.Settings.Configuration" target="_blank">Serilog.Settings.Configuration
+
+###### Sample Code
+```CSharp
+var builder = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json");
+        
+var configuration = builder.Build();
+
+var logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+```
+
+###### Sample ```AppSettings.Json```
+```JSON
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console","Serilog.Sinks.File","NewRelic.Logging.Serilog" ],
+    "MinimumLevel": "Debug",
+    "Enrich": [ "WithNewRelicLogsInContext" ],
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "C:\\Logs\SerilogExample.log.json",
+          "formatter": "NewRelic.Logging.Serilog.NewRelicFormatter, NewRelic.Logging.Serilog"
+          }
+      }
+    ],
+    
+    "Properties": {
+      "Application": "NewRelic Logging Serilog Example"
+    }
+  }
+}
+```
+<br/>
+
+#### .Config file Based Configuration
+The example code below creates a logger based on settings contained in a `.config` file.
+
+The following NuGet Package is required:
+* <a href="https://www.nuget.org/packages/Serilog.Settings.AppSettings" target="_blank">Serilog.Settings.AppSettings</a>
+
+```CSharp
+var logger = new LoggerConfiguration()
+    .ReadFrom.AppSettings()
+    .CreateLogger();
+```
+
+```XML
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="serilog:using:NewRelic" value="NewRelic.Logging.Serilog" />
+    <add key="serilog:using:File" value="Serilog.Sinks.File" />
+    <!--Add other enrichers here-->
+    <add key="serilog:enrich:WithNewRelicLogsInContext" />
+    <add key="serilog:write-to:File.path" value="C:\logs\SerilogExample.log.json" />
+    <add key="serilog:write-to:File.formatter" value="NewRelic.Logging.Serilog.NewRelicFormatter, NewRelic.Logging.Serilog" />
+  </appSettings>
+```

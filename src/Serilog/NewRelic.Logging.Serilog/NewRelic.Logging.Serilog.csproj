@@ -16,7 +16,7 @@
     <PackageIconUrl>https://newrelic.com/images/avatar-newrelic.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/newrelic/newrelic-logging-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/newrelic/newrelic-logging-dotnet</RepositoryUrl>
-    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logging-dotnet</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logging-dotnet/CHANGELOG.md</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <Major>1</Major>

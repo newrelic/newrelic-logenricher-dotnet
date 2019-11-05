@@ -175,7 +175,7 @@ For exmple, the following log message template will result in the custom propert
 ## File-based Configuration
 Configuration of the New Relic extensions for Serilog may be accomplished with file based configuration providers.
 
-#### AppSettings Based Configuration
+### AppSettings Based Configuration
 The example code below creates a logger based on settings contained in an `appSettings.json` file.
 
 The following NuGet Packages are required:
@@ -205,7 +205,7 @@ var logger = new LoggerConfiguration()
       {
         "Name": "File",
         "Args": {
-          "path": "C:\\Logs\SerilogExample.log.json",
+          "path": "C:\\Logs\\SerilogExample.log.json",
           "formatter": "NewRelic.Logging.Serilog.NewRelicFormatter, NewRelic.Logging.Serilog"
           }
       }
@@ -219,7 +219,7 @@ var logger = new LoggerConfiguration()
 ```
 <br/>
 
-#### .Config file Based Configuration
+### .Config file Based Configuration
 The example code below creates a logger based on settings contained in a `.config` file.
 
 The following NuGet Package is required:

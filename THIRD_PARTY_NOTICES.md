@@ -5,12 +5,12 @@ New Relic Logging Extensions use source code from third party libraries which ca
 In the event that a required notice is missing or incorrect, please notify 
 us by e-mailing open-source@newrelic.com.
 
-----------------------------------------------------------------
+---
 ### Serilog
 This product includes 'Serilog' (http://www.serilog.net/), which 
 is released under the following license(s):
-
-##### Apache License
+```
+Apache License
 
 Version 2.0, January 2004
 
@@ -84,3 +84,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```

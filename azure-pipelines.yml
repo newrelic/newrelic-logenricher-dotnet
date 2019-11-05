@@ -25,7 +25,7 @@ steps:
   condition: succeeded()
   displayName: 'Copy Build Artifacts to Staging Location'
   inputs:
-    contents: 'src/Serilog/NewRelic.Logging.Serilog/**/*.nupkg' 
+    contents: src/Serilog/NewRelic.Logging.Serilog/**/?(*.nupkg|*.snupkg)
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 

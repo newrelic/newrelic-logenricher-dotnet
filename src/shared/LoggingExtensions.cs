@@ -22,7 +22,7 @@ namespace NewRelic.Logging
         LineNumber
     };
 
-    public static class LoggingExtensions
+    internal static class LoggingExtensions
     {
         public const string UserPropertyPrefix = "Message Properties.";
 

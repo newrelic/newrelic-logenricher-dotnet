@@ -5,7 +5,7 @@ namespace NewRelic.Logging
     // To/FromUnixTimeMilliseconds implementation taken from:
     // https://github.com/dotnet/coreclr/blob/85374ceaed177f71472cc4c23c69daf7402e5048/src/System.Private.CoreLib/shared/System/DateTimeOffset.cs
     // Licensed to the .NET Foundation under one or more agreements. The .NET Foundation licenses this file to you under the MIT license.
-    public static class DateTimeExtensions
+    internal static class DateTimeExtensions
     {
         private const long TicksPerMillisecond = 10000;
         private const long TicksPerSecond = TicksPerMillisecond * 1000;

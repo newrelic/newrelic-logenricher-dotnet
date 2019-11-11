@@ -44,4 +44,4 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'NuGet'
+    publishFeedCredentials: 'mock-nuget'

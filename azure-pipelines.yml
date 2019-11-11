@@ -8,6 +8,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- script: echo coolio
 - script: dotnet build NewRelic.Logging.sln --configuration $(buildConfiguration)
   displayName: 'Build (configuration=$(buildConfiguration))'
 

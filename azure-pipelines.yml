@@ -37,10 +37,10 @@ steps:
     artifactName: 'lic-drop' 
 
 - task: NuGetCommand@2
-  condition: and(succeeded(), eq(variables['pushNupkg'], 'true'))
+  condition: succeeded()
   displayName: 'Push NuGet Packages'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'NuGet'
+    publishFeedCredentials: 'mock-nuget'

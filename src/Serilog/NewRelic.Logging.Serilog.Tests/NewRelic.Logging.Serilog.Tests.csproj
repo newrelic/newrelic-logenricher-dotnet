@@ -7,8 +7,12 @@
     <RootNamespace>NewRelic.Logging.Serilog.Tests</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>NewRelic.Logging.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.Logging.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\NewRelic.Logging.StrongNameKey.snk" Link="NewRelic.Logging.StrongNameKey.snk" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="JustMock" Version="2019.3.910.4" />

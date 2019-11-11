@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Serilog.Debugging;
 using Serilog.Events;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     public class FormatterTests
     {

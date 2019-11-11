@@ -4,7 +4,7 @@ using System.Text.Json;
 using Serilog;
 using Serilog.Core;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     public static class TestHelpers
     {

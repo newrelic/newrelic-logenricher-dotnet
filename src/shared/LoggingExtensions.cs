@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NewRelic.Logging
+namespace NewRelic.LogEnrichers
 {
     public enum NewRelicLoggingProperty
     {

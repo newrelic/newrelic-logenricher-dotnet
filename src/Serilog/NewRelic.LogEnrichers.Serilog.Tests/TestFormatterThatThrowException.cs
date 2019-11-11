@@ -3,7 +3,7 @@ using System.IO;
 using Serilog.Events;
 using Serilog.Formatting;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     public class TestFormatterThatThrowException : ITextFormatter
     {

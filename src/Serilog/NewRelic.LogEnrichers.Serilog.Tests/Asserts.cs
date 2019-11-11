@@ -2,7 +2,7 @@
 using System.Text.Json;
 using NUnit.Framework;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     public static class Asserts
     {

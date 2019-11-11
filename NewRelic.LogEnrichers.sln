@@ -15,11 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		THIRD_PARTY_NOTICES.md = THIRD_PARTY_NOTICES.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.Logging.Serilog", "src\Serilog\NewRelic.Logging.Serilog\NewRelic.Logging.Serilog.csproj", "{1E6F4432-D90A-4E5B-B668-4F966CDDD584}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog", "src\Serilog\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj", "{1E6F4432-D90A-4E5B-B668-4F966CDDD584}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.Logging.Serilog.Tests", "src\Serilog\NewRelic.Logging.Serilog.Tests\NewRelic.Logging.Serilog.Tests.csproj", "{34C14AEC-2456-4234-8FAD-6044B6196812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog.Tests", "src\Serilog\NewRelic.LogEnrichers.Serilog.Tests\NewRelic.LogEnrichers.Serilog.Tests.csproj", "{34C14AEC-2456-4234-8FAD-6044B6196812}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.Logging.Serilog.Examples", "examples\NewRelic.Logging.Serilog.Examples\NewRelic.Logging.Serilog.Examples.csproj", "{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog.Examples", "examples\NewRelic.LogEnrichers.Serilog.Examples\NewRelic.LogEnrichers.Serilog.Examples.csproj", "{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{076719D4-E458-473C-B79A-276A420C839A}"
 	ProjectSection(SolutionItems) = preProject

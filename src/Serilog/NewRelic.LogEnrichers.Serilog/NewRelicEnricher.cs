@@ -3,7 +3,7 @@ using NewRelic.Api.Agent;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace NewRelic.Logging.Serilog
+namespace NewRelic.LogEnrichers.Serilog
 {
     public class NewRelicEnricher : ILogEventEnricher
     {

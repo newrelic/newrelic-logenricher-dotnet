@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Events;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     public class TestEnricher : ILogEventEnricher
     {

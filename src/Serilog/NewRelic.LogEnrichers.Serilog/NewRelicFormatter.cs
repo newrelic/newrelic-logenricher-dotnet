@@ -6,7 +6,7 @@ using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Json;
 
-namespace NewRelic.Logging.Serilog
+namespace NewRelic.LogEnrichers.Serilog
 {
     public class NewRelicFormatter : ITextFormatter
     {

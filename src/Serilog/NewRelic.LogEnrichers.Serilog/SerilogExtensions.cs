@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Configuration;
 
-namespace NewRelic.Logging.Serilog
+namespace NewRelic.LogEnrichers.Serilog
 {
     public static class SerilogExtensions
     {

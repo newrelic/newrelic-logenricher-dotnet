@@ -3,15 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <AssemblyName>NewRelic.Logging.Serilog.Tests</AssemblyName>
-    <RootNamespace>NewRelic.Logging.Serilog.Tests</RootNamespace>
+    <AssemblyName>NewRelic.LogEnrichers.Serilog.Tests</AssemblyName>
+    <RootNamespace>NewRelic.LogEnrichers.Serilog.Tests</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.Logging.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\NewRelic.Logging.StrongNameKey.snk" Link="NewRelic.Logging.StrongNameKey.snk" />
+    <None Include="..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewRelic.Logging.Serilog\NewRelic.Logging.Serilog.csproj" />
+    <ProjectReference Include="..\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj" />
   </ItemGroup>
 
 </Project>

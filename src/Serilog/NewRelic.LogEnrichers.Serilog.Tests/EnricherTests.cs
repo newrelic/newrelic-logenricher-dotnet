@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Serilog.Debugging;
 using Telerik.JustMock;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     [TestFixture]
     public class EnricherTests

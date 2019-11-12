@@ -5,7 +5,7 @@ using NewRelic.Api.Agent;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace NewRelic.Logging.Serilog.Examples
+namespace NewRelic.LogEnrichers.Serilog.Examples
 {
     class Program
     {

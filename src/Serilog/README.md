@@ -198,7 +198,7 @@ var logger = new LoggerConfiguration()
 ```JSON
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.Console","Serilog.Sinks.File","NewRelic.Logging.Serilog" ],
+    "Using": [ "Serilog.Sinks.Console","Serilog.Sinks.File","NewRelic.LogEnrichers.Serilog" ],
     "MinimumLevel": "Debug",
     "Enrich": [ "WithNewRelicLogsInContext" ],
     "WriteTo": [
@@ -206,7 +206,7 @@ var logger = new LoggerConfiguration()
         "Name": "File",
         "Args": {
           "path": "C:\\Logs\\SerilogExample.log.json",
-          "formatter": "NewRelic.Logging.Serilog.NewRelicFormatter, NewRelic.Logging.Serilog"
+          "formatter": "NewRelic.LogEnrichers.Serilog.NewRelicFormatter, NewRelic.LogEnrichers.Serilog"
           }
       }
     ],
@@ -235,11 +235,11 @@ var logger = new LoggerConfiguration()
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <appSettings>
-    <add key="serilog:using:NewRelic" value="NewRelic.Logging.Serilog" />
+    <add key="serilog:using:NewRelic" value="NewRelic.LogEnrichers.Serilog" />
     <add key="serilog:using:File" value="Serilog.Sinks.File" />
     <!--Add other enrichers here-->
     <add key="serilog:enrich:WithNewRelicLogsInContext" />
     <add key="serilog:write-to:File.path" value="C:\logs\SerilogExample.log.json" />
-    <add key="serilog:write-to:File.formatter" value="NewRelic.Logging.Serilog.NewRelicFormatter, NewRelic.Logging.Serilog" />
+    <add key="serilog:write-to:File.formatter" value="NewRelic.LogEnrichers.Serilog.NewRelicFormatter, NewRelic.LogEnrichers.Serilog" />
   </appSettings>
 ```

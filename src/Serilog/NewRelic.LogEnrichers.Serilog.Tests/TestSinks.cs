@@ -5,7 +5,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Formatting;
 
-namespace NewRelic.Logging.Serilog.Tests
+namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     /// <summary>
     /// This sink lets us examine the results of the enricher and formatter.

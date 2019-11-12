@@ -5,8 +5,8 @@ The .NET Extensions for Serilog will add contextual information from the .NET Ag
 ## Minimum Requirements
 
 * Microsoft <a target="_blank" href="https://dotnet.microsoft.com/download/dotnet-framework">.NET Framework 4.5+</a> or  <a target="_blank" href="https://dotnet.microsoft.com/download/dotnet-core">.NET Core 2.0+</a>
-* <a target="_blank" href="https://docs.newrelic.com/docs/release-notes/agent-release-notes/net-release-notes">New Relic .NET Agent 8.18+<a>
-* <a target="_blank" href="https://docs.newrelic.com/docs/agents/net-agent/net-agent-api" target="_blank">New Relic .NET Agent API 8.18+</a>
+* <a target="_blank" href="https://docs.newrelic.com/docs/release-notes/agent-release-notes/net-release-notes">New Relic .NET Agent 8.21+<a>
+* <a target="_blank" href="https://docs.newrelic.com/docs/agents/net-agent/net-agent-api" target="_blank">New Relic .NET Agent API 8.19+</a>
 * <a target="_blank" href="https://serilog.net/">Serilog 2.5+</a>
 * <a target="_blank" href="https://www.nuget.org/packages/Serilog.Sinks.File/">Serilog File Sinks v4.0+</a>
 

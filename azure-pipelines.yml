@@ -1,5 +1,10 @@
 trigger:
-  - master
+  branches:
+    include:
+      - master
+      - refs/tags/v*
+    exclude:
+      - gh-pages
 
 pool:
   vmImage: 'windows-latest'
@@ -37,7 +42,7 @@ steps:
     artifactName: 'lic-drop' 
 
 - task: NuGetCommand@2
-  condition: and(succeeded(), eq(variables['pushNupkg'], 'true'))
+  condition: and(succeeded(), eq(variables['pushNupkg'], 'true'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
   displayName: 'Push NuGet Packages'
   inputs:
     command: 'push'

@@ -1,5 +1,5 @@
 # New Relic Logging Extensions for .NET
-The New Relic logging plugins are extensions for common .NET logging frameworks. They are designed to capture app, transaction trace, and span information as part of your application log messages, and format log data for forwarding to New Relic.
+The New Relic logging plugins are extensions for common .NET logging frameworks. They are designed to capture app, transaction trace, and span information as part of your application log messages, and format log data for sending to New Relic.
 
 For the latest information, please see the [New Relic docs](https://docs.newrelic.com/docs/logs/new-relic-logs/enable-logs/enable-new-relic-logs)
 

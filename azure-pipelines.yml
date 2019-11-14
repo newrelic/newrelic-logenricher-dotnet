@@ -42,7 +42,7 @@ steps:
     artifactName: 'lic-drop' 
 
 - task: NuGetCommand@2
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['pushNupkg'], 'true'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['pushNupkg'], 'false'))
   displayName: 'Push NuGet Packages'
   inputs:
     command: 'push'

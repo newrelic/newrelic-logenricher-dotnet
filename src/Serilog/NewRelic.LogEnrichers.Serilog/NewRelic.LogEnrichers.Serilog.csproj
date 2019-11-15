@@ -16,7 +16,7 @@
     <PackageIconUrl>https://newrelic.com/images/avatar-newrelic.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</RepositoryUrl>
-    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logenricher-dotnet/CHANGELOG.md</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logenricher-dotnet/blob/master/CHANGELOG.md</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

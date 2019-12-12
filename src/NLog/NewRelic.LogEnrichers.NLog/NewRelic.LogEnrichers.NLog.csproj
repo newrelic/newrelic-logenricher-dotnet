@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <LangVersion>7.1</LangVersion>
+    <RootNamespace>NewRelic.LogEnrichers.NLog</RootNamespace>
+    <AssemblyName>NewRelic.LogEnrichers.NLog</AssemblyName>
+
+    <Title>New Relic Logging Extension for NLog</Title>
+    <Description>.NET library for sending logging context data to New Relic</Description>
+    <Authors>newrelic</Authors>
+
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIconUrl>https://newrelic.com/images/avatar-newrelic.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</RepositoryUrl>
+    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logenricher-dotnet/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <Major>1</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+    <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+    <PackageVersion>$(Major).$(Minor).$(Build)</PackageVersion>
+    <AssemblyVersion>$(Major).0.0.0</AssemblyVersion>
+    <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
+
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewRelic.Agent.Api" Version="8.21.34" />
+    <PackageReference Include="NLog" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
+    <Compile Include="..\..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
+    <None Include="..\..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
+  </ItemGroup>
+
+</Project>

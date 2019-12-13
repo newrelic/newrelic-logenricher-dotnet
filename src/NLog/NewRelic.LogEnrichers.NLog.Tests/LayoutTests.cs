@@ -7,6 +7,7 @@ using System.Diagnostics;
 using NewRelic.Api.Agent;
 using Telerik.JustMock;
 using System.Collections.Generic;
+using System;
 
 namespace NewRelic.LogEnrichers.NLog.Tests
 {
@@ -16,7 +17,10 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         DebugTarget _target;
         IAgent _testAgent;
 
-        Dictionary<string,string> linkingMetadataDict = new Dictionary<string, string>
+        private const string TestErrMsg = "This is a test exception";
+        private const string LogMessage = "This is a log message";
+
+        private static Dictionary<string,string> linkingMetadataDict = new Dictionary<string, string>
             {
                 { "trace.id", "trace-id" },
                 { "span.id", "span-id" },
@@ -47,15 +51,14 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         public void LogMessage_NoAgent_VerifyAttributes()
         {
             //Arrange
-            var message = "lorem ipsum";
 
             //Act
-            _logger.Info(message);
+            _logger.Info(LogMessage);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
             //Assert
-            Asserts.KeyAndValueMatch(resultsDictionary, "message", message);
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
@@ -63,7 +66,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         }
 
         [Test]
-        public void LogMessage_WtihAgent_VerifyAttributes()
+        public void LogMessage_WithAgent_VerifyAttributes()
         {
             //Arrange
             var wasRun = false;
@@ -71,15 +74,13 @@ namespace NewRelic.LogEnrichers.NLog.Tests
                 .DoInstead(() => { wasRun = true; })
                 .Returns(linkingMetadataDict);
 
-            var message = "lorem ipsum";
-
             //Act
-            _logger.Info(message);
+            _logger.Info(LogMessage);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
             //Assert
-            Asserts.KeyAndValueMatch(resultsDictionary, "message", message);
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
@@ -89,7 +90,46 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             {
                 Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
             }
+        }
 
+        [Test]
+        public void LogError_WithAgent_VerifyAttributes()
+        {
+            //Arrange
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns(linkingMetadataDict);
+
+            var testException = new InvalidOperationException(TestErrMsg);
+
+            //Act
+            try
+            {
+                TestHelpers.CreateStackTracedError(0, testException, 3);
+
+            }
+            catch (Exception caughtException)
+            {
+                _logger.Error(caughtException, LogMessage);
+            }
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "ERROR");
+            Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
+            Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
+            Assert.IsTrue(wasRun);
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+            }
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.class", testException.GetType().FullName);
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.message", TestErrMsg);
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.stack", testException.StackTrace);
         }
     }
 }

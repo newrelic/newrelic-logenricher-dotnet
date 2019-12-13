@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <AssemblyName>NewRelic.LogEnrichers.Serilog.Tests</AssemblyName>
-    <RootNamespace>NewRelic.LogEnrichers.Serilog.Tests</RootNamespace>
+    <AssemblyName>NewRelic.LogEnrichers.NLog.Tests</AssemblyName>
+    <RootNamespace>NewRelic.LogEnrichers.NLog.Tests</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>

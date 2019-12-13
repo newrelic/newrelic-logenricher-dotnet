@@ -4,6 +4,7 @@ using NLog.Config;
 using NLog;
 using System.Threading;
 using System.Diagnostics;
+using NewRelic.Api.Agent;
 
 namespace NewRelic.LogEnrichers.NLog.Tests
 {
@@ -11,12 +12,13 @@ namespace NewRelic.LogEnrichers.NLog.Tests
     {
         Logger _logger;
         DebugTarget _target;
+        IAgent _agent;
 
         [SetUp]
         public void Setup()
         {
             _target = new DebugTarget("testTarget");
-            _target.Layout = new NewRelicJsonLayout();
+            _target.Layout = new NewRelicJsonLayout(() => _agent);
 
             var config = new LoggingConfiguration();
             config.AddTarget(_target);

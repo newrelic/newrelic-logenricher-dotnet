@@ -22,6 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Seril
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{076719D4-E458-473C-B79A-276A420C839A}"
 	ProjectSection(SolutionItems) = preProject
+		src\shared\Asserts.cs = src\shared\Asserts.cs
 		src\shared\DateTimeExtensions.cs = src\shared\DateTimeExtensions.cs
 		src\shared\LoggingExtensions.cs = src\shared\LoggingExtensions.cs
 		src\shared\TestHelpers.cs = src\shared\TestHelpers.cs

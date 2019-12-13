@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
+    <Compile Include="..\..\shared\Asserts.cs" Link="Asserts.cs" />
     <ProjectReference Include="..\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
   </ItemGroup>
 

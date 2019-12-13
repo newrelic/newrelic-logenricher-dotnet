@@ -4,7 +4,6 @@ using NLog.Config;
 using NLog;
 using System.Threading;
 using System.Diagnostics;
-using NLog.LayoutRenderers;
 
 namespace NewRelic.LogEnrichers.NLog.Tests
 {

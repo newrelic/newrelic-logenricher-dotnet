@@ -45,7 +45,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             const string warningCountLogMessage = "This is warning #{Count}";
 
             var testEnricher = new NewRelicEnricher(() => _testAgent);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
             var rnd = new Random();
             var countLogAttempts = rnd.Next(2, 25);
             var expectedMessages = new List<string>();
@@ -81,7 +81,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         {
             // Arrange
             var testEnricher = new NewRelicEnricher(() => null);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(WarningLogMessage);
@@ -98,7 +98,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         {
             // Arrange
             var testEnricher = new NewRelicEnricher();
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(WarningLogMessage);
@@ -122,7 +122,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                     throw new Exception("Exception - GetLinkingMetadata");
                 });
             var testEnricher = new NewRelicEnricher(() => _testAgent);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(ExceptionLogMessage);
@@ -145,7 +145,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .DoInstead(() => { wasRun = true; })
                 .Returns<Dictionary<string,string>>(null);
             var testEnricher = new NewRelicEnricher(() => _testAgent);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(ExceptionLogMessage);
@@ -167,7 +167,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .DoInstead(() => { wasRun = true; })
                 .Returns(new Dictionary<string, string>());
             var testEnricher = new NewRelicEnricher(() => _testAgent);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(WarningLogMessage);
@@ -199,7 +199,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .DoInstead(() => { wasRun = true; })
                 .Returns(testDict);
             var testEnricher = new NewRelicEnricher(() => _testAgent);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(WarningLogMessage);
@@ -226,7 +226,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .DoInstead(() => { wasRun = true; })
                 .Returns(testDict);
             var testEnricher = new NewRelicEnricher(() => _testAgent);
-            var testLogger = TestHelpers.GetLogger(_outputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
             // Act
             testLogger.Warning(TestTemplate, TestValue);

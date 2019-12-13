@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{076719
 	ProjectSection(SolutionItems) = preProject
 		src\shared\DateTimeExtensions.cs = src\shared\DateTimeExtensions.cs
 		src\shared\LoggingExtensions.cs = src\shared\LoggingExtensions.cs
+		src\shared\TestHelpers.cs = src\shared\TestHelpers.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{66661FF9-086D-4218-9FE4-7F07589E442A}"
@@ -36,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{76184F97-7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog", "src\NLog\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj", "{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRelic.LogEnrichers.NLog.Tests", "src\NLog\NewRelic.LogEnrichers.NLog.Tests\NewRelic.LogEnrichers.NLog.Tests.csproj", "{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Tests", "src\NLog\NewRelic.LogEnrichers.NLog.Tests\NewRelic.LogEnrichers.NLog.Tests.csproj", "{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

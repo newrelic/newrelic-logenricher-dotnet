@@ -75,7 +75,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .WithUserPropValue(NullTestKey, NullTestValue)
                 .WithNewRelicMetadataValue(new Dictionary<string, string>());
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -83,7 +83,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
@@ -108,7 +108,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .WithUserPropValue(IntegerTestKey, IntegerTestValue)
                 .WithNewRelicMetadataValue(testNRProperties);
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -116,7 +116,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
@@ -138,7 +138,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var testFormatter = new TestFormatterThatThrowException();
             var testOutputSink = new TestSinkWithFormatter(testFormatter);
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -163,7 +163,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .WithUserPropValue(DoubleAtSignTestKey, NullTestValue)
                 .WithNewRelicMetadataValue(new Dictionary<string, string>());
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -171,7 +171,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
@@ -192,7 +192,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .WithUserPropValue(DictionaryTestKey, new Dictionary<string, object>() { { "DKeyA", "DValueA" }, { "DKeyB", 42 } })
                 .WithNewRelicMetadataValue(new Dictionary<string, string>());
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -200,7 +200,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
@@ -223,7 +223,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Arrange
             var testEnricher = new TestEnricher();
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             const string template = "We have {value1}, {value2}, and {value3}.";
@@ -232,7 +232,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, template);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties + 3, resultDic);
             Asserts.KeyAndValueMatch(resultDic, "message", "We have 1, \"two\", and False.");
@@ -244,7 +244,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Arrange
             var testEnricher = new TestEnricher();
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -252,7 +252,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Assert.That(resultDic, Contains.Key("timestamp"));
@@ -271,7 +271,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Arrange
             var testEnricher = new TestEnricher();
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Write(level, LogMessage);
@@ -279,7 +279,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Assert.That(resultDic, Contains.Key("log.level"));
@@ -299,7 +299,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var formatter = new NewRelicFormatter()
                 .WithPropertyMapping(ThreadIDKey, NewRelicLoggingProperty.ThreadId);
             var testOutputSink = new TestSinkWithFormatter(formatter);
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher, threadIdEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher, threadIdEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -307,7 +307,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             //additional 1 for threadid
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties + 1, resultDic);
@@ -321,7 +321,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Arrange
             var testEnricher = new TestEnricher();
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
             var testException = new InvalidOperationException(TestErrMsg);
 
             // Act
@@ -337,7 +337,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties + 3, resultDic);
             Asserts.KeyAndValueMatch(resultDic, "error.message", TestErrMsg);
@@ -351,7 +351,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Arrange
             var testEnricher = new TestEnricher();
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
             var testException = new Exception(string.Empty);
 
             // Act
@@ -367,7 +367,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties + 2, resultDic);
             Assert.That(resultDic, Does.Not.ContainKey("error.message"));
@@ -381,7 +381,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Arrange
             var testEnricher = new TestEnricher();
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
             var testException = new Exception(TestErrMsg);
             
             // Act
@@ -390,7 +390,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties + 2, resultDic);
             Assert.That(resultDic, Does.Not.ContainKey("error.stack"));
@@ -412,7 +412,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 .WithUserPropValue(IntegerTestKey, IntegerTestValue)
                 .WithNewRelicMetadataValue(testNRProperties);
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -420,7 +420,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             Asserts.PropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
@@ -473,7 +473,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var testOutputSink = new TestSinkWithFormatter(testFormatter);
 
-            var testLogger = TestHelpers.GetLogger(testOutputSink, testEnricher);
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
 
             // Act
             testLogger.Warning(LogMessage);
@@ -481,7 +481,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Assert
             Asserts.NoSerilogErrorsCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
 
-            var resultDic = TestHelpers.SerializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             foreach(var expectedOutput in expectedOutputs)
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace NewRelic.LogEnrichers.NLog.Tests
+namespace NewRelic.LogEnrichers
 {
     public static class TestHelpers
     {
@@ -15,5 +15,16 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             var resultDic = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(output);
             return resultDic;
         }
+
+        public static void CreateStackTracedError(int level, Exception exception, int throwAtLevel)
+        {
+            if (level == throwAtLevel)
+            {
+                throw exception;
+            }
+
+            CreateStackTracedError(level + 1, exception, throwAtLevel);
+        }
+
     }
 }

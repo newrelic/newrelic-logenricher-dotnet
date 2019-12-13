@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
     <ProjectReference Include="..\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj" />
   </ItemGroup>
 

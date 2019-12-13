@@ -2,18 +2,16 @@
 using NLog.Config;
 using NLog.LayoutRenderers;
 using NLog.Layouts;
-using NLog.Targets;
-using NLog.Targets.Wrappers;
-using NewRelic.Api.Agent;
 using System;
 using System.Text;
-using System.Threading;
 
 namespace NewRelic.LogEnrichers.NLog
 {
     [Layout("newrelic-jsonlayout")]
     public class NewRelicJsonLayout : JsonLayout
     {
+        internal const string TimestampLayoutRendererName = "nr-unix-timestamp";
+
         private readonly Lazy<NewRelic.Api.Agent.IAgent> _nrAgent;
 
         private IJsonConverter _jsonConverter;
@@ -22,6 +20,8 @@ namespace NewRelic.LogEnrichers.NLog
         internal NewRelicJsonLayout(Func<NewRelic.Api.Agent.IAgent> agentFactory) : base()
         {
             _nrAgent = new Lazy<NewRelic.Api.Agent.IAgent>(agentFactory);
+            LayoutRenderer.Register<UnixTimestampLayoutRenderer>(TimestampLayoutRendererName);
+
 
             SuppressSpaces = true;
             RenderEmptyObject = false;
@@ -29,7 +29,7 @@ namespace NewRelic.LogEnrichers.NLog
             // We do not want the properties written automatically since we want to add a prefix
             //IncludeAllProperties = true;
 
-            Attributes.Add(new JsonAttribute("timestamp", "${unix-timestamp}", false));
+            Attributes.Add(new JsonAttribute("timestamp", "${"+TimestampLayoutRendererName+"}", false));
             Attributes.Add(new JsonAttribute("log.level", "${level:upperCase=true}", true));
             Attributes.Add(new JsonAttribute("message", "${message}", true));
             Attributes.Add(new JsonAttribute("message.template", "${message:raw=true}"));
@@ -149,7 +149,7 @@ namespace NewRelic.LogEnrichers.NLog
         }
     }
 
-    [LayoutRenderer("unix-timestamp")]
+    [LayoutRenderer(NewRelicJsonLayout.TimestampLayoutRendererName)]
     public class UnixTimestampLayoutRenderer : LayoutRenderer
     {
         protected override void Append(StringBuilder builder, LogEventInfo logEvent)

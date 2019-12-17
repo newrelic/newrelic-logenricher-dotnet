@@ -137,9 +137,12 @@ namespace NewRelic.LogEnrichers.NLog
                 try
                 {
                     var metadata = _nrAgent.Value.GetLinkingMetadata();
-                    foreach (var pair in metadata)
+                    if (metadata != null)
                     {
-                        WriteJsonAttribute(pair.Key, pair.Value, target);
+                        foreach (var pair in metadata)
+                        {
+                            WriteJsonAttribute(pair.Key, pair.Value, target);
+                        }
                     }
                 }
                 catch (Exception ex)

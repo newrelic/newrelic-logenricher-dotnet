@@ -100,7 +100,6 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             InternalLogger.LogLevel = LogLevel.Trace;
             InternalLogger.LogWriter = internalLogStringWriter;
 
-
             // Act
             _logger.Info(LogMessage);
             var loggedMessage = _target.LastMessage;
@@ -111,6 +110,36 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Assert.That(internalLogStringWriter.ToString(), Does.Contain(exceptionMessage));
             Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
         }
+
+        [Test]
+        public void GetLinkingMetadata_IsHandled_NullResult()
+        {
+            // Arrange
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns<Dictionary<string, string>>(null);
+
+            var internalLogStringWriter = new StringWriter();
+            InternalLogger.LogLevel = LogLevel.Trace;
+            InternalLogger.LogWriter = internalLogStringWriter;
+
+            // Act
+            _logger.Info(LogMessage);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            // Assert
+            Assert.That(wasRun, Is.True);
+            Assert.That(internalLogStringWriter.ToString(), Is.EqualTo("")); // I.e. no exception was caught and logged in this case
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Assert.That(resultsDictionary, Does.Not.ContainKey(key));
+            }
+        }
+
+
 
         [Test]
         public void LogMessage_NoAgent_VerifyAttributes()

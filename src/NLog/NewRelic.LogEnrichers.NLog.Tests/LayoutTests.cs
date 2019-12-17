@@ -139,7 +139,28 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             }
         }
 
+        [Test]
+        public void GetLinkingMetadata_IsHandled_EmptyDictionaryResult()
+        {
+            // Arrange
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns(new Dictionary<string, string>());
 
+            // Act
+            _logger.Info(LogMessage);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            // Assert
+            Assert.That(wasRun, Is.True);
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Assert.That(resultsDictionary, Does.Not.ContainKey(key));
+            }
+        }
 
         [Test]
         public void LogMessage_NoAgent_VerifyAttributes()

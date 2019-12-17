@@ -8,6 +8,8 @@ using NewRelic.Api.Agent;
 using Telerik.JustMock;
 using System.Collections.Generic;
 using System;
+using NLog.Common;
+using System.IO;
 
 namespace NewRelic.LogEnrichers.NLog.Tests
 {
@@ -48,6 +50,69 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         }
 
         [Test]
+        public void GetLinkingMetadata_CalledOncePerLogMessage()
+        {
+            //Arrange
+            var rnd = new Random();
+            var countLogAttempts = rnd.Next(2, 25);
+
+            //Act
+            for (var i = 0; i < countLogAttempts; i++)
+            {
+                _logger.Info(LogMessage);
+            }
+
+            //Assert
+            Mock.Assert(() => _testAgent.GetLinkingMetadata(), Occurs.Exactly(countLogAttempts));
+            Assert.That(_target.Counter, Is.EqualTo(countLogAttempts));
+        }
+
+        [Test]
+        public void GetLinkingMetadata_IsHandled_NullAgent()
+        {
+            // Arrange
+            _target.Layout = new NewRelicJsonLayout(() => null);
+
+            // Act
+            _logger.Info(LogMessage);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            // Assert
+            Assert.That(_target.Counter, Is.EqualTo(1));
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+        }
+
+        [Test]
+        public void ExceptionInGetLinkingMetadata_IsHandled()
+        {
+            // Arrange
+            var wasRun = false;
+            var exceptionMessage = "Exception - GetLinkingMetadata";
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() =>
+                {
+                    wasRun = true;
+                    throw new Exception(exceptionMessage);
+                });
+
+            var internalLogStringWriter = new StringWriter();
+            InternalLogger.LogLevel = LogLevel.Trace;
+            InternalLogger.LogWriter = internalLogStringWriter;
+
+
+            // Act
+            _logger.Info(LogMessage);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            // Assert
+            Assert.That(wasRun, Is.True);
+            Assert.That(internalLogStringWriter.ToString(), Does.Contain(exceptionMessage));
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+        }
+
+        [Test]
         public void LogMessage_NoAgent_VerifyAttributes()
         {
             //Arrange
@@ -63,6 +128,10 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Assert.That(resultsDictionary, Does.Not.ContainKey(key), "The agent was running and instrumented the test process.");
+            }
         }
 
         [Test]
@@ -93,7 +162,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         }
 
         [Test]
-        public void LogError_WithAgent_VerifyAttributes()
+        public void LogErrorWithException_WithAgent_VerifyAttributes()
         {
             //Arrange
             var wasRun = false;

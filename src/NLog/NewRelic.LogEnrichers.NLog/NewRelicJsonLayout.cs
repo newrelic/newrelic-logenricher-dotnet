@@ -1,4 +1,5 @@
 ﻿using NLog;
+using NLog.Common;
 using NLog.Config;
 using NLog.LayoutRenderers;
 using NLog.Layouts;
@@ -131,10 +132,20 @@ namespace NewRelic.LogEnrichers.NLog
             //It is safe to call this method here because we are using a custom layout, which NLog
             //assumes is not thread safe so it will render the layout before switching threads
             //when an async or buffered wrapper is used.
-            var metadata = _nrAgent.Value.GetLinkingMetadata();
-            foreach (var pair in metadata)
+            if (_nrAgent.Value != null)
             {
-                WriteJsonAttribute(pair.Key, pair.Value, target);
+                try
+                {
+                    var metadata = _nrAgent.Value.GetLinkingMetadata();
+                    foreach (var pair in metadata)
+                    {
+                        WriteJsonAttribute(pair.Key, pair.Value, target);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    InternalLogger.Error(ex, "Exception caught in NewRelicJsonLayout.RenderFormattedMessage");
+                }
             }
 
             target.Append(JsonClose);

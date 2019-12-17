@@ -49,6 +49,14 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             _logger = LogManager.GetLogger("testLogger");
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _logger = null;
+            _target = null;
+            _testAgent = null;
+        }
+
         [Test]
         public void GetLinkingMetadata_CalledOncePerLogMessage()
         {

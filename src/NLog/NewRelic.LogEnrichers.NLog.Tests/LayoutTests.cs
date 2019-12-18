@@ -221,38 +221,31 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
         }
         [Test]
-        public void LogMessageWithUserAttribute_WithAgent_VerifyAttributes()
+        public void LogMessageWithUserAttributes_VerifyUserAttributes()
         {
             //Arrange
-            var wasRun = false;
-            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
-                .DoInstead(() => { wasRun = true; })
-                .Returns(linkingMetadataDict);
+            var userPropertiesKey = "Message Properties";
 
-            var userPropertyName = "UserPropertyName";
-            var userPropertyValue = "UserPropertyValue";
-            var messageTemplate = "Message with custom attribute: {"+userPropertyName+"}";
-            var formattedMessage = $"Message with custom attribute: \"{userPropertyValue}\"";
+            var userPropName1 = "UserPropertyName1";
+            var userPropVal1 = "UserPropertyValue1";
+            var userPropName2 = "UserPropertyName2";
+            var userPropVal2 = "UserPropertyValue2";
+            var messageTemplate = "Message with custom attributes: {" + userPropName1 + "}, {" + userPropName2 + "}";
+            var formattedMessage = $"Message with custom attributes: \"{userPropVal1}\", \"{userPropVal2}\"";
 
             //Act
-            _logger.Info(messageTemplate, userPropertyValue);
+            _logger.Info(messageTemplate, userPropVal1, userPropVal2);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
             //Assert
             Asserts.KeyAndValueMatch(resultsDictionary, "message", formattedMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, "message.template", messageTemplate);
-            Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "INFO");
-            Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
-            Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
-            Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
-            Assert.IsTrue(resultsDictionary.ContainsKey("Message Properties"));
-            Asserts.KeyAndValueMatch(resultsDictionary, "Message Properties", JsonValueKind.Object);
-            Assert.IsTrue(wasRun);
-            foreach (var key in linkingMetadataDict.Keys)
-            {
-                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
-            }
+            Assert.IsTrue(resultsDictionary.ContainsKey(userPropertiesKey));
+            Asserts.KeyAndValueMatch(resultsDictionary, userPropertiesKey, JsonValueKind.Object);
+            var userPropertiesDict = TestHelpers.DeserializeOutputJSON(resultsDictionary[userPropertiesKey].ToString());
+            Asserts.KeyAndValueMatch(userPropertiesDict, userPropName1, userPropVal1);
+            Asserts.KeyAndValueMatch(userPropertiesDict, userPropName2, userPropVal2);
         }
 
         [Test]

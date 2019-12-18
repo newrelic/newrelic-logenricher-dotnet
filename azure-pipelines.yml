@@ -31,9 +31,17 @@ steps:
 
 - task: CopyFiles@2
   condition: succeeded()
-  displayName: 'Copy Build Artifacts to Staging Location'
+  displayName: 'Copy Serilog Build Artifacts to Staging Location'
   inputs:
-    contents: src/(Serilog|NLog)/(NewRelic.LogEnrichers.Serilog|NewRelic.LogEnrichers.NLog)/**/?(*.nupkg|*.snupkg)
+    contents: src/Serilog/NewRelic.LogEnrichers.Serilog/**/?(*.nupkg|*.snupkg)
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: true
+
+- task: CopyFiles@2
+  condition: succeeded()
+  displayName: 'Copy NLog Build Artifacts to Staging Location'
+  inputs:
+    contents: src/NLog/NewRelic.LogEnrichers.NLog/**/?(*.nupkg|*.snupkg)
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 

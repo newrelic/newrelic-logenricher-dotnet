@@ -30,21 +30,21 @@ namespace NewRelic.LogEnrichers.NLog
             // We do not want the properties written automatically since we want to add a prefix
             //IncludeAllProperties = true;
 
-            Attributes.Add(new JsonAttribute("timestamp", "${"+TimestampLayoutRendererName+"}", false));
-            Attributes.Add(new JsonAttribute("log.level", "${level:upperCase=true}", true));
-            Attributes.Add(new JsonAttribute("message", "${message}", true));
-            Attributes.Add(new JsonAttribute("message.template", "${message:raw=true}"));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.Timestamp.GetOutputName(), "${"+TimestampLayoutRendererName+"}", false));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LogLevel.GetOutputName(), "${level:upperCase=true}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.MessageText.GetOutputName(), "${message}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.MessageTemplate.GetOutputName(), "${message:raw=true}"));
 
             // correlation
-            Attributes.Add(new JsonAttribute("thread.id", "${threadid}", true));
-            Attributes.Add(new JsonAttribute("correlation.id", "${ActivityId}", true));
-            Attributes.Add(new JsonAttribute("process.id", "${processid}", true));
-            Attributes.Add(new JsonAttribute("line.number", "${callsite-linenumber}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ThreadId.GetOutputName(), "${threadid}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.CorrelationId.GetOutputName(), "${ActivityId}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ProcessId.GetOutputName(), "${processid}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LineNumber.GetOutputName(), "${callsite-linenumber}", true));
 
             // exceptions
-            Attributes.Add(new JsonAttribute("error.class", "${exception:format=Type}", true));
-            Attributes.Add(new JsonAttribute("error.message", "${exception:format=Message}", true));
-            Attributes.Add(new JsonAttribute("error.stack", "${exception:format=StackTrace}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ErrorClass.GetOutputName(), "${exception:format=Type}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ErrorMessage.GetOutputName(), "${exception:format=Message}", true));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ErrorStack.GetOutputName(), "${exception:format=StackTrace}", true));
 
             //Nesting json objects like this works fine and will lead to message properties
             //that look like message.property.ErrorMessage in the UI.

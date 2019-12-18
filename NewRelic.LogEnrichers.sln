@@ -22,8 +22,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Seril
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{076719D4-E458-473C-B79A-276A420C839A}"
 	ProjectSection(SolutionItems) = preProject
+		src\shared\Asserts.cs = src\shared\Asserts.cs
 		src\shared\DateTimeExtensions.cs = src\shared\DateTimeExtensions.cs
 		src\shared\LoggingExtensions.cs = src\shared\LoggingExtensions.cs
+		src\shared\TestHelpers.cs = src\shared\TestHelpers.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{66661FF9-086D-4218-9FE4-7F07589E442A}"
@@ -31,6 +33,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{6666
 		src\Serilog\ArchitectureDiagram.svg = src\Serilog\ArchitectureDiagram.svg
 		src\Serilog\README.md = src\Serilog\README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{76184F97-72D2-46AA-9838-D2DBB7714E19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog", "src\NLog\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj", "{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Tests", "src\NLog\NewRelic.LogEnrichers.NLog.Tests\NewRelic.LogEnrichers.NLog.Tests.csproj", "{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +58,14 @@ Global
 		{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +74,8 @@ Global
 		{1E6F4432-D90A-4E5B-B668-4F966CDDD584} = {66661FF9-086D-4218-9FE4-7F07589E442A}
 		{34C14AEC-2456-4234-8FAD-6044B6196812} = {66661FF9-086D-4218-9FE4-7F07589E442A}
 		{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC} = {66661FF9-086D-4218-9FE4-7F07589E442A}
+		{4AEC595A-A6EB-414C-A0AA-00F66DFB8630} = {76184F97-72D2-46AA-9838-D2DBB7714E19}
+		{1FF12FD5-7282-4CB0-A8D8-D213A05658B1} = {76184F97-72D2-46AA-9838-D2DBB7714E19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C9155C8-199D-48A5-BB57-38EB738FA89D}

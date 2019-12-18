@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <AssemblyName>NewRelic.LogEnrichers.Serilog.Tests</AssemblyName>
-    <RootNamespace>NewRelic.LogEnrichers.Serilog.Tests</RootNamespace>
+    <AssemblyName>NewRelic.LogEnrichers.NLog.Tests</AssemblyName>
+    <RootNamespace>NewRelic.LogEnrichers.NLog.Tests</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
@@ -24,7 +24,7 @@
   <ItemGroup>
     <Compile Include="..\..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
     <Compile Include="..\..\shared\Asserts.cs" Link="Asserts.cs" />
-    <ProjectReference Include="..\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj" />
+    <ProjectReference Include="..\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <LangVersion>7.1</LangVersion>
+    <RootNamespace>NewRelic.LogEnrichers.NLog</RootNamespace>
+    <AssemblyName>NewRelic.LogEnrichers.NLog</AssemblyName>
+
+    <Title>New Relic Logging Extension for NLog</Title>
+    <Description>.NET library for sending logging context data to New Relic</Description>
+    <Authors>newrelic</Authors>
+
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIconUrl>https://newrelic.com/images/avatar-newrelic.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</RepositoryUrl>
+    <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logenricher-dotnet/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <Major>1</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+    <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+    <PackageVersion>$(Major).$(Minor).$(Build)</PackageVersion>
+    <AssemblyVersion>$(Major).0.0.0</AssemblyVersion>
+    <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
+
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewRelic.Agent.Api" Version="8.21.34" />
+    <PackageReference Include="NLog" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>NewRelic.LogEnrichers.NLog.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010009b42ffa7e9f9f92ef6313376ea85513f88ac004413378fd3c3eb414f897da70d3d36d54598f14fa6fe21aef9d0cd30747408c927627dd125cf17d29a6b7f8574a552c295d9d605266d8830630dbc09b6a7569e1f4664f51833d8a9d0f2745ff1351dd5ba7762a94812ba13667f6d51943671a47e5378e8b62368c87b39a57a3</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
+    <Compile Include="..\..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
+    <None Include="..\..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
+  </ItemGroup>
+
+</Project>

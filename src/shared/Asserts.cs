@@ -22,6 +22,10 @@ namespace NewRelic.LogEnrichers
             {
                 Assert.That(resultDic[key].GetInt32(), Is.EqualTo(value));
             }
+            else if (valueType == typeof(long))
+            {
+                Assert.That(resultDic[key].GetInt64(), Is.EqualTo(value));
+            }
             else if (valueType == typeof(JsonValueKind))
             {
                 Assert.That(resultDic[key].ValueKind, Is.EqualTo(value));

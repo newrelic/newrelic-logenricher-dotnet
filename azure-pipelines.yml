@@ -19,6 +19,9 @@ steps:
 - script: dotnet test src/Serilog/NewRelic.LogEnrichers.Serilog.Tests --no-build --no-restore --configuration $(buildConfiguration) --logger trx
   displayName: 'Run Serilog Unit Tests'
 
+- script: dotnet test src/NLog/NewRelic.LogEnrichers.NLog.Tests --no-build --no-restore --configuration $(buildConfiguration) --logger trx
+  displayName: 'Run NLog Unit Tests'
+
 - task: PublishTestResults@2
   displayName: 'Publish All Test Results'
   inputs:

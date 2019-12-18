@@ -271,6 +271,49 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         }
 
         [Test]
+        public void IsHandled_JSONValue_UserProperty()
+        {
+            //Arrange
+            var userPropName1 = "UserPropertyName1";
+            var userPropVal1 = new { foo = "bar", beep = "boop" };
+            var messageTemplate = "Message with custom attribute: {@" + userPropName1 + "}";
+            var formattedMessage = "Message with custom attribute: {\"foo\":\"bar\", \"beep\":\"boop\"}";
+
+            //Act
+            _logger.Info(messageTemplate, userPropVal1);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", formattedMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, "message.template", messageTemplate);
+            Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
+            Asserts.KeyAndValueMatch(resultsDictionary, UserPropertiesKey, JsonValueKind.Object);
+            var userPropertiesDict = TestHelpers.DeserializeOutputJSON(resultsDictionary[UserPropertiesKey].ToString());
+            Asserts.KeyAndValueMatch(userPropertiesDict, userPropName1, JsonValueKind.Object);
+            var userPropValDict = TestHelpers.DeserializeOutputJSON(userPropertiesDict[userPropName1].ToString());
+            Asserts.KeyAndValueMatch(userPropValDict, "foo", "bar");
+            Asserts.KeyAndValueMatch(userPropValDict, "beep", "boop");
+        }
+
+        [Test]
+        public void LogEvent_VerifyTimestamp()
+        {
+            //Arrange
+
+            var logEvent = new LogEventInfo(LogLevel.Info, "testLogger", LogMessage);
+
+            //Act
+            _logger.Log(logEvent);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, "timestamp", logEvent.TimeStamp.ToUnixTimeMilliseconds());
+        }
+
+        [Test]
         public void IsHandled_NullValue_InLinkingMetadata()
         {
             //Arrange
@@ -338,6 +381,78 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, "error.class", testException.GetType().FullName);
             Asserts.KeyAndValueMatch(resultsDictionary, "error.message", TestErrMsg);
             Asserts.KeyAndValueMatch(resultsDictionary, "error.stack", testException.StackTrace);
+        }
+
+        [Test]
+        public void LogErrorWithException_NoExceptionMessage()
+        {
+            //Arrange
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns(linkingMetadataDict);
+
+            var testException = new InvalidOperationException(string.Empty);
+
+            //Act
+            try
+            {
+                TestHelpers.CreateStackTracedError(0, testException, 3);
+
+            }
+            catch (Exception caughtException)
+            {
+                _logger.Error(caughtException, LogMessage);
+            }
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "ERROR");
+            Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
+            Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
+            Assert.IsTrue(wasRun);
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+            }
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.class", testException.GetType().FullName);
+            Assert.That(resultsDictionary, Does.Not.ContainKey("error.message"));
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.stack", testException.StackTrace);
+        }
+
+        [Test]
+        public void LogErrorWithException_NoStackTrace()
+        {
+            //Arrange
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns(linkingMetadataDict);
+
+            var testException = new InvalidOperationException(TestErrMsg);
+
+            //Act
+            _logger.Error(testException, LogMessage);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "ERROR");
+            Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
+            Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
+            Assert.IsTrue(wasRun);
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+            }
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.class", testException.GetType().FullName);
+            Asserts.KeyAndValueMatch(resultsDictionary, "error.message", TestErrMsg);
+            Assert.That(resultsDictionary, Does.Not.ContainKey("error.stack"));
         }
     }
 }

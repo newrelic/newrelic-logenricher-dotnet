@@ -48,7 +48,7 @@ namespace NewRelic.LogEnrichers.NLog
 
             //Nesting json objects like this works fine and will lead to message properties
             //that look like message.property.ErrorMessage in the UI.
-            Attributes.Add(new JsonAttribute("message.property", new JsonLayout()
+            Attributes.Add(new JsonAttribute("Message Properties", new JsonLayout()
             {
                 IncludeAllProperties = true,
                 IncludeMdc = false,

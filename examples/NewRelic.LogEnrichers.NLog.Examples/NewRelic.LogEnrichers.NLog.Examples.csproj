@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssemblyName>Logging.NLog.Examples</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewRelic.Agent.Api" Version="8.21.34" />
+    <PackageReference Include="NLog" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NLog\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="newrelic.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,29 +1,31 @@
 ﻿using System;
-using Serilog;
-using Serilog.Core;
-using NewRelic.Api.Agent;
 using System.IO;
 using System.Runtime.CompilerServices;
+using NewRelic.Api.Agent;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 
-namespace NewRelic.LogEnrichers.Serilog.Examples
+
+namespace NewRelic.LogEnrichers.NLog.Examples
 {
-    class Program
-    {
+	class Program
+	{
         private static Logger _logger;
 
         static void Main(string[] args)
-        {
-            Console.WriteLine("Welcome to the New Relic Logging Extentions for Serilog");
+		{
+            Console.WriteLine("Welcome to the New Relic Logging Extentions for NLog");
             Console.WriteLine();
-            
 
-            if(args.Length == 0)
+
+            if (args.Length == 0)
             {
                 Console.WriteLine("Usage:");
                 Console.WriteLine("dotnet run {OutputFolderPath}");
                 return;
             }
-           
+
             var folderPath = string.Join(' ', args);
 
             var folderPath_StandardLogs = Path.Combine(folderPath, "StandardLogs");
@@ -41,7 +43,7 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
             // This log information will be visible in New Relic Logging. Since 
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
-            _logger.Information("Hello, welcome to Serilog Logs In Context sample app!");
+            _logger.Info("Hello, welcome to the Nlog Logs In Context sample app!");
 
             do
             {
@@ -59,7 +61,7 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
             // This log information will be visible in New Relic Logging. Since 
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
-            _logger.Information("Thanks for visiting, please come back soon!");
+            _logger.Info("Thanks for visiting, please come back soon!");
         }
 
 
@@ -73,30 +75,29 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
             Console.WriteLine($"New Relic Log Forwarder Source  : {folderPath_NewRelicLogs}");
             Console.WriteLine();
 
-            var loggerConfig = new LoggerConfiguration();
+            var loggerConfig = new LoggingConfiguration();
 
             // CONFIGURE BASIC LOGGING TO A FILE
-            // 1.  Enrich log Events with Thread information using the Serilog enricher.
-            // 2.  Write log files to local storage
-            loggerConfig
-                .Enrich.WithThreadName()
-                .Enrich.WithThreadId()
-                .WriteTo.File(Path.Combine(folderPath_StandardLogs, "SerilogExtensions.log"));
+            // 1.  Add a file target which writes to the standard logs folder with the default layout.
+            var standardFileTarget = new FileTarget("StandardFileTarget");
+            standardFileTarget.FileName = Path.Combine(folderPath_StandardLogs, "NLogExtensions.log");
+            loggerConfig.AddTarget(standardFileTarget);
 
             // CONFIGURE NEW RELIC LOGGING.
-            // 1.  Add contextual information to log events with the New Relic Enricher
-            // 2.  Create output in New Relic's expected JSON format
-            // 3.  Map the "ThreadId" and "ThreadName" properties in the JSON format
-            // 4.  Write the JSON files to a staging location for the Log Forwarder
-            loggerConfig
-                .Enrich.WithNewRelicLogsInContext()
-                .WriteTo.Async(x => x.File(
-                    path: Path.Combine(folderPath_NewRelicLogs, "SerilogExtensions_NewRelicLogging.json"),
-                    formatter: new NewRelicFormatter()
-                        .WithPropertyMapping("ThreadId", NewRelicLoggingProperty.ThreadId)
-                        .WithPropertyMapping("ThreadName", NewRelicLoggingProperty.ThreadName)));
+            // 1.  Add a file target which writes to a staging location for the log forwarder
+            // 2.  Use the NewRelicJsonLayout which will write the output in the format required by NewRelic, as well
+            //     as adding the contextual information linking transaction data (if applicable) to log events.
+            var newRelicFileTarget = new FileTarget("NewRelicFileTarget");
+            newRelicFileTarget.Layout = new NewRelicJsonLayout();
+            newRelicFileTarget.FileName = Path.Combine(folderPath_NewRelicLogs, "NLogExtensions_NewRelicLogging.json");
+            loggerConfig.AddTarget(newRelicFileTarget);
 
-            return loggerConfig.CreateLogger();
+            loggerConfig.AddRuleForAllLevels("StandardFileTarget");
+            loggerConfig.AddRuleForAllLevels("NewRelicFileTarget");
+
+            LogManager.Configuration = loggerConfig;
+
+            return LogManager.GetLogger("Example");
         }
 
         /// <summary>
@@ -108,25 +109,22 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void TestMethod(string testVal)
         {
-            _logger.Information("Starting TestMethod - {testValue}", testVal);
+            _logger.Info("Starting TestMethod - {testValue}", testVal);
 
             try
             {
-                for(var cnt =0; cnt < 10; cnt++)
+                for (var cnt = 0; cnt < 10; cnt++)
                 {
                     Console.WriteLine("writing message");
-                    _logger.Information("This is log message #{MessageID}", cnt);
+                    _logger.Info("This is log message #{MessageID}", cnt);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.Error(ex, "Error has occurred in TestMethod - {testValue}", testVal);
             }
 
-            _logger.Information("Ending TestMethod - {testValue}", testVal);
+            _logger.Info("Ending TestMethod - {testValue}", testVal);
         }
-
     }
-
-
 }

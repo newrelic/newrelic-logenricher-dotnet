@@ -61,7 +61,7 @@ namespace NewRelic.LogEnrichers.NLog.Examples
             // This log information will be visible in New Relic Logging. Since 
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
-            _logger.Info("Thanks for visitng, please come back soon!");
+            _logger.Info("Thanks for visiting, please come back soon!");
         }
 
 

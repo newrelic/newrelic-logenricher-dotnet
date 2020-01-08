@@ -11,6 +11,7 @@ using System;
 using NLog.Common;
 using System.IO;
 using System.Text.Json;
+using NLog.Layouts;
 
 namespace NewRelic.LogEnrichers.NLog.Tests
 {
@@ -189,6 +190,43 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
             Assert.That(resultsDictionary, Does.Not.ContainKey("line.number"));
+            foreach (var key in linkingMetadataDict.Keys)
+            {
+                Assert.That(resultsDictionary, Does.Not.ContainKey(key), "The agent was running and instrumented the test process.");
+            }
+        }
+
+        [Test]
+        public void LogMessage_CustomLayoutAttributes_VerifyAttributes()
+        {
+            //Arrange
+            // For this one-off test, need to re-do the logging configuration to override what is done in setup
+            var target = new DebugTarget("customAttributeTarget");
+            var layout = new NewRelicJsonLayout(() => _testAgent);
+            layout.Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LineNumber.GetOutputName(), "${callsite-linenumber}", true));
+            target.Layout = layout;
+
+            var config = new LoggingConfiguration();
+            config.AddTarget(target);
+            config.AddRuleForAllLevels(target);
+
+            LogManager.Configuration = config;
+
+            var logger = LogManager.GetLogger("customAttributeLogger");
+
+
+            //Act
+            logger.Info(LogMessage);
+            var loggedMessage = target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, "message", LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, "log.level", "INFO");
+            Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
+            Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
+            Assert.That(resultsDictionary, Does.ContainKey("line.number"));
             foreach (var key in linkingMetadataDict.Keys)
             {
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key), "The agent was running and instrumented the test process.");

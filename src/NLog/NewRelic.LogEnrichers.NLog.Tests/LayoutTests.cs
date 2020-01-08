@@ -188,6 +188,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, "thread.id", Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, "process.id", Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey("timestamp"));
+            Assert.That(resultsDictionary, Does.Not.ContainKey("line.number"));
             foreach (var key in linkingMetadataDict.Keys)
             {
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key), "The agent was running and instrumented the test process.");

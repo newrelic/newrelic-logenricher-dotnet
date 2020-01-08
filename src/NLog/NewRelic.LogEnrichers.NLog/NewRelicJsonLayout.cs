@@ -39,7 +39,6 @@ namespace NewRelic.LogEnrichers.NLog
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ThreadId.GetOutputName(), "${threadid}", true));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.CorrelationId.GetOutputName(), "${ActivityId}", true));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ProcessId.GetOutputName(), "${processid}", true));
-            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LineNumber.GetOutputName(), "${callsite-linenumber}", true));
 
             // exceptions
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ErrorClass.GetOutputName(), "${exception:format=Type}", true));

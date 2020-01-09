@@ -48,13 +48,12 @@ steps:
 - task: SonarCloudPublish@1
   displayName: 'SonarCloud - Publish Quality Gate Results'
   
-
-- task: PowerShell@2
+- task: sonarcloud-buildbreaker@2
   displayName: "SonarCloud - Valiate Quality Gate Results"
   condition: and ( succeeded(), eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'master'))
   inputs:
-    filePath: 'build/CheckSonarCloudQualityGate.ps1'
-    arguments: '-SonarServerName "sonarcloud.io" -SonarProjectKey "$(SonarCloudProjectKey)" -SonarToken "$(SonarCloudAuthKey)" -PullRequestNumber $(System.PullRequest.PullRequestNumber)'
+    SonarCloud: 'SonarCloud'
+    organization: '$(SonarCloudOrganization)'
 
 - task: CopyFiles@2
   condition: succeeded()

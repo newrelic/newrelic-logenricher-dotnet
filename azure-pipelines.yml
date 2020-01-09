@@ -13,6 +13,19 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: SonarCloudPrepare@1
+  displayName: 'SonarCloud - Prepare for Analysis'
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: '$(SonarCloudOrganization)'
+    projectKey: '$(SonarCloudProjectKey)'
+    projectName: '$(SonarCloudProjectName)'
+    projectVersion: '$(Build.BuildNumber)'
+    extraProperties: |
+     sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/TestResults/Coverage/coverage.opencover.xml
+     sonar.exclusions=**/wwwroot/lib/**/*
+
 - script: dotnet build NewRelic.LogEnrichers.sln --configuration $(buildConfiguration)
   displayName: 'Build (configuration=$(buildConfiguration))'
 
@@ -28,6 +41,20 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
     failTaskOnFailedTests: true
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud - Code analysis'
+
+- task: SonarCloudPublish@1
+  displayName: 'SonarCloud - Publish Quality Gate Results'
+  
+
+- task: PowerShell@2
+  displayName: "SonarCloud - Valiate Quality Gate Results"
+  condition: and ( succeeded(), eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'master'))
+  inputs:
+    filePath: 'build/CheckSonarCloudQualityGate.ps1'
+    arguments: '-SonarServerName "sonarcloud.io" -SonarProjectKey "$(SonarCloudProjectKey)" -SonarToken "$(SonarCloudAuthKey)" -PullRequestNumber $(System.PullRequest.PullRequestNumber)'
 
 - task: CopyFiles@2
   condition: succeeded()

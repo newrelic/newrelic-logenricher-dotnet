@@ -7,8 +7,6 @@ namespace NewRelic.LogEnrichers.Serilog
 {
     public class NewRelicEnricher : ILogEventEnricher
     {
-        public string testProperty { get; set; }
-
         private const string LinkingMetadataKey = "newrelic.linkingmetadata";
 
         private readonly Lazy<IAgent> _nrAgent;

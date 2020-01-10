@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Tests", "src\NLog\NewRelic.LogEnrichers.NLog.Tests\NewRelic.LogEnrichers.NLog.Tests.csproj", "{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRelic.LogEnrichers.NLog.Examples", "examples\NewRelic.LogEnrichers.NLog.Examples\NewRelic.LogEnrichers.NLog.Examples.csproj", "{078EB9EE-92DF-4989-9E6D-679A25C918AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Examples", "examples\NewRelic.LogEnrichers.NLog.Examples\NewRelic.LogEnrichers.NLog.Examples.csproj", "{078EB9EE-92DF-4989-9E6D-679A25C918AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

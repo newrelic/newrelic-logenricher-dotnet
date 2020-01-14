@@ -163,7 +163,7 @@ In this example configuration, the ThreadId and ThreadName enrichers add the add
 <br/>
 
 ##### Custom Message Properties
-The ```NewRelicFormatter``` automatically adds all custom properties to Log Events.  These properties are visible in New Relic Logging under the "Message Properties" section.  There are two methods of adding custom properites: (1) a custom enricher; or (2) a message template.
+The ```NewRelicFormatter``` automatically adds all custom properties to Log Events.  These properties are visible in New Relic Logging under the "Message Properties" section.  There are two methods of adding custom properties: (1) a custom enricher; or (2) a message template.
 
 For exmple, the following log message template will result in the custom properties of ```FirstName``` and ```nbr```
 

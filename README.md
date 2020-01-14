@@ -9,6 +9,7 @@ For the latest information, please see the [New Relic docs](https://docs.newreli
 | Framework               | Version   |
 |-------------------------|-----------|
 | [Serilog](src/Serilog/README.md)             | 2.5+      |
+| [NLog](src/NLog/README.md)                   | 4.5+      |
 
 
 ## Minimum Requirements

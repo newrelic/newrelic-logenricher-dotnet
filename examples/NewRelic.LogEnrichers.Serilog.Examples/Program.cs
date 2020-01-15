@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace NewRelic.LogEnrichers.Serilog.Examples
 {
-    class Program
+    static class Program
     {
         private static Logger _logger;
 

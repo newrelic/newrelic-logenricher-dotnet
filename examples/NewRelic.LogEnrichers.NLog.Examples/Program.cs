@@ -9,12 +9,12 @@ using NLog.Targets;
 
 namespace NewRelic.LogEnrichers.NLog.Examples
 {
-	static class Program
-	{
+    static class Program
+    {
         private static Logger _logger;
 
         static void Main(string[] args)
-		{
+        {
             Console.WriteLine("Welcome to the New Relic Logging Extentions for NLog");
             Console.WriteLine();
 

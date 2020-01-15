@@ -9,7 +9,7 @@ using NLog.Targets;
 
 namespace NewRelic.LogEnrichers.NLog.Examples
 {
-	class Program
+	static class Program
 	{
         private static Logger _logger;
 

@@ -27,9 +27,6 @@ namespace NewRelic.LogEnrichers.NLog
             SuppressSpaces = true;
             RenderEmptyObject = false;
 
-            // We do not want the properties written automatically since we want to add a prefix
-            //IncludeAllProperties = true;
-
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.Timestamp.GetOutputName(), "${"+TimestampLayoutRendererName+"}", false));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LogLevel.GetOutputName(), "${level:upperCase=true}", true));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.MessageText.GetOutputName(), "${message}", true));
@@ -58,38 +55,6 @@ namespace NewRelic.LogEnrichers.NLog
                 MaxRecursionLimit = MaxRecursionLimit,
                 ExcludeProperties = ExcludeProperties
             }, false));
-
-            //Do not include the following pieces of data until requested
-
-            //Attributes.Add(new JsonAttribute("message.mdc", new JsonLayout()
-            //{
-            //	IncludeAllProperties = false,
-            //	IncludeMdc = true,
-            //	IncludeGdc = false,
-            //	IncludeMdlc = false,
-            //	RenderEmptyObject = false,
-            //	SuppressSpaces = true
-            //}, false));
-
-            //Attributes.Add(new JsonAttribute("message.mdlc", new JsonLayout()
-            //{
-            //	IncludeAllProperties = true,
-            //	IncludeMdc = false,
-            //	IncludeGdc = false,
-            //	IncludeMdlc = true,
-            //	RenderEmptyObject = false,
-            //	SuppressSpaces = true
-            //}, false));
-
-            //Attributes.Add(new JsonAttribute("message.gdc", new JsonLayout()
-            //{
-            //	IncludeAllProperties = true,
-            //	IncludeMdc = false,
-            //	IncludeGdc = true,
-            //	IncludeMdlc = false,
-            //	RenderEmptyObject = false,
-            //	SuppressSpaces = true
-            //}, false));
         }
 
         public NewRelicJsonLayout() : this(NewRelic.Api.Agent.NewRelic.GetAgent)

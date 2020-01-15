@@ -63,7 +63,7 @@ steps:
   displayName: 'Copy Serilog Build Artifacts to Staging Location'
   inputs:
     contents: src/Serilog/NewRelic.LogEnrichers.Serilog/**/?(*.nupkg|*.snupkg)
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/Serilog'
     flattenFolders: true
 
 - task: CopyFiles@2
@@ -71,7 +71,7 @@ steps:
   displayName: 'Copy NLog Build Artifacts to Staging Location'
   inputs:
     contents: src/NLog/NewRelic.LogEnrichers.NLog/**/?(*.nupkg|*.snupkg)
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/NLog'
     flattenFolders: true
 
 - task: PublishBuildArtifacts@1

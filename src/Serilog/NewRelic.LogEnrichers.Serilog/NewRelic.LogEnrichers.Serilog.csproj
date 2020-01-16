@@ -30,7 +30,7 @@
     <AssemblyVersion>$(Major).0.0.0</AssemblyVersion>
     <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
 
-    <GitTagPrefix>NewRelic.LogEnrichers.Serilog_</GitTagPrefix>
+    <GitTagPrefix>NewRelic.LogEnrichers.Serilog_v</GitTagPrefix>
     
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>

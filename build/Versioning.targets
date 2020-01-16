@@ -30,7 +30,7 @@
       <GitTagPrefix>v</GitTagPrefix>
     </PropertyGroup>
 
-    <Exec Command="git describe --match $(GitTagPrefix)[0-9]* --abbrev=0 HEAD --tags" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true">
+    <Exec Command="git describe --match $(GitTagPrefix)* --abbrev=0 HEAD --tags" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="LatestTagVersion" />
       <Output TaskParameter="ExitCode" PropertyName="GitExitCode" />
     </Exec>

@@ -36,6 +36,10 @@
     </Exec>
     <Warning Condition="'$(GitExitCode)' > '0'" Text="No tag with prefix '$(GitTagPrefix)' found. Defaulting to version 1.0.0." />
 
+    <PropertyGroup Condition="'$(GitExitCode)' == '0'">
+      <FoundGitTag>true</FoundGitTag>
+    </PropertyGroup>
+
     <Exec Condition="'$(GitExitCode)' == '0'" Command="git rev-list $(LatestTagVersion)..HEAD --count HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitCommitCount" />
     </Exec>
@@ -56,7 +60,7 @@
       <Output PropertyName="PreReleaseMoniker" TaskParameter="PreReleaseMoniker" />
     </ParseVersion>
 
-    <PropertyGroup Condition="$(PreReleaseMoniker) == '' And $(Revision) > 0">
+    <PropertyGroup Condition="($(PreReleaseMoniker) == '' And $(Revision) > 0) Or ($(FoundGitTag) != 'true')">
       <PreReleaseMoniker>unreleased</PreReleaseMoniker>
     </PropertyGroup>
 

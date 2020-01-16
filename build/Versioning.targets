@@ -12,7 +12,7 @@
 
         Patch:              The patch version.
 
-        PreReleaseMonkier:  Optional. If the tag contains a prerelese moniker (e.g., alpha, beta, preview, etc), NuGet artifacts
+        PreReleaseMoniker:  Optional. If the tag contains a prerelese moniker (e.g., alpha, beta, preview, etc), NuGet artifacts
                             will include the prerelease moniker followed by a dot plus the number of commits since the tag.
                             For example, if the latest tag is v1.0.0-alpha and HEAD is 10 commits ahead of the tag, then NuGet
                             packages will be versioned 1.0.0-alpha.10. This versioning conforms to SemVer 2.0.0 (https://semver.org/)
@@ -85,7 +85,7 @@
         <![CDATA[
         var preReleaseMonikerStart = VersionString.IndexOf('-');
         var preReleaseMonikerLength = preReleaseMonikerStart < 0 ? 0 : VersionString.Substring(preReleaseMonikerStart).Length;
-        var preReleaseMonkier = preReleaseMonikerLength == 0 ? "" : VersionString.Substring(preReleaseMonikerStart + 1);
+        var preReleaseMoniker = preReleaseMonikerLength == 0 ? "" : VersionString.Substring(preReleaseMonikerStart + 1);
         var majorVersionStart = 0;
         var majorVersionLength = VersionString.IndexOf('.', majorVersionStart);
         var minorVersionStart = 1 + majorVersionLength;
@@ -97,7 +97,7 @@
         Major = int.Parse(VersionString.Substring(majorVersionStart, majorVersionLength));
         Minor = int.Parse(VersionString.Substring(minorVersionStart, minorVersionLength));
         Patch = int.Parse(VersionString.Substring(patchVersionStart, patchVersionLength));
-        PreReleaseMoniker = preReleaseMonkier;
+        PreReleaseMoniker = preReleaseMoniker;
         ]]>
       </Code>
     </Task>

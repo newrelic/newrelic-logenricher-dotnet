@@ -1,0 +1,3 @@
+<Project InitialTargets="VersionByGitTag">
+  <Import Project="build\Versioning.targets" Condition="Exists('build\Versioning.targets')" />
+</Project>

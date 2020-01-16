@@ -2,7 +2,10 @@ trigger:
   branches:
     include:
       - master
-      - refs/tags/v*
+      - refs/tags/v*.*.*      # v1.0.0
+      - refs/tags/v*.*.*-*    # v1.0.0-alpha
+      - refs/tags/*_v*.*.*    # SomePrefix_v1.0.0
+      - refs/tags/*_v*.*.*-*  # SomePrefix_v1.0.0-alpha
     exclude:
       - gh-pages
 
@@ -60,7 +63,7 @@ steps:
   displayName: 'Copy Serilog Build Artifacts to Staging Location'
   inputs:
     contents: src/Serilog/NewRelic.LogEnrichers.Serilog/**/?(*.nupkg|*.snupkg)
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/Serilog'
     flattenFolders: true
 
 - task: CopyFiles@2
@@ -68,7 +71,7 @@ steps:
   displayName: 'Copy NLog Build Artifacts to Staging Location'
   inputs:
     contents: src/NLog/NewRelic.LogEnrichers.NLog/**/?(*.nupkg|*.snupkg)
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/NLog'
     flattenFolders: true
 
 - task: PublishBuildArtifacts@1
@@ -79,10 +82,21 @@ steps:
     artifactName: 'lic-drop' 
 
 - task: NuGetCommand@2
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['pushNupkg'], 'true'))
-  displayName: 'Push NuGet Packages'
+  condition: |
+    and (
+      succeeded(),
+      or (
+        eq(variables['Build.SourceBranch'], 'refs/head/master'),
+        startsWith(variables['Build.SourceBranch'], 'refs/tags')
+      )
+    )
+  displayName: 'Push packages to MyGet'
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+    packagesToPush: |
+      $(Build.ArtifactStagingDirectory)/**/*.nupkg;
+      $(Build.ArtifactStagingDirectory)/**/*.snupkg;
+      !$(Build.ArtifactStagingDirectory)/**/*-unreleased*.nupkg;
+      !$(Build.ArtifactStagingDirectory)/**/*-unreleased*.snupkg
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'NuGet'
+    publishFeedCredentials: 'MyGet'

@@ -58,7 +58,7 @@
 
     <!-- If a tag with the correct GitTagPrefix for this product was not found on the commit we're building from, set the PreReleaseMoniker to 'unreleased'.
          This will prevent the resulting NuGet packages from being pushed to MyGet by the Azure build pipeline. -->
-    <PropertyGroup Condition="$(GitExitCode) != 0 Or $(Revision) > 0">
+    <PropertyGroup Condition="$(GitExitCode) != 0 Or $(PreReleaseMoniker) == '' And $(Revision) > 0">
       <PreReleaseMoniker>unreleased</PreReleaseMoniker>
     </PropertyGroup>
 

@@ -86,7 +86,7 @@ steps:
     and (
       succeeded(),
       or (
-        eq(variables['Build.SourceBranch'], 'refs/head/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
         startsWith(variables['Build.SourceBranch'], 'refs/tags')
       )
     )
@@ -104,7 +104,7 @@ steps:
     and (
       succeeded(),
       or (
-        eq(variables['Build.SourceBranch'], 'refs/head/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
         startsWith(variables['Build.SourceBranch'], 'refs/tags')
       )
     )

@@ -151,6 +151,5 @@ logger.Info("Hello, New Relic!");
       <logger name="NewRelicLog" minlevel="Info" writeTo="newRelicLogFile" />
     </rules>
   </nlog>
-</configuration>```
-<br/>
+</configuration>
 ```

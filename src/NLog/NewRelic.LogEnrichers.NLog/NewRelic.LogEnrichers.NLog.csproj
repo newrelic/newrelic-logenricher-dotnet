@@ -41,7 +41,7 @@
 
   <ItemGroup>
     <PackageReference Include="NewRelic.Agent.Api" Version="8.21.34" />
-    <PackageReference Include="NLog" Version="4.5.0" />
+    <PackageReference Include="NLog" Version="4.5.11" />
   </ItemGroup>
 
   <ItemGroup>

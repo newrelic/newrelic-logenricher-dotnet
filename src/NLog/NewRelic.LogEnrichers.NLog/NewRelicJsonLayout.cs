@@ -79,6 +79,7 @@ namespace NewRelic.LogEnrichers.NLog
             IncludeMdlc = false;
             RenderEmptyObject = false;
             SuppressSpaces = true;
+            MaxRecursionLimit = 1;
         }
 
         protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)

@@ -52,7 +52,7 @@ namespace NewRelic.LogEnrichers.NLog
                 IncludeMdlc = false,
                 RenderEmptyObject = false,
                 SuppressSpaces = true,
-                MaxRecursionLimit = MaxRecursionLimit,
+                MaxRecursionLimit = 1,
                 ExcludeProperties = ExcludeProperties
             }, false));
         }

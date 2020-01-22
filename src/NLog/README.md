@@ -33,11 +33,15 @@ Configure the ```NewRelicJsonLayout``` by adding it to the NLog configuration as
   var loggerConfig = new LoggingConfiguration();
   
   var newRelicFileTarget = new FileTarget("NewRelicFileTarget");
+  
   newRelicFileTarget.Layout = new NewRelicJsonLayout();
   newRelicFileTarget.FileName = "log/folder/path/NewRelicLogging.json";
+  
   loggerConfig.AddTarget(newRelicFileTarget);
   loggerConfig.AddRuleForAllLevels("NewRelicFileTarget");
+  
   LogManager.Configuration = loggerConfig;
+  
   var logger = LogManager.GetLogger("Example");
 
 ```
@@ -46,12 +50,13 @@ The ```NewRelicJsonLayout``` includes a default set of attributes.  You can add 
 
 ```csharp
   var nrLayout = new NewRelicJsonLayout();
+  
   nrLayout.Attributes.Add("line.number", "${callsite-linenumber}", true));
   // Add layout to target
 ```
 <br/>
 
-In order to send the output of the ```NewRelicJsonLayout``` to the New Relic logging endpoint, it needs to be written to disk (so that a log forwarder, e.g. Fluentd, can be configured to send it to New Relic).  Since the JSON files are written to disk, some of these <a href="https://github.com/nlog/NLog/wiki/File-target" target="_blank">configuration options</a> may be useful in managing the amount of disk space used and/or the performance of the Target.
+In order to send the output of the ```NewRelicJsonLayout``` to the New Relic logging endpoint, it needs to be written to disk so that a log forwarder, e.g. Fluentd, can be configured to send it to New Relic.  Since the JSON files are written to disk, some of these <a href="https://github.com/nlog/NLog/wiki/File-target" target="_blank">configuration options</a> may be useful in managing the amount of disk space used and/or the performance of the Target.
 
 * ```archiveAboveSize```
 * ```maxArchiveFiles```
@@ -105,7 +110,7 @@ In addition to the linking metadata obtained from the .NET Agent, the ```NewReli
 <br/>
 
 #### Custom Message Properties
-The ```NewRelicJsonLayout``` automatically includes all custom properties added to log events in its outout.  These properties are visible in New Relic Logging under the "Message Properties" section.  NLog supports <a href="https://github.com/NLog/NLog/wiki/Context" target="_blank">several methods of adding context</a>.  Note that the ```NewRelicJsonLayout``` does _not_ include custom properties from the ```MappedDiagnosticsContext```, ```MappedDiagnosticsLogicalContext```, or ```GlobalDiagnosticsContext```.
+The ```NewRelicJsonLayout``` automatically includes all custom properties added to log events in its outout.  These properties are visible in New Relic Logging under the "Message Properties" section.  NLog supports <a href="https://github.com/NLog/NLog/wiki/Context" target="_blank">several methods of adding custom properties</a>.  Note that the ```NewRelicJsonLayout``` does _not_ include custom properties from the ```MappedDiagnosticsContext```, ```MappedDiagnosticsLogicalContext```, or ```GlobalDiagnosticsContext```.
 
 For example, the following log message template will result in the custom properties of ```FirstName``` and ```nbr``` being included in the output nested under the "Message Properties" key.
 

@@ -56,7 +56,7 @@ namespace NewRelic.LogEnrichers.NLog
                 IncludeMdlc = false,
                 RenderEmptyObject = false,
                 SuppressSpaces = true,
-                MaxRecursionLimit = 1,
+                MaxRecursionLimit = 1, // See https://github.com/newrelic/newrelic-logenricher-dotnet/issues/43
                 ExcludeProperties = ExcludeProperties
             };
 
@@ -70,15 +70,13 @@ namespace NewRelic.LogEnrichers.NLog
         //This prevents changing the properties that we don't want changed
         protected override void InitializeLayout()
         {
-            var maxRecursionLimitPreviousValue = MaxRecursionLimit;
-
             // This reads XML configuration
             base.InitializeLayout();
 
-            if ((MaxRecursionLimit != maxRecursionLimitPreviousValue) || (maxRecursionLimitPreviousValue != 1))
-            {
-                _jsonLayoutForMessageProperties.MaxRecursionLimit = MaxRecursionLimit;
-            }
+            // At this point, the value of MaxRecursionLimit in this instance of NewRelicJsonLayout is either
+            // what we initialized it to be in the constructor, or a value supplied by the user.  Either way, 
+            // we should set the value of MaxRecursionLimit on the message properties sub-layout to be the same.
+            _jsonLayoutForMessageProperties.MaxRecursionLimit = MaxRecursionLimit;
 
             // Now we set things to how we want them configured finally
 
@@ -92,7 +90,6 @@ namespace NewRelic.LogEnrichers.NLog
             IncludeMdlc = false;
             RenderEmptyObject = false;
             SuppressSpaces = true;
-            MaxRecursionLimit = 1;
         }
 
         protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)

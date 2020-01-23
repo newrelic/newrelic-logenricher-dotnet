@@ -18,6 +18,8 @@ namespace NewRelic.LogEnrichers.NLog
         private IJsonConverter _jsonConverter;
         private IJsonConverter JsonConverter => _jsonConverter ?? (_jsonConverter = ConfigurationItemFactory.Default.JsonConverter);
 
+        private readonly JsonLayout _jsonLayoutForMessageProperties;
+
         internal NewRelicJsonLayout(Func<NewRelic.Api.Agent.IAgent> agentFactory) : base()
         {
             _nrAgent = new Lazy<NewRelic.Api.Agent.IAgent>(agentFactory);
@@ -26,6 +28,7 @@ namespace NewRelic.LogEnrichers.NLog
 
             SuppressSpaces = true;
             RenderEmptyObject = false;
+            MaxRecursionLimit = 1;
 
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.Timestamp.GetOutputName(), "${"+TimestampLayoutRendererName+"}", false));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LogLevel.GetOutputName(), "${level:upperCase=true}", true));
@@ -44,7 +47,8 @@ namespace NewRelic.LogEnrichers.NLog
 
             //Nesting json objects like this works fine and will lead to message properties
             //that look like message.property.ErrorMessage in the UI.
-            Attributes.Add(new JsonAttribute("Message Properties", new JsonLayout()
+
+            _jsonLayoutForMessageProperties = new JsonLayout()
             {
                 IncludeAllProperties = true,
                 IncludeMdc = false,
@@ -54,7 +58,9 @@ namespace NewRelic.LogEnrichers.NLog
                 SuppressSpaces = true,
                 MaxRecursionLimit = 1,
                 ExcludeProperties = ExcludeProperties
-            }, false));
+            };
+
+            Attributes.Add(new JsonAttribute("Message Properties", _jsonLayoutForMessageProperties, false));
         }
 
         public NewRelicJsonLayout() : this(NewRelic.Api.Agent.NewRelic.GetAgent)
@@ -64,8 +70,15 @@ namespace NewRelic.LogEnrichers.NLog
         //This prevents changing the properties that we don't want changed
         protected override void InitializeLayout()
         {
+            var maxRecursionLimitPreviousValue = MaxRecursionLimit;
+
             // This reads XML configuration
             base.InitializeLayout();
+
+            if ((MaxRecursionLimit != maxRecursionLimitPreviousValue) || (maxRecursionLimitPreviousValue != 1))
+            {
+                _jsonLayoutForMessageProperties.MaxRecursionLimit = MaxRecursionLimit;
+            }
 
             // Now we set things to how we want them configured finally
 

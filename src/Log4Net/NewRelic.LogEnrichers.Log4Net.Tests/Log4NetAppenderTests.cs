@@ -36,8 +36,10 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var layout = Mock.Create<log4net.Layout.SimpleLayout>();
             layout.ActivateOptions();
 
-            var childAppender = new log4net.Appender.ConsoleAppender();
-            childAppender.Layout = layout;
+            var childAppender = new log4net.Appender.ConsoleAppender
+            {
+                Layout = layout
+            };
 
             testAppender.AddAppender(childAppender);
 
@@ -83,8 +85,10 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var layout = Mock.Create<log4net.Layout.SimpleLayout>();
             layout.ActivateOptions();
 
-            var childAppender = new log4net.Appender.ConsoleAppender();
-            childAppender.Layout = layout;
+            var childAppender = new log4net.Appender.ConsoleAppender
+            {
+                Layout = layout
+            };
 
             testAppender.AddAppender(childAppender);
 
@@ -135,8 +139,10 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var testLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
             var layout = Mock.Create<log4net.Layout.SimpleLayout>();
-            var childAppender = new log4net.Appender.ConsoleAppender();
-            childAppender.Layout = layout;
+            var childAppender = new log4net.Appender.ConsoleAppender
+            {
+                Layout = layout
+            };
 
             testAppender.AddAppender(childAppender);
 
@@ -176,8 +182,10 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var testLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
             var layout = Mock.Create<log4net.Layout.SimpleLayout>();
-            var childAppender = new log4net.Appender.ConsoleAppender();
-            childAppender.Layout = layout;
+            var childAppender = new log4net.Appender.ConsoleAppender
+            {
+                Layout = layout
+            };
 
             testAppender.AddAppender(childAppender);
 

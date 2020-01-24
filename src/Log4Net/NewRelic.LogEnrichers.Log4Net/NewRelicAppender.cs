@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using log4net.Appender;
 using log4net.Core;
+using log4net.Util;
 using NewRelic.Api.Agent;
 
 namespace NewRelic.LogEnrichers.Log4Net
@@ -22,29 +23,21 @@ namespace NewRelic.LogEnrichers.Log4Net
 
         protected override void Append(LoggingEvent loggingEvent)
         {
-            var linkingMetadata = _nrAgent.Value?.GetLinkingMetadata();
-
-            if (linkingMetadata != null && linkingMetadata.Keys.Count != 0)
+            try
             {
-                loggingEvent.Properties[LinkingMetadataKey] = linkingMetadata;
-            }
+                var linkingMetadata = _nrAgent.Value?.GetLinkingMetadata();
 
-            base.Append(loggingEvent);
-        }
-
-        protected override void Append(LoggingEvent[] loggingEvents)
-        {
-            var linkingMetadata = _nrAgent.Value?.GetLinkingMetadata();
-
-            if (linkingMetadata != null && linkingMetadata.Keys.Count != 0)
-            {
-                foreach (var loggingEvent in loggingEvents)
+                if (linkingMetadata != null && linkingMetadata.Keys.Count != 0)
                 {
                     loggingEvent.Properties[LinkingMetadataKey] = linkingMetadata;
                 }
+            } 
+            catch(Exception ex) 
+            {
+                LogLog.Error(GetType(), "Exception caught in NewRelicAppender.Append", ex);
             }
 
-            base.Append(loggingEvents);
+            base.Append(loggingEvent);
         }
     }
 }

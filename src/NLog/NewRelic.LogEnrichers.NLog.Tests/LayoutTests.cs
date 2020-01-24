@@ -336,6 +336,73 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         }
 
         [Test]
+        public void LogMessageWithNestedObjects_DefaultRecursionLimit()
+        {
+            var alice = new Person { Name = "Alice", Manager = null };
+            var bob = new Person { Name = "Bob", Manager = alice };
+            var charlie = new Person { Name = "Charlie", Manager = bob };
+            var messageTemplate = "Person = {person}";
+            var formattedMessage = "Person = Charlie";
+
+            //Act
+            _logger.Info(messageTemplate, charlie);
+            var loggedMessage = _target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
+            Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
+            Asserts.KeyAndValueMatch(resultsDictionary, UserPropertiesKey, JsonValueKind.Object);
+            var userPropertiesDict = TestHelpers.DeserializeOutputJSON(resultsDictionary[UserPropertiesKey].ToString());
+            Asserts.KeyAndValueMatch(userPropertiesDict, "person", JsonValueKind.Object);
+            var userPropValDict = TestHelpers.DeserializeOutputJSON(userPropertiesDict["person"].ToString());
+            Asserts.KeyAndValueMatch(userPropValDict, "Name", "Charlie");
+            Asserts.KeyAndValueMatch(userPropValDict, "Manager", "Bob");
+        }
+
+        [Test]
+        public void LogMessageWithNestedObjects_UserModifiedRecursionLimit()
+        {
+            //Arrange
+            // For this one-off test, need to re-do the logging configuration to override what is done in setup
+            var target = new DebugTarget("customAttributeTarget");
+            var layout = new NewRelicJsonLayout(() => _testAgent);
+            layout.MaxRecursionLimit = 3;
+            target.Layout = layout;
+
+            var config = new LoggingConfiguration();
+            config.AddTarget(target);
+            config.AddRuleForAllLevels(target);
+
+            LogManager.Configuration = config;
+
+            var logger = LogManager.GetLogger("customAttributeLogger");
+
+            var alice = new Person { Name = "Alice", Manager = null };
+            var bob = new Person { Name = "Bob", Manager = alice };
+            var charlie = new Person { Name = "Charlie", Manager = bob };
+            var messageTemplate = "Person = {person}";
+            var formattedMessage = "Person = Charlie";
+
+            //Act
+            logger.Info(messageTemplate, charlie);
+            var loggedMessage = target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            //Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
+            Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
+            Asserts.KeyAndValueMatch(resultsDictionary, UserPropertiesKey, JsonValueKind.Object);
+            var userPropertiesDict = TestHelpers.DeserializeOutputJSON(resultsDictionary[UserPropertiesKey].ToString());
+            Asserts.KeyAndValueMatch(userPropertiesDict, "person", JsonValueKind.Object);
+            var userPropValDict = TestHelpers.DeserializeOutputJSON(userPropertiesDict["person"].ToString());
+            Asserts.KeyAndValueMatch(userPropValDict, "Name", "Charlie");
+            Asserts.KeyAndValueMatch(userPropValDict, "Manager", JsonValueKind.Object);
+        }
+
+        [Test]
         public void LogEvent_VerifyTimestamp()
         {
             //Arrange
@@ -493,5 +560,13 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorMessage.GetOutputName(), TestErrMsg);
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.ErrorStack.GetOutputName()));
         }
+    }
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public Person Manager { get; set; }
+
+        public override string ToString() { return Name; }
     }
 }

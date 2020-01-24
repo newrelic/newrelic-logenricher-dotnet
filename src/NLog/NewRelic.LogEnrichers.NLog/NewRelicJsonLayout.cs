@@ -18,6 +18,8 @@ namespace NewRelic.LogEnrichers.NLog
         private IJsonConverter _jsonConverter;
         private IJsonConverter JsonConverter => _jsonConverter ?? (_jsonConverter = ConfigurationItemFactory.Default.JsonConverter);
 
+        private readonly JsonLayout _jsonLayoutForMessageProperties;
+
         internal NewRelicJsonLayout(Func<NewRelic.Api.Agent.IAgent> agentFactory) : base()
         {
             _nrAgent = new Lazy<NewRelic.Api.Agent.IAgent>(agentFactory);
@@ -26,6 +28,7 @@ namespace NewRelic.LogEnrichers.NLog
 
             SuppressSpaces = true;
             RenderEmptyObject = false;
+            MaxRecursionLimit = 1;
 
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.Timestamp.GetOutputName(), "${"+TimestampLayoutRendererName+"}", false));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LogLevel.GetOutputName(), "${level:upperCase=true}", true));
@@ -44,7 +47,8 @@ namespace NewRelic.LogEnrichers.NLog
 
             //Nesting json objects like this works fine and will lead to message properties
             //that look like message.property.ErrorMessage in the UI.
-            Attributes.Add(new JsonAttribute("Message Properties", new JsonLayout()
+
+            _jsonLayoutForMessageProperties = new JsonLayout()
             {
                 IncludeAllProperties = true,
                 IncludeMdc = false,
@@ -52,9 +56,11 @@ namespace NewRelic.LogEnrichers.NLog
                 IncludeMdlc = false,
                 RenderEmptyObject = false,
                 SuppressSpaces = true,
-                MaxRecursionLimit = MaxRecursionLimit,
+                MaxRecursionLimit = 1, // See https://github.com/newrelic/newrelic-logenricher-dotnet/issues/43
                 ExcludeProperties = ExcludeProperties
-            }, false));
+            };
+
+            Attributes.Add(new JsonAttribute("Message Properties", _jsonLayoutForMessageProperties, false));
         }
 
         public NewRelicJsonLayout() : this(NewRelic.Api.Agent.NewRelic.GetAgent)
@@ -66,6 +72,11 @@ namespace NewRelic.LogEnrichers.NLog
         {
             // This reads XML configuration
             base.InitializeLayout();
+
+            // At this point, the value of MaxRecursionLimit in this instance of NewRelicJsonLayout is either
+            // what we initialized it to be in the constructor, or a value supplied by the user.  Either way, 
+            // we should set the value of MaxRecursionLimit on the message properties sub-layout to be the same.
+            _jsonLayoutForMessageProperties.MaxRecursionLimit = MaxRecursionLimit;
 
             // Now we set things to how we want them configured finally
 

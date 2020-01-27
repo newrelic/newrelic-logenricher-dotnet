@@ -25,7 +25,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         private const string LogMessage = "This is a log message";
         private const string UserPropertiesKey = "Message Properties";
 
-        private static Dictionary<string,string> linkingMetadataDict = new Dictionary<string, string>
+        private static readonly Dictionary<string,string> linkingMetadataDict = new Dictionary<string, string>
             {
                 { "trace.id", "trace-id" },
                 { "span.id", "span-id" },
@@ -40,8 +40,10 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         public void Setup()
         {
             _testAgent = Mock.Create<IAgent>();
-            _target = new DebugTarget("testTarget");
-            _target.Layout = new NewRelicJsonLayout(() => _testAgent);
+            _target = new DebugTarget("testTarget")
+            {
+                Layout = new NewRelicJsonLayout(() => _testAgent)
+            };
 
             var config = new LoggingConfiguration();
             config.AddTarget(_target);

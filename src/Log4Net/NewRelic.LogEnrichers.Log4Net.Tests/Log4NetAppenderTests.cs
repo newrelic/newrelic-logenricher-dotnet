@@ -25,9 +25,9 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
 
             var testAgent = Mock.Create<IAgent>();
-            var testAppender = new NewRelicAppender(() => testAgent);
-
             Mock.Arrange(() => testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "key", "value" } });
+
+            var testAppender = new NewRelicAppender(() => testAgent);
 
             //Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -66,7 +66,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             Assert.That(testLoggingEvents.Count, Is.EqualTo(countLogAttempts));
             testLoggingEvents.ForEach(loggingEvent =>
             {
-                Assert.That(loggingEvent.Properties.Contains("newrelic.linkingmetadata"), "newrelic.linkingmetadata property found. This test expects newrelic.linkingmetadata property in log event");
+                Assert.That(loggingEvent.Properties.Contains("newrelic.linkingmetadata"), "newrelic.linkingmetadata not property found. This test expects newrelic.linkingmetadata property in log event");
             });
         }
 
@@ -126,11 +126,13 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
 
             var testAgent = Mock.Create<IAgent>();
-            var testAppender = new NewRelicAppender(() => testAgent);
             Mock.Arrange(() => testAgent.GetLinkingMetadata()).DoInstead(() =>
             {
                 throw new Exception("Exception - GetLinkingMetadata");
             });
+
+            var testAppender = new NewRelicAppender(() => testAgent);
+
 
             //Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());

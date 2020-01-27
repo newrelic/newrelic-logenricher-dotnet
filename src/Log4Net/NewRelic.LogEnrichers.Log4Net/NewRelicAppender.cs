@@ -33,7 +33,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             } 
             catch(Exception ex) 
             {
-                LogLog.Error(GetType(), "Exception caught in NewRelicAppender.Append", ex);
+                LogLog.Error(GetType(), "Exception caught in NewRelic.LogEnrichers.Log4Net.NewRelicAppender.Append", ex);
             }
 
             base.Append(loggingEvent);

@@ -26,7 +26,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         private const string StringTestValue = "test-string";
         private const string TestErrMsg = "This is a test exception";
         private const string LogMessage = "This is a log message";
-        private const int countIntrinsicProperties = 4;
+        private const int CountIntrinsicProperties = 4;
 
         private readonly NewRelicLoggingProperty[] _newRelicPropertiesNotReserved;
         private readonly NewRelicLoggingProperty[] _newRelicPropertiesReserved = new[]
@@ -85,7 +85,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + NullTestKey, JsonValueKind.Null);
             Assert.That(resultDic, Does.Not.ContainKey(UserPropertyKeyPrefix + LinkingMetadataKey));
@@ -118,7 +118,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
             Assert.That(resultDic, Does.Not.ContainKey(UserPropertyKeyPrefix + LinkingMetadataKey));
             Asserts.KeyAndValueMatch(resultDic, StringATestKey, StringTestValue);
@@ -173,7 +173,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + "@" + SingleAtSignTestKey, BooleanTestValue);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + DoubleAtSignTestKey, JsonValueKind.Null);
@@ -202,7 +202,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + BooleanTestKey, BooleanTestValue);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + NullTestKey, JsonValueKind.Null);
@@ -234,7 +234,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties + 3, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties + 3, resultDic);
             Asserts.KeyAndValueMatch(resultDic, "message", "We have 1, \"two\", and False.");
         }
 
@@ -254,7 +254,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Assert.That(resultDic, Contains.Key("timestamp"));
             Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Timestamp.ToUnixTimeMilliseconds(),
                 Is.EqualTo(resultDic["timestamp"].GetInt64()));
@@ -281,7 +281,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Assert.That(resultDic, Contains.Key("log.level"));
             Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Level.ToString(),Is.EqualTo(resultDic["log.level"].GetString()));
         }
@@ -310,7 +310,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
             //additional 1 for threadid
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties + 1, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties + 1, resultDic);
             Assert.That(resultDic, Contains.Key("thread.id"));
             Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Properties[ThreadIDKey].ToString(),Is.EqualTo(resultDic["thread.id"].GetString()));
         }
@@ -339,7 +339,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties + 3, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties + 3, resultDic);
             Asserts.KeyAndValueMatch(resultDic, "error.message", TestErrMsg);
             Asserts.KeyAndValueMatch(resultDic, "error.class", testException.GetType().FullName);
             Asserts.KeyAndValueMatch(resultDic, "error.stack", testException.StackTrace);
@@ -369,7 +369,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties + 2, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties + 2, resultDic);
             Assert.That(resultDic, Does.Not.ContainKey("error.message"));
             Asserts.KeyAndValueMatch(resultDic, "error.class", testException.GetType().FullName);
             Asserts.KeyAndValueMatch(resultDic, "error.stack", testException.StackTrace);
@@ -392,7 +392,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties + 2, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties + 2, resultDic);
             Assert.That(resultDic, Does.Not.ContainKey("error.stack"));
             Asserts.KeyAndValueMatch(resultDic, "error.message", TestErrMsg);
             Asserts.KeyAndValueMatch(resultDic, "error.class", testException.GetType().FullName);
@@ -422,7 +422,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            AssertThatPropertyCountsMatch(testEnricher, countIntrinsicProperties, resultDic);
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Asserts.KeyAndValueMatch(resultDic, UserPropertyKeyPrefix + IntegerTestKey, IntegerTestValue);
             Assert.That(resultDic, Does.Not.ContainKey(UserPropertyKeyPrefix + LinkingMetadataKey));
             Asserts.KeyAndValueMatch(resultDic, StringATestKey, "TestValue1");

@@ -11,16 +11,12 @@ using Telerik.JustMock;
 
 namespace NewRelic.LogEnrichers.Log4Net.Tests
 {
-	public class Log4NetAppenderTests
+    public class Log4NetAppenderTests
     {
-        [SetUp]
-		public void Setup()
-		{
-        }
 
         [Test]
-		public void GetLinkingMetadata_CalledOnceForEachEvent()
-		{
+        public void GetLinkingMetadata_CalledOnceForEachEvent()
+        {
             // Arrange
             LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
 

@@ -43,26 +43,26 @@ namespace NewRelic.LogEnrichers.Log4Net
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LogLevel), e.Level);
         }
 
-        void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent e) 
+        void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent) 
         {
             if (dictionary == null)
             {
                 return;
             }
 
-            if (e.ExceptionObject != null)
+            if (loggingEvent.ExceptionObject != null)
             {
-                if (!string.IsNullOrEmpty(e.ExceptionObject.Message))
+                if (!string.IsNullOrEmpty(loggingEvent.ExceptionObject.Message))
                 {
-                    dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorMessage), e.ExceptionObject.Message);
+                    dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorMessage), loggingEvent.ExceptionObject.Message);
                 }
 
-                if (!string.IsNullOrEmpty(e.ExceptionObject.StackTrace))
+                if (!string.IsNullOrEmpty(loggingEvent.ExceptionObject.StackTrace))
                 {
-                    dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorStack), e.ExceptionObject.StackTrace);
+                    dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorStack), loggingEvent.ExceptionObject.StackTrace);
                 }
 
-                dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorClass), e.ExceptionObject.GetType().ToString());
+                dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorClass), loggingEvent.ExceptionObject.GetType().ToString());
             }
         }
 

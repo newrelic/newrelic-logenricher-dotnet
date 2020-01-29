@@ -60,16 +60,17 @@ namespace NewRelic.LogEnrichers.Log4Net
 
         void SetUserProperties(Dictionary<string, object> dictionary, LoggingEvent e)
         {
+            var properties = e.GetProperties();
             if (dictionary == null)
             {
                 return;
             }
 
-            foreach (var key in e.Properties.GetKeys())
+            foreach (var key in properties.GetKeys())
             {
                 if (key != LinkingMetadataKey)
                 {
-                    dictionary[LoggingExtensions.UserPropertyPrefix + key] = e.Properties[key];
+                    dictionary[LoggingExtensions.UserPropertyPrefix + key] = properties[key];
                 }
             }
         }

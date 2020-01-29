@@ -52,9 +52,17 @@ namespace NewRelic.LogEnrichers.Log4Net
 
             if (e.ExceptionObject != null)
             {
-                dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorMessage), e.ExceptionObject?.Message);
-                dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorStack), e.ExceptionObject?.StackTrace);
-                dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorClass), e.ExceptionObject?.GetType().ToString());
+                if (!string.IsNullOrEmpty(e.ExceptionObject.Message))
+                {
+                    dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorMessage), e.ExceptionObject.Message);
+                }
+
+                if (!string.IsNullOrEmpty(e.ExceptionObject.StackTrace))
+                {
+                    dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorStack), e.ExceptionObject.StackTrace);
+                }
+
+                dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ErrorClass), e.ExceptionObject.GetType().ToString());
             }
         }
 

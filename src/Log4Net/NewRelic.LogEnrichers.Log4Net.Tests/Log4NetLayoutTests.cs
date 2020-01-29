@@ -106,11 +106,9 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             BasicConfigurator.Configure(logRepository, _testAppender);
 
             TextWriter tw = null;
-            LoggingEvent le = null;
 
             Mock.Arrange(() => _layout.Format(Arg.IsAny<TextWriter>(), Arg.IsAny<LoggingEvent>())).DoInstead((TextWriter textWriter, LoggingEvent loggingEvent) =>
             {
-                le = loggingEvent;
                 tw = textWriter;
             }).CallOriginal();
 
@@ -130,6 +128,124 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             Asserts.KeyAndValueMatch(deserializedMessage, UserPropertyKeyPrefix + "customerPropertyInteger", 100);
         }
 
+        [Test]
+        public void Output_Exception()
+        {
+            // Arrange
+            LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
+
+            //Set the the NewRelicAppender at the root logger
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            BasicConfigurator.Configure(logRepository, _testAppender);
+
+            TextWriter tw = null;
+            Mock.Arrange(() => _layout.Format(Arg.IsAny<TextWriter>(), Arg.IsAny<LoggingEvent>())).DoInstead((TextWriter textWriter, LoggingEvent loggingEvent) =>
+            {
+                tw = textWriter;
+            }).CallOriginal();
+
+            var testLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            var testExceptionMessage = "This is an exception.";
+            var testException = new InvalidOperationException(testExceptionMessage);
+
+            // Act
+            try
+            {
+                TestHelpers.CreateStackTracedError(0, testException, 3);
+            }
+            catch (Exception ex)
+            {
+                testLogger.Error("Something has occurred!!!", ex);
+            }
+
+            //// Act
+            var serializedMessage = tw.ToString();
+            var deserializedMessage = TestHelpers.DeserializeOutputJSON(serializedMessage);
+
+            // Assert
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.message", testExceptionMessage);
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.class", testException.GetType().FullName);
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.stack", testException.StackTrace);
+        }
+
+        [Test]
+        public void Output_Exception_NoMessage()
+        {
+            // Arrange
+            LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
+
+            //Set the the NewRelicAppender at the root logger
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            BasicConfigurator.Configure(logRepository, _testAppender);
+
+            TextWriter tw = null;
+            Mock.Arrange(() => _layout.Format(Arg.IsAny<TextWriter>(), Arg.IsAny<LoggingEvent>())).DoInstead((TextWriter textWriter, LoggingEvent loggingEvent) =>
+            {
+                tw = textWriter;
+            }).CallOriginal();
+
+            var testLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            var testException = new Exception(string.Empty);
+
+            // Act
+            try
+            {
+                TestHelpers.CreateStackTracedError(0, testException, 3);
+            }
+            catch (Exception ex)
+            {
+                testLogger.Error("Something has occurred!!!", ex);
+            }
+
+            //// Act
+            var serializedMessage = tw.ToString();
+            var deserializedMessage = TestHelpers.DeserializeOutputJSON(serializedMessage);
+
+            // Assert
+            Assert.That(deserializedMessage, Does.Not.ContainKey("error.message"));
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.class", testException.GetType().FullName);
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.stack", testException.StackTrace);
+        }
+
+        [Test]
+        public void Output_Exception_NoStackTrace()
+        {
+            // Arrange
+            LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
+
+            //Set the the NewRelicAppender at the root logger
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            BasicConfigurator.Configure(logRepository, _testAppender);
+
+            TextWriter tw = null;
+            Mock.Arrange(() => _layout.Format(Arg.IsAny<TextWriter>(), Arg.IsAny<LoggingEvent>())).DoInstead((TextWriter textWriter, LoggingEvent loggingEvent) =>
+            {
+                tw = textWriter;
+            }).CallOriginal();
+
+            var testLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            var testExceptionMessage = "this is an exception";
+            var testException = new Exception(testExceptionMessage);
+
+            // Act
+
+            testLogger.Error("Something has occurred!!!", testException);
+
+            //// Act
+            var serializedMessage = tw.ToString();
+            var deserializedMessage = TestHelpers.DeserializeOutputJSON(serializedMessage);
+
+            // Assert
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.message", testExceptionMessage);
+            Asserts.KeyAndValueMatch(deserializedMessage, "error.class", testException.GetType().FullName);
+            Assert.That(deserializedMessage, Does.Not.ContainKey("error.stack"));
+        }
     }
 
     public static class CustomLoggingExtensions

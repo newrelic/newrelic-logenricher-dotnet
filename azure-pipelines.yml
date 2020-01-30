@@ -38,6 +38,9 @@ steps:
 - script: dotnet test src/NLog/NewRelic.LogEnrichers.NLog.Tests --no-build --no-restore --configuration $(buildConfiguration) --logger trx
   displayName: 'Run NLog Unit Tests'
 
+- script: dotnet test src/Log4Net/NewRelic.LogEnrichers.Log4Net.Tests --no-build --no-restore --configuration $(buildConfiguration) --logger trx
+  displayName: 'Run Log4Net Unit Tests'
+
 - task: PublishTestResults@2
   displayName: 'Publish All Test Results'
   inputs:
@@ -72,6 +75,14 @@ steps:
   inputs:
     contents: src/NLog/NewRelic.LogEnrichers.NLog/**/?(*.nupkg|*.snupkg)
     targetFolder: '$(Build.ArtifactStagingDirectory)/NLog'
+    flattenFolders: true
+
+- task: CopyFiles@2
+  condition: succeeded()
+  displayName: 'Copy Log4Net Build Artifacts to Staging Location'
+  inputs:
+    contents: src/Log4Net/NewRelic.LogEnrichers.Log4Net/**/?(*.nupkg|*.snupkg)
+    targetFolder: '$(Build.ArtifactStagingDirectory)/Log4Net'
     flattenFolders: true
 
 - task: PublishBuildArtifacts@1

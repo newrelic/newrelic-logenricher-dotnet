@@ -18,29 +18,29 @@ namespace NewRelic.LogEnrichers.Log4Net
         {
         }
 
-        public override void Format(TextWriter writer, LoggingEvent e)
+        public override void Format(TextWriter writer, LoggingEvent loggingEvent)
         {
             var dic = new Dictionary<string, object>();
 
-            SetInstrinsics(dic, e);
-            SetExceptionData(dic, e);
-            SetUserProperties(dic, e);
-            SetLinkMetaData(dic, e);
+            SetInstrinsics(dic, loggingEvent);
+            SetExceptionData(dic, loggingEvent);
+            SetUserProperties(dic, loggingEvent);
+            SetLinkMetaData(dic, loggingEvent);
 
             writer.WriteLine(JsonConvert.SerializeObject(dic));
         }
 
-        void SetInstrinsics(Dictionary<string, object> dictionary, LoggingEvent e)
+        void SetInstrinsics(Dictionary<string, object> dictionary, LoggingEvent loggingEvent)
         {
             if (dictionary == null)
             {
                 return;
             }
 
-            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.Timestamp), e.TimeStamp.ToUnixTimeMilliseconds());
-            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ThreadName), e.ThreadName);
-            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.MessageText), e.RenderedMessage);
-            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LogLevel), e.Level);
+            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.Timestamp), loggingEvent.TimeStamp.ToUnixTimeMilliseconds());
+            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ThreadName), loggingEvent.ThreadName);
+            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.MessageText), loggingEvent.RenderedMessage);
+            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LogLevel), loggingEvent.Level);
         }
 
         void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent) 

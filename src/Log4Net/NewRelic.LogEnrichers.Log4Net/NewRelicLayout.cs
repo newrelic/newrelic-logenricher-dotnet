@@ -30,7 +30,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             writer.WriteLine(JsonConvert.SerializeObject(dic));
         }
 
-        void SetInstrinsics(Dictionary<string, object> dictionary, LoggingEvent loggingEvent)
+        private void SetInstrinsics(Dictionary<string, object> dictionary, LoggingEvent loggingEvent)
         {
             if (dictionary == null)
             {
@@ -43,7 +43,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LogLevel), loggingEvent.Level);
         }
 
-        void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent) 
+        private void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent) 
         {
             if (dictionary == null)
             {
@@ -66,7 +66,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             }
         }
 
-        void SetUserProperties(Dictionary<string, object> dictionary, LoggingEvent e)
+        private void SetUserProperties(Dictionary<string, object> dictionary, LoggingEvent e)
         {
             var properties = e.GetProperties();
             if (dictionary == null)
@@ -83,7 +83,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             }
         }
 
-        void SetLinkMetaData(Dictionary<string, object> dictionary, LoggingEvent e)
+        private void SetLinkMetaData(Dictionary<string, object> dictionary, LoggingEvent e)
         {
             if (dictionary == null)
             {

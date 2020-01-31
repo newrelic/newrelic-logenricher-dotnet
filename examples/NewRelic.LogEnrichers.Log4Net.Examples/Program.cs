@@ -51,8 +51,9 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
                 Console.WriteLine("Creating Logged Transactions");
 
                 // Call example methods that create transactions
-                TestMethod();
-                TestExceptionMethod();
+                TestMethod(new object());
+                // Pass null as an argument to trigger the method to throw argument null exception
+                TestMethod(null);
 
                 Console.WriteLine("Press <ENTER> to continue, Q to exit.");
             }
@@ -66,7 +67,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
 
         [Transaction]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void TestMethod()
+        private static void TestMethod(object obj)
         {
             _logger.Info(@$"Starting TestMethod");
 
@@ -74,38 +75,23 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
             {
                 for (var cnt = 0; cnt < 10; cnt++)
                 {
+                    if (obj == null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
                     Console.WriteLine("writing message");
                     _logger.Info(@$"This is log message {cnt}");
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(@$"Error has occurred in TestMethod", ex);
+                Console.WriteLine("Error has occurred in TestMethod");
+                Api.Agent.NewRelic.NoticeError(ex);
+                _logger.Error("Error has occurred in TestMethod", ex);
             }
 
             _logger.Info(@$"Ending TestMethod");
-        }
-
-        [Transaction]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void TestExceptionMethod()
-        {
-            _logger.Info(@$"Starting TestExceptionMethod");
-
-            for (var cnt = 0; cnt < 10; cnt++)
-            {
-                try
-                {
-                    throw new Exception("An exception has occurred");
-                }
-                catch (Exception ex)
-                {
-                    NewRelic.Api.Agent.NewRelic.NoticeError(ex);
-                    _logger.Error(@$"Error has occurred in TestExceptionMethod - exception number {cnt}.", ex);
-                }
-            }
-
-            _logger.Info(@$"Ending TestExceptionMethod");
         }
     }
 }

@@ -77,7 +77,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
                 {
                     if (obj == null)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArgumentNullException("obj");
                     }
 
                     Console.WriteLine("writing message");

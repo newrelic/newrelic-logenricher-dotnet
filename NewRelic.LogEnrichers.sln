@@ -48,6 +48,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net.Tests", "src\Log4Net\NewRelic.LogEnrichers.Log4Net.Tests\NewRelic.LogEnrichers.Log4Net.Tests.csproj", "{08D5269D-E907-4BB9-BE53-17181E3D78F4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net.Examples", "examples\NewRelic.LogEnrichers.Log4Net.Examples\NewRelic.LogEnrichers.Log4Net.Examples.csproj", "{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{08D5269D-E907-4BB9-BE53-17181E3D78F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08D5269D-E907-4BB9-BE53-17181E3D78F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08D5269D-E907-4BB9-BE53-17181E3D78F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +105,7 @@ Global
 		{078EB9EE-92DF-4989-9E6D-679A25C918AF} = {76184F97-72D2-46AA-9838-D2DBB7714E19}
 		{F5D96450-8D7C-40BD-87FC-382A1430983F} = {37DA3549-BF6F-4035-B250-49456744C94B}
 		{08D5269D-E907-4BB9-BE53-17181E3D78F4} = {37DA3549-BF6F-4035-B250-49456744C94B}
+		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0} = {37DA3549-BF6F-4035-B250-49456744C94B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C9155C8-199D-48A5-BB57-38EB738FA89D}

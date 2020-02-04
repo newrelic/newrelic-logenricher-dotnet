@@ -95,8 +95,8 @@ Based on the Fornatter and Sink Configuration described above, the following Flu
 <!--NewRelicLoggingExample.conf-->
 <source> 
     @type tail 
-    path C:\logs\NLogExample.log.json
-    pos_file C:\logs\NLogExample.log.json.pos 
+    path C:\logs\Log4NetExample.log.json
+    pos_file C:\logs\Log4NetExample.log.json.pos 
     tag logfile.*
  <parse> 
     @type json 

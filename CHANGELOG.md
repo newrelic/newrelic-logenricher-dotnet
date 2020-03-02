@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+- 
+
+## [Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1] - 2020-03-02
+### Bugfix release
+- Change the user property prefix from "Message Properties." to "Message.Properties." to fix an issue with search in the logging UI.
+
 ## [Log4Net_v1.0.0] - 2020-02-04
 ### Initial Release supporting log4net
 - Adds `NewRelic.LogEnrichers.Log4Net.NewRelicAppender` and `NewRelic.LogEnrichers.Log4Net.NewRelicLayout`.
@@ -26,3 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds `NewRelic.LogEnrichers.Serilog.NewRelicEnricher` and `NewRelic.LogEnrichers.Serilog.NewRelicFormatter`.
 - Adds sample application
 - Adds implementation documentation.
+
+[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/cc06087..HEAD
+[Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/5d101b2..HEAD
+

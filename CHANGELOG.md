@@ -34,6 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds sample application
 - Adds implementation documentation.
 
-[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/cc06087..HEAD
-[Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/5d101b2..HEAD
+[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Serilog_v1.0.1...HEAD
+[Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.0...Serilog_v1.0.1
+[Log4Net_v1.0.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/f354ce5...Log4Net_v1.0.0
+[NLog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/NLog_v1.0.0...NLog_v1.0.1
+[NLog_v1.0.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/60940cd...NLog_v1.0.0
+[Serilog_v1.0.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/33cded7...Serilog_v1.0.0
+
 

@@ -18,7 +18,7 @@ namespace NewRelic.LogEnrichers.NLog
         private IJsonConverter _jsonConverter;
         private IJsonConverter JsonConverter => _jsonConverter ?? (_jsonConverter = ConfigurationItemFactory.Default.JsonConverter);
 
-        internal readonly static string UserPropertyKey = LoggingExtensions.UserPropertyPrefix.Substring(0, LoggingExtensions.UserPropertyPrefix.Length - 1);
+        internal readonly static string UserPropertyKey = LoggingExtensions.UserPropertyPrefix.TrimEnd('.');
 
         private readonly JsonLayout _jsonLayoutForMessageProperties;
 

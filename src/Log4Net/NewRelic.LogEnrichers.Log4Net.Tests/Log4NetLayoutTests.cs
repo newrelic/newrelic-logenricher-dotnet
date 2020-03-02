@@ -15,7 +15,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 {
     public class Log4NetLayoutTests
     {
-        private const string UserPropertyKeyPrefix = "Message Properties.";
+        private const string UserPropertyKeyPrefix = LoggingExtensions.UserPropertyPrefix;
 
         private IAgent _testAgent;
         private NewRelicAppender _testAppender;

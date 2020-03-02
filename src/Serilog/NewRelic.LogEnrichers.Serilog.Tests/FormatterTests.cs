@@ -11,7 +11,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
     public class FormatterTests
     {
         private const string LinkingMetadataKey = "newrelic.linkingmetadata";
-        private const string UserPropertyKeyPrefix = "Message Properties.";
+        private const string UserPropertyKeyPrefix = LoggingExtensions.UserPropertyPrefix;
         private const string SingleAtSignTestKey = "@SingleAtSignTestKey";
         private const string DoubleAtSignTestKey = "@@DoubleAtSignTestKey";
         private const string IntegerTestKey = "IntegerTestKey";

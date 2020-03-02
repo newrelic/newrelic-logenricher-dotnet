@@ -18,6 +18,8 @@ namespace NewRelic.LogEnrichers.NLog
         private IJsonConverter _jsonConverter;
         private IJsonConverter JsonConverter => _jsonConverter ?? (_jsonConverter = ConfigurationItemFactory.Default.JsonConverter);
 
+        internal readonly static string UserPropertyKey = LoggingExtensions.UserPropertyPrefix.TrimEnd('.');
+
         private readonly JsonLayout _jsonLayoutForMessageProperties;
 
         internal NewRelicJsonLayout(Func<NewRelic.Api.Agent.IAgent> agentFactory) : base()
@@ -60,7 +62,7 @@ namespace NewRelic.LogEnrichers.NLog
                 ExcludeProperties = ExcludeProperties
             };
 
-            Attributes.Add(new JsonAttribute("Message Properties", _jsonLayoutForMessageProperties, false));
+            Attributes.Add(new JsonAttribute(UserPropertyKey, _jsonLayoutForMessageProperties, false));
         }
 
         public NewRelicJsonLayout() : this(NewRelic.Api.Agent.NewRelic.GetAgent)

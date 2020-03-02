@@ -26,7 +26,7 @@ namespace NewRelic.LogEnrichers
 
     internal static class LoggingExtensions
     {
-        public const string UserPropertyPrefix = "Message Properties.";
+        public const string UserPropertyPrefix = "Message.Properties.";
 
         public static string GetOutputName(this NewRelicLoggingProperty property)
         {

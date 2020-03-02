@@ -23,7 +23,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
         private const string TestErrMsg = "This is a test exception";
         private const string LogMessage = "This is a log message";
-        private readonly string UserPropertiesKey = NewRelicJsonLayout.UserPropertyKey;
+        private readonly string UserPropertiesKey = "Message.Properties";
 
         private static readonly Dictionary<string,string> linkingMetadataDict = new Dictionary<string, string>
             {

@@ -1,4 +1,4 @@
-[![Community Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Community_Plus.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#community-project)
+[![Community Plus header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Community_Plus.png)](https://opensource.newrelic.com/oss-category/#community-plus)
 
 # New Relic Logging Extensions for .NET
 The New Relic logging plugins are extensions for common .NET logging frameworks. They are designed to capture app, transaction trace, and span information as part of your application log messages, and format log data for forwarding to New Relic.

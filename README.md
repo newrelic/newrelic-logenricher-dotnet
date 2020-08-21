@@ -12,6 +12,7 @@ For the latest information, please see the [New Relic docs](https://docs.newreli
 |-------------------------|-----------|
 | [Serilog](src/Serilog/README.md)             | 2.5+      |
 | [NLog](src/NLog/README.md)                   | 4.5+      |
+| [Log4Net](src/Log4Net/NewRelic.LogEnrichers.Log4Net/README.md) | 2.0.8+ |
 
 
 ## Minimum Requirements

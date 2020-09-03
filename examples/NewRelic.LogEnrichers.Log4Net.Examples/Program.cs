@@ -11,7 +11,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
 {
     static class Program
     {
-        private static ILog _logger;
+        private static ILog? _logger;
 
         static void Main(string[] args)
         {
@@ -38,8 +38,14 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
             GlobalContext.Properties["NewRelicLogFileName"] = @$"{folderPath_NewRelicLogs}\Log4NetExample.json";
 
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-            _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            if (logRepository != null)
+            {
+                XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+            }
+
+
+            _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
             // This log information will be visible in New Relic Logging. Since 
             // a transaction has not been started, this log message will not be
@@ -67,9 +73,9 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
 
         [Transaction]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void TestMethod(object obj)
+        private static void TestMethod(object? obj)
         {
-            _logger.Info(@$"Starting TestMethod");
+            _logger?.Info(@$"Starting TestMethod");
 
             try
             {
@@ -81,17 +87,17 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
                     }
 
                     Console.WriteLine("writing message");
-                    _logger.Info(@$"This is log message {cnt}");
+                    _logger?.Info(@$"This is log message {cnt}");
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error has occurred in TestMethod");
                 Api.Agent.NewRelic.NoticeError(ex);
-                _logger.Error("Error has occurred in TestMethod", ex);
+                _logger?.Error("Error has occurred in TestMethod", ex);
             }
 
-            _logger.Info(@$"Ending TestMethod");
+            _logger?.Info(@$"Ending TestMethod");
         }
     }
 }

@@ -2,10 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <LangVersion>7.1</LangVersion>
     <RootNamespace>NewRelic.LogEnrichers.Log4Net</RootNamespace>
     <AssemblyName>NewRelic.LogEnrichers.Log4Net</AssemblyName>
-
     <Title>New Relic Logging Extension for Log4Net</Title>
     <Description>.NET library for sending logging context data to New Relic</Description>
     <Authors>newrelic</Authors>

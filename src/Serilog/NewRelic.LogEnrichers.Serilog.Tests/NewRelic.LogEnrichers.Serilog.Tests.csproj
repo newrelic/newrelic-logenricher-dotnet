@@ -7,6 +7,7 @@
     <RootNamespace>NewRelic.LogEnrichers.Serilog.Tests</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
+    <Nullable>disable</Nullable>
     <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 

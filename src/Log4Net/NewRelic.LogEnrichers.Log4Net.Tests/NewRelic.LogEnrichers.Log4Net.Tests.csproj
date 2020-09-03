@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
     <AssemblyName>NewRelic.LogEnrichers.Log4Net.Tests</AssemblyName>
     <RootNamespace>NewRelic.LogEnrichers.Log4Net.Tests</RootNamespace>
+    <Nullable>disable</Nullable>
 
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>

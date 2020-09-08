@@ -70,7 +70,7 @@ namespace NewRelic.LogEnrichers
             }
         }
 
-        private static NewRelicLoggingProperty[] _allNewRelicLoggingProperties;
+        private static NewRelicLoggingProperty[]? _allNewRelicLoggingProperties;
         public static NewRelicLoggingProperty[] AllNewRelicLoggingProperties => 
             _allNewRelicLoggingProperties ?? (_allNewRelicLoggingProperties = Enum.GetValues(typeof(NewRelicLoggingProperty)).Cast<NewRelicLoggingProperty>().ToArray());
       

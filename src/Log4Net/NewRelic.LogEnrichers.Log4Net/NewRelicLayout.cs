@@ -32,11 +32,6 @@ namespace NewRelic.LogEnrichers.Log4Net
 
         private void SetInstrinsics(Dictionary<string, object> dictionary, LoggingEvent loggingEvent)
         {
-            if (dictionary == null)
-            {
-                return;
-            }
-
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.Timestamp), loggingEvent.TimeStamp.ToUnixTimeMilliseconds());
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ThreadName), loggingEvent.ThreadName);
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.MessageText), loggingEvent.RenderedMessage);
@@ -45,11 +40,6 @@ namespace NewRelic.LogEnrichers.Log4Net
 
         private void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent) 
         {
-            if (dictionary == null)
-            {
-                return;
-            }
-
             if (loggingEvent.ExceptionObject != null)
             {
                 if (!string.IsNullOrEmpty(loggingEvent.ExceptionObject.Message))
@@ -69,11 +59,7 @@ namespace NewRelic.LogEnrichers.Log4Net
         private void SetUserProperties(Dictionary<string, object> dictionary, LoggingEvent e)
         {
             var properties = e.GetProperties();
-            if (dictionary == null)
-            {
-                return;
-            }
-
+            
             foreach (var key in properties.GetKeys())
             {
                 if (key != LinkingMetadataKey)
@@ -85,11 +71,6 @@ namespace NewRelic.LogEnrichers.Log4Net
 
         private void SetLinkMetaData(Dictionary<string, object> dictionary, LoggingEvent e)
         {
-            if (dictionary == null)
-            {
-                return;
-            }
-
             if (e.Properties[LinkingMetadataKey] is Dictionary<string, string> linkdata)
             {
                 foreach (var kv in linkdata)

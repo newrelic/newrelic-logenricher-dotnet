@@ -11,7 +11,7 @@ namespace NewRelic.LogEnrichers.NLog.Examples
 {
     static class Program
     {
-        private static Logger _logger;
+        private static Logger? _logger;
 
         static void Main(string[] args)
         {
@@ -109,22 +109,22 @@ namespace NewRelic.LogEnrichers.NLog.Examples
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void TestMethod(string testVal)
         {
-            _logger.Info("Starting TestMethod - {testValue}", testVal);
+            _logger?.Info("Starting TestMethod - {testValue}", testVal);
 
             try
             {
                 for (var cnt = 0; cnt < 10; cnt++)
                 {
                     Console.WriteLine("writing message");
-                    _logger.Info("This is log message #{MessageID}", cnt);
+                    _logger?.Info("This is log message #{MessageID}", cnt);
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error has occurred in TestMethod - {testValue}", testVal);
+                _logger?.Error(ex, "Error has occurred in TestMethod - {testValue}", testVal);
             }
 
-            _logger.Info("Ending TestMethod - {testValue}", testVal);
+            _logger?.Info("Ending TestMethod - {testValue}", testVal);
         }
     }
 }

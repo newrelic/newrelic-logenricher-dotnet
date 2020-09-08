@@ -15,7 +15,7 @@ namespace NewRelic.LogEnrichers.NLog
 
         private readonly Lazy<NewRelic.Api.Agent.IAgent> _nrAgent;
 
-        private IJsonConverter _jsonConverter;
+        private IJsonConverter? _jsonConverter;
         private IJsonConverter JsonConverter => _jsonConverter ?? (_jsonConverter = ConfigurationItemFactory.Default.JsonConverter);
 
         internal readonly static string UserPropertyKey = LoggingExtensions.UserPropertyPrefix.TrimEnd('.');

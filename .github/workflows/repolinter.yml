@@ -1,3 +1,5 @@
+# NOTE: This file should always be named `repolinter.yml` to allow
+# workflow_dispatch to work properly
 name: Repolinter Action
 
 # NOTE: This workflow will ONLY check the default branch!
@@ -24,7 +26,6 @@ jobs:
       - name: Run Repolinter
         if: ${{ steps.default-branch.outputs.result == 'true' }}
         uses: newrelic/repolinter-action@v1
-        continue-on-error: true
         with:
           config_url: https://raw.githubusercontent.com/newrelic/.github/main/repolinter-rulesets/community-plus.yml
           output_type: issue

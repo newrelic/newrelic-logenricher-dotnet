@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2020 New Relic, Inc. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+using System;
 using Serilog;
 using Serilog.Core;
 using NewRelic.Api.Agent;

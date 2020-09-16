@@ -1,4 +1,7 @@
-﻿using NLog;
+﻿// Copyright 2020 New Relic, Inc. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+using NLog;
 using NLog.Common;
 using NLog.Config;
 using NLog.LayoutRenderers;

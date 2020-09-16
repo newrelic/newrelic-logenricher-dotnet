@@ -11,7 +11,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageIconUrl>https://newrelic.com/images/avatar-newrelic.png</PackageIconUrl>
+    <PackageIcon>avatar-newrelic.png</PackageIcon>
     <PackageProjectUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</RepositoryUrl>
     <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logenricher-dotnet/blob/master/CHANGELOG.md</PackageReleaseNotes>
@@ -53,6 +53,10 @@
     <Compile Include="..\..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
     <None Include="..\..\..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
+    <None Include="..\..\shared\avatar-newrelic.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

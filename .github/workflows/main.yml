@@ -2,7 +2,7 @@ name: New Relic Log Enrichers for .NET
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   push:
     tags:
       - refs/tags/v*.*.*      # v1.0.0

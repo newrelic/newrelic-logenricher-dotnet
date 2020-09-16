@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2020 New Relic, Inc. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+using System;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Util;

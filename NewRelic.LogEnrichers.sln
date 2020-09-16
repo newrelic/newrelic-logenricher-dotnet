@@ -51,6 +51,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net.Examples", "examples\NewRelic.LogEnrichers.Log4Net.Examples\NewRelic.LogEnrichers.Log4Net.Examples.csproj", "{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{404DA576-B103-4102-949B-A562FE4DEED7}"
+	ProjectSection(SolutionItems) = preProject
+		build\Common.ruleset = build\Common.ruleset
+		build\stylecop.json = build\stylecop.json
+		build\StyleCop.props = build\StyleCop.props
+		build\Versioning.targets = build\Versioning.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

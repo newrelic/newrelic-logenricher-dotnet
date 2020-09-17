@@ -49,15 +49,15 @@ jobs:
       shell: powershell
 
     - name: Unit Tests - Log4Net
-      run:  dotnet test ${{ github.workspace }}\tests\Log4Net\NewRelic.LogEnrichers.Log4Net.Tests --no-build --no-restore --configuration Release --logger trx
+      run:  dotnet test ${{ github.workspace }}\tests\NewRelic.LogEnrichers.Log4Net.Tests --no-build --no-restore --configuration Release --logger trx
       shell: powershell
 
     - name: Unit Tests - NLog
-      run:  dotnet test ${{ github.workspace }}\tests\NLog\NewRelic.LogEnrichers.NLog.Tests --no-build --no-restore --configuration Release --logger trx
+      run:  dotnet test ${{ github.workspace }}\tests\NewRelic.LogEnrichers.NLog.Tests --no-build --no-restore --configuration Release --logger trx
       shell: powershell
 
     - name: Unit Tests - Serilog
-      run:  dotnet test ${{ github.workspace }}\tests\Serilog\NewRelic.LogEnrichers.Serilog.Tests --no-build --no-restore --configuration Release --logger trx
+      run:  dotnet test ${{ github.workspace }}\tests\NewRelic.LogEnrichers.Serilog.Tests --no-build --no-restore --configuration Release --logger trx
       shell: powershell
          
     - name: Archive the artifacts

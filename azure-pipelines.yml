@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - master
+      - main
       - refs/tags/v*.*.*      # v1.0.0
       - refs/tags/v*.*.*-*    # v1.0.0-alpha
       - refs/tags/*_v*.*.*    # SomePrefix_v1.0.0
@@ -56,7 +56,7 @@ steps:
   
 - task: sonarcloud-buildbreaker@2
   displayName: "SonarCloud - Valiate Quality Gate Results"
-  condition: and ( succeeded(), eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'master'))
+  condition: and ( succeeded(), eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'main'))
   inputs:
     SonarCloud: 'SonarCloud'
     organization: '$(SonarCloudOrganization)'
@@ -97,7 +97,7 @@ steps:
     and (
       succeeded(),
       or (
-        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/main'),
         startsWith(variables['Build.SourceBranch'], 'refs/tags')
       )
     )
@@ -115,7 +115,7 @@ steps:
     and (
       succeeded(),
       or (
-        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/main'),
         startsWith(variables['Build.SourceBranch'], 'refs/tags')
       )
     )

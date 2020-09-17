@@ -3,7 +3,7 @@
     <LangVersion>8.0</LangVersion>
     <SignAssembly>true</SignAssembly>
     <RepoRoot>$([System.IO.Directory]::GetParent($(MSBuildThisFileDirectory)).Parent.FullName)</RepoRoot>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)NewRelic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

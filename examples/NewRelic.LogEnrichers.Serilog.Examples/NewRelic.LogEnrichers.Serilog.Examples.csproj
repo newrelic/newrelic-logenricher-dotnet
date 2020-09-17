@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Serilog\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj" />
+    <ProjectReference Include="..\..\src\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj" />
   </ItemGroup>
 
   <ItemGroup>

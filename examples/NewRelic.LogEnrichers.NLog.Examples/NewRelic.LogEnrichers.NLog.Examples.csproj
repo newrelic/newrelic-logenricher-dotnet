@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NLog\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
+    <ProjectReference Include="..\..\src\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,39 +15,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		THIRD_PARTY_NOTICES.md = THIRD_PARTY_NOTICES.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog", "src\Serilog\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj", "{1E6F4432-D90A-4E5B-B668-4F966CDDD584}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog", "src\NewRelic.LogEnrichers.Serilog\NewRelic.LogEnrichers.Serilog.csproj", "{1E6F4432-D90A-4E5B-B668-4F966CDDD584}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog.Tests", "src\Serilog\NewRelic.LogEnrichers.Serilog.Tests\NewRelic.LogEnrichers.Serilog.Tests.csproj", "{34C14AEC-2456-4234-8FAD-6044B6196812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog.Tests", "tests\NewRelic.LogEnrichers.Serilog.Tests\NewRelic.LogEnrichers.Serilog.Tests.csproj", "{34C14AEC-2456-4234-8FAD-6044B6196812}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Serilog.Examples", "examples\NewRelic.LogEnrichers.Serilog.Examples\NewRelic.LogEnrichers.Serilog.Examples.csproj", "{D6B2A9C4-7D80-44FC-BDE6-4F175B4477BC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{076719D4-E458-473C-B79A-276A420C839A}"
-	ProjectSection(SolutionItems) = preProject
-		src\shared\Asserts.cs = src\shared\Asserts.cs
-		src\shared\DateTimeExtensions.cs = src\shared\DateTimeExtensions.cs
-		src\shared\LoggingExtensions.cs = src\shared\LoggingExtensions.cs
-		src\shared\TestHelpers.cs = src\shared\TestHelpers.cs
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{66661FF9-086D-4218-9FE4-7F07589E442A}"
 	ProjectSection(SolutionItems) = preProject
-		src\Serilog\ArchitectureDiagram.svg = src\Serilog\ArchitectureDiagram.svg
-		src\Serilog\README.md = src\Serilog\README.md
+		src\NewRelic.LogEnrichers.Serilog\ArchitectureDiagram.svg = src\NewRelic.LogEnrichers.Serilog\ArchitectureDiagram.svg
+		src\NewRelic.LogEnrichers.Serilog\README.md = src\NewRelic.LogEnrichers.Serilog\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{76184F97-72D2-46AA-9838-D2DBB7714E19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog", "src\NLog\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj", "{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog", "src\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj", "{4AEC595A-A6EB-414C-A0AA-00F66DFB8630}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Tests", "src\NLog\NewRelic.LogEnrichers.NLog.Tests\NewRelic.LogEnrichers.NLog.Tests.csproj", "{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Tests", "tests\NewRelic.LogEnrichers.NLog.Tests\NewRelic.LogEnrichers.NLog.Tests.csproj", "{1FF12FD5-7282-4CB0-A8D8-D213A05658B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.NLog.Examples", "examples\NewRelic.LogEnrichers.NLog.Examples\NewRelic.LogEnrichers.NLog.Examples.csproj", "{078EB9EE-92DF-4989-9E6D-679A25C918AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log4Net", "Log4Net", "{37DA3549-BF6F-4035-B250-49456744C94B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net", "src\Log4Net\NewRelic.LogEnrichers.Log4Net\NewRelic.LogEnrichers.Log4Net.csproj", "{F5D96450-8D7C-40BD-87FC-382A1430983F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net", "src\NewRelic.LogEnrichers.Log4Net\NewRelic.LogEnrichers.Log4Net.csproj", "{F5D96450-8D7C-40BD-87FC-382A1430983F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net.Tests", "src\Log4Net\NewRelic.LogEnrichers.Log4Net.Tests\NewRelic.LogEnrichers.Log4Net.Tests.csproj", "{08D5269D-E907-4BB9-BE53-17181E3D78F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net.Tests", "tests\NewRelic.LogEnrichers.Log4Net.Tests\NewRelic.LogEnrichers.Log4Net.Tests.csproj", "{08D5269D-E907-4BB9-BE53-17181E3D78F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4Net.Examples", "examples\NewRelic.LogEnrichers.Log4Net.Examples\NewRelic.LogEnrichers.Log4Net.Examples.csproj", "{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}"
 EndProject

@@ -23,8 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Seril
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{66661FF9-086D-4218-9FE4-7F07589E442A}"
 	ProjectSection(SolutionItems) = preProject
-		src\Serilog\ArchitectureDiagram.svg = src\NewRelic.LogEnrichers.Serilog\ArchitectureDiagram.svg
-		src\Serilog\README.md = src\NewRelic.LogEnrichers.Serilog\README.md
+		src\NewRelic.LogEnrichers.Serilog\ArchitectureDiagram.svg = src\NewRelic.LogEnrichers.Serilog\ArchitectureDiagram.svg
+		src\NewRelic.LogEnrichers.Serilog\README.md = src\NewRelic.LogEnrichers.Serilog\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{76184F97-72D2-46AA-9838-D2DBB7714E19}"

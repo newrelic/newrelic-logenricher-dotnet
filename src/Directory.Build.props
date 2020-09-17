@@ -1,7 +1,4 @@
 <Project>
-  <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\Common.prod.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\StyleCop.props" />
 </Project>

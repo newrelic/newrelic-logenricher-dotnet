@@ -1,4 +1,3 @@
 <Project InitialTargets="VersionByGitTag">
-  <Import Project="build\Versioning.targets" Condition="Exists('build\Versioning.targets')" />
-  <Import Project="build\StyleCop.props" Condition="Exists('build\StyleCop.props')" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\Versioning.targets" />
 </Project>

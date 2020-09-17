@@ -16,7 +16,6 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 {
     public class Log4NetAppenderTests
     {
-
         [Test]
         public void GetLinkingMetadata_CalledOnceForEachEvent()
         {
@@ -28,7 +27,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             var testAppender = new NewRelicAppender(() => testAgent);
 
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, testAppender);
 
@@ -37,7 +36,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             var childAppender = new log4net.Appender.ConsoleAppender
             {
-                Layout = layout
+                Layout = layout,
             };
 
             testAppender.AddAppender(childAppender);
@@ -77,7 +76,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             var testAppender = new NewRelicAppender(() => null);
 
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, testAppender);
 
@@ -86,14 +85,14 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             var childAppender = new log4net.Appender.ConsoleAppender
             {
-                Layout = layout
+                Layout = layout,
             };
 
             testAppender.AddAppender(childAppender);
 
             var testLoggingEvents = new List<LoggingEvent>();
 
-            Mock.Arrange(() => layout.Format(Arg.IsAny<TextWriter>(), Arg.IsAny<LoggingEvent>())).DoInstead((TextWriter textWriter, LoggingEvent loggingEvent) => 
+            Mock.Arrange(() => layout.Format(Arg.IsAny<TextWriter>(), Arg.IsAny<LoggingEvent>())).DoInstead((TextWriter textWriter, LoggingEvent loggingEvent) =>
             {
                 testLoggingEvents.Add(loggingEvent);
             });
@@ -101,7 +100,6 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var testLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
             // Act
-
             var rnd = new Random();
             var countLogAttempts = rnd.Next(2, 25);
 
@@ -132,8 +130,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             var testAppender = new NewRelicAppender(() => testAgent);
 
-
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, testAppender);
 
@@ -142,7 +139,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var layout = Mock.Create<log4net.Layout.SimpleLayout>();
             var childAppender = new log4net.Appender.ConsoleAppender
             {
-                Layout = layout
+                Layout = layout,
             };
 
             testAppender.AddAppender(childAppender);
@@ -155,7 +152,6 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             });
 
             // Act
-
             testLogger.Info("This is log message ");
 
             // Assert
@@ -174,9 +170,8 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             var testAppender = new NewRelicAppender(() => testAgent);
 
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-
 
             BasicConfigurator.Configure(logRepository, testAppender);
 
@@ -185,7 +180,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var layout = Mock.Create<log4net.Layout.SimpleLayout>();
             var childAppender = new log4net.Appender.ConsoleAppender
             {
-                Layout = layout
+                Layout = layout,
             };
 
             testAppender.AddAppender(childAppender);
@@ -198,7 +193,6 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             });
 
             // Act
-
             testLogger.Info("This is log message ");
 
             // Assert

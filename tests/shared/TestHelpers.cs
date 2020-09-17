@@ -11,9 +11,9 @@ namespace NewRelic.LogEnrichers
     {
         /// <summary>
         /// Responsible for deserializing the JSON that was built.
-        /// Will ensure that the JSON is well-formed
+        /// Will ensure that the JSON is well-formed.
         /// </summary>
-        public static  Dictionary<string, JsonElement> DeserializeOutputJSON(string output)
+        public static Dictionary<string, JsonElement> DeserializeOutputJSON(string output)
         {
             var resultDic = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(output);
             return resultDic;
@@ -28,6 +28,5 @@ namespace NewRelic.LogEnrichers
 
             CreateStackTracedError(level + 1, exception, throwAtLevel);
         }
-
     }
 }

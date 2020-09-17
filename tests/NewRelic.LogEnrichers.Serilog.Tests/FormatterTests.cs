@@ -40,7 +40,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             NewRelicLoggingProperty.ErrorStack,
             NewRelicLoggingProperty.MessageText,
             NewRelicLoggingProperty.MessageTemplate,
-            NewRelicLoggingProperty.LogLevel
+            NewRelicLoggingProperty.LogLevel,
         };
 
         public FormatterTests()
@@ -67,7 +67,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         }
 
         /// <summary>
-        /// LogEvent Property has null value
+        /// LogEvent Property has null value.
         /// </summary>
         [Test]
         public void IsHandled_NullValue_UserProperty()
@@ -95,7 +95,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         }
 
         /// <summary>
-        /// Entry in NR dictionary has null value
+        /// Entry in NR dictionary has null value.
         /// </summary>
         [Test]
         public void IsHandled_NullValue_InNewRelicDictionary()
@@ -104,7 +104,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var testNRProperties = new Dictionary<string, string>()
             {
                 { StringATestKey, StringTestValue },
-                { NullTestKey, null }
+                { NullTestKey, null },
             };
 
             var testEnricher = new TestEnricher()
@@ -131,7 +131,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         [Test]
         public void IsHandled_Exception()
         {
-            // Arrange 
+            // Arrange
             // Setup formatter to fail part-way through emitting the JSON string.
             // Want to verify that a partial JSON string is not written out.
             var testEnricher = new TestEnricher()
@@ -259,7 +259,8 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Assert.That(resultDic, Contains.Key("timestamp"));
-            Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Timestamp.ToUnixTimeMilliseconds(),
+            Assert.That(
+                testOutputSink.InputsAndOutputs[0].LogEvent.Timestamp.ToUnixTimeMilliseconds(),
                 Is.EqualTo(resultDic["timestamp"].GetInt64()));
         }
 
@@ -286,7 +287,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
             Assert.That(resultDic, Contains.Key("log.level"));
-            Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Level.ToString(),Is.EqualTo(resultDic["log.level"].GetString()));
+            Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Level.ToString(), Is.EqualTo(resultDic["log.level"].GetString()));
         }
 
         [Test]
@@ -294,7 +295,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         {
             const string ThreadIDKey = "ThreadID";
             var testThreadIDValue = _random.Next(0, int.MaxValue);
-            
+
             // Arrange
             var testEnricher = new TestEnricher();
             var threadIdEnricher = new TestEnricher()
@@ -312,10 +313,10 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            //additional 1 for threadid
+            // additional 1 for threadid
             AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties + 1, resultDic);
             Assert.That(resultDic, Contains.Key("thread.id"));
-            Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Properties[ThreadIDKey].ToString(),Is.EqualTo(resultDic["thread.id"].GetString()));
+            Assert.That(testOutputSink.InputsAndOutputs[0].LogEvent.Properties[ThreadIDKey].ToString(), Is.EqualTo(resultDic["thread.id"].GetString()));
         }
 
         [Test]
@@ -386,7 +387,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter());
             var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
             var testException = new Exception(TestErrMsg);
-            
+
             // Act
             testLogger.Error(testException, LogMessage);
 
@@ -408,9 +409,9 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var testNRProperties = new Dictionary<string, string>()
             {
                 { StringATestKey, "TestValue1" },
-                { StringBTestKey, "TestValue2" }
+                { StringBTestKey, "TestValue2" },
             };
-            
+
             var testEnricher = new TestEnricher()
                 .WithUserPropValue(IntegerTestKey, IntegerTestValue)
                 .WithNewRelicMetadataValue(testNRProperties);
@@ -441,7 +442,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             // Act and Assert
             foreach (var prop in _newRelicPropertiesReserved)
             {
-                Assert.That(()=>testFormatter.WithPropertyMapping(Guid.NewGuid().ToString(), prop),Throws.Exception.TypeOf<InvalidOperationException>());
+                Assert.That(() => testFormatter.WithPropertyMapping(Guid.NewGuid().ToString(), prop), Throws.Exception.TypeOf<InvalidOperationException>());
             }
         }
 
@@ -451,7 +452,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var testNRProperties = new Dictionary<string, string>()
             {
                 { StringATestKey, "TestValue1" },
-                { StringBTestKey, "TestValue2" }
+                { StringBTestKey, "TestValue2" },
             };
 
             var testEnricher = new TestEnricher()
@@ -486,17 +487,18 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
             var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
 
-            foreach(var expectedOutput in expectedOutputs)
+            foreach (var expectedOutput in expectedOutputs)
             {
                 Asserts.KeyAndValueMatch(resultDic, expectedOutput.Key, expectedOutput.Value);
             }
 
-            foreach(var inputVal in inputValues)
+            foreach (var inputVal in inputValues)
             {
                 Assert.That(resultDic, Does.Not.ContainKey(inputVal.Key));
                 Assert.That(resultDic, Does.Not.ContainKey(UserPropertyKeyPrefix + inputVal.Key));
             }
         }
+
         private static void AssertThatPropertyCountsMatch(TestEnricher enricher, int countIntrinsics, Dictionary<string, JsonElement> jsonAsDic)
         {
             var expectedCount = enricher.CountUserProps + enricher.CountNewRelicProps + countIntrinsics;
@@ -509,6 +511,5 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             Assert.That(inputsAndOutputs.Count, Is.EqualTo(1));
             Assert.That(inputsAndOutputs[0].LogEvent.MessageTemplate.Text, Is.EqualTo(messageTemplate));
         }
-
     }
 }

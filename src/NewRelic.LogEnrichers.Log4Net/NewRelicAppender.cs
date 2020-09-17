@@ -9,18 +9,19 @@ using NewRelic.Api.Agent;
 
 namespace NewRelic.LogEnrichers.Log4Net
 {
-	public class NewRelicAppender : ForwardingAppender
-	{
+    public class NewRelicAppender : ForwardingAppender
+    {
         private const string LinkingMetadataKey = "newrelic.linkingmetadata";
         private readonly Lazy<IAgent> _nrAgent;
+
+        public NewRelicAppender()
+            : this(NewRelic.Api.Agent.NewRelic.GetAgent)
+        {
+        }
 
         internal NewRelicAppender(Func<IAgent> agentFactory)
         {
             _nrAgent = new Lazy<IAgent>(agentFactory);
-        }
-
-        public NewRelicAppender() : this(NewRelic.Api.Agent.NewRelic.GetAgent)
-        {
         }
 
         protected override void Append(LoggingEvent loggingEvent)
@@ -33,8 +34,8 @@ namespace NewRelic.LogEnrichers.Log4Net
                 {
                     loggingEvent.Properties[LinkingMetadataKey] = linkingMetadata;
                 }
-            } 
-            catch(Exception ex) 
+            }
+            catch (Exception ex)
             {
                 LogLog.Error(GetType(), "Exception caught in NewRelic.LogEnrichers.Log4Net.NewRelicAppender.Append", ex);
             }

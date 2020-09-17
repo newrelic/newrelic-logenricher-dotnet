@@ -54,7 +54,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var expectedMessages = new List<string>();
 
             // Act
-            for(var i = 0; i < countLogAttempts; i++)
+            for (var i = 0; i < countLogAttempts; i++)
             {
                 expectedMessages.Add(warningCountLogMessageExpected + i.ToString());
                 testLogger.Warning(warningCountLogMessage, i);
@@ -66,7 +66,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             Assert.That(_outputSink.LogEvents.Count, Is.EqualTo(countLogAttempts));
             Assert.That(_outputSink.LogEvents[0].Properties, Does.Not.ContainKey(LinkingMetadataKey));
 
-            //The actual messages are what we expected.
+            // The actual messages are what we expected.
             for (var i = 0; i < _outputSink.LogEvents.Count; i++)
             {
                 var expectedMessage = expectedMessages[i];
@@ -146,7 +146,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             var wasRun = false;
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())
                 .DoInstead(() => { wasRun = true; })
-                .Returns<Dictionary<string,string>>(null);
+                .Returns<Dictionary<string, string>>(null);
             var testEnricher = new NewRelicEnricher(() => _testAgent);
             var testLogger = SerilogTestHelpers.GetLogger(_outputSink, testEnricher);
 
@@ -195,7 +195,7 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
                 { "entity.name", "entity-name" },
                 { "entity.type", "entity-type" },
                 { "entity.guid", "entity-guid" },
-                { "hostname", "host-name" }
+                { "hostname", "host-name" },
             };
 
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())

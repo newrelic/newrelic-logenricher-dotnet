@@ -24,8 +24,8 @@ namespace NewRelic.LogEnrichers
         MethodName,
         LineNumber,
         CorrelationId,
-        ProcessId
-    };
+        ProcessId,
+    }
 
     internal static class LoggingExtensions
     {
@@ -67,15 +67,15 @@ namespace NewRelic.LogEnrichers
                     return "correlation.id";
                 case NewRelicLoggingProperty.ProcessId:
                     return "process.id";
-
                 default:
                     throw new KeyNotFoundException($"New Relic Logging Field {property}");
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "StyleCop wants to apply two rules that are mutually exclusive, picked the most logical of the two.")]
         private static NewRelicLoggingProperty[]? _allNewRelicLoggingProperties;
-        public static NewRelicLoggingProperty[] AllNewRelicLoggingProperties => 
+
+        public static NewRelicLoggingProperty[] AllNewRelicLoggingProperties =>
             _allNewRelicLoggingProperties ?? (_allNewRelicLoggingProperties = Enum.GetValues(typeof(NewRelicLoggingProperty)).Cast<NewRelicLoggingProperty>().ToArray());
-      
     }
 }

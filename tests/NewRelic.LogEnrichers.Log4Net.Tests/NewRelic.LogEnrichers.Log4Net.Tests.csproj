@@ -9,7 +9,7 @@
 
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
     <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
   </PropertyGroup>
 
@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
-    <Compile Include="..\..\shared\Asserts.cs" Link="Asserts.cs" />
-    <ProjectReference Include="..\NewRelic.LogEnrichers.Log4Net\NewRelic.LogEnrichers.Log4Net.csproj" />
+    <Compile Include="..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
+    <Compile Include="..\shared\Asserts.cs" Link="Asserts.cs" />
+    <ProjectReference Include="..\..\src\NewRelic.LogEnrichers.Log4Net\NewRelic.LogEnrichers.Log4Net.csproj" />
   </ItemGroup>
 
 </Project>

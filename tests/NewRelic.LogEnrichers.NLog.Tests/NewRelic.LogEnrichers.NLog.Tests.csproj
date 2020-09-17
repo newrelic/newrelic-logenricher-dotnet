@@ -8,11 +8,11 @@
     <SignAssembly>true</SignAssembly>
     <Nullable>disable</Nullable>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
+    <None Include="..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
-    <Compile Include="..\..\shared\Asserts.cs" Link="Asserts.cs" />
-    <ProjectReference Include="..\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
+    <Compile Include="..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
+    <Compile Include="..\shared\Asserts.cs" Link="Asserts.cs" />
+    <ProjectReference Include="..\..\src\NewRelic.LogEnrichers.NLog\NewRelic.LogEnrichers.NLog.csproj" />
   </ItemGroup>
 
 </Project>

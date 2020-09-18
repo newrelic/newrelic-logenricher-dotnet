@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="New Relic Telemetry SDK for .NET Rules" Description="New Relic Telemetry SDK for .NET ruleset for src and tests directories." ToolsVersion="16.0">
+<RuleSet Name="New Relic Log Enrichers for .NET Rules" Description="New Relic Log Enrichers for .NET ruleset for src and tests directories." ToolsVersion="16.0">
   <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
-    <Name Resource="NewRelicTelemetrySDKNETRules_Name" />
-    <Description Resource="NewRelicTelemetrySDKNETRules_Description" />
+    <Name Resource="NewRelicLogEnrichersNETRules_Name" />
+    <Description Resource="NewRelicLogEnrichersNETRules_Description" />
   </Localization>
   <Include Path="extendeddesignguidelinerules.ruleset" Action="Default" />
   <Include Path="minimumrecommendedrules.ruleset" Action="Default" />

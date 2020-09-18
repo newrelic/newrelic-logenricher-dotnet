@@ -3,6 +3,6 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 </Project>

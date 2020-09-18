@@ -1,10 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>NewRelic.LogEnrichers.NLog.Tests</AssemblyName>
     <RootNamespace>NewRelic.LogEnrichers.NLog.Tests</RootNamespace>
-    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

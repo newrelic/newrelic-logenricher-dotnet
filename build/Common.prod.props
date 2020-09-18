@@ -5,6 +5,7 @@
     <NoWarn>$(NoWarn),1573,1572,1584,1658,1570,1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -2,31 +2,30 @@
 // SPDX-License-Identifier: Apache-2.0
 
 using System;
-using Serilog;
-using Serilog.Core;
-using NewRelic.Api.Agent;
 using System.IO;
 using System.Runtime.CompilerServices;
+using NewRelic.Api.Agent;
+using Serilog;
+using Serilog.Core;
 
 namespace NewRelic.LogEnrichers.Serilog.Examples
 {
-    static class Program
+    internal static class Program
     {
         private static Logger? _logger;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the New Relic Logging Extentions for Serilog");
             Console.WriteLine();
-            
 
-            if(args.Length == 0)
+            if (args.Length == 0)
             {
                 Console.WriteLine("Usage:");
                 Console.WriteLine("dotnet run {OutputFolderPath}");
                 return;
             }
-           
+
             var folderPath = string.Join(' ', args);
 
             var folderPath_StandardLogs = Path.Combine(folderPath, "StandardLogs");
@@ -41,7 +40,7 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
                 folderPath_StandardLogs: folderPath_StandardLogs,
                 folderPath_NewRelicLogs: folderPath_NewRelicLogs);
 
-            // This log information will be visible in New Relic Logging. Since 
+            // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
             _logger.Information("Hello, welcome to Serilog Logs In Context sample app!");
@@ -59,19 +58,17 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
             }
             while (Console.ReadLine() != "Q");
 
-            // This log information will be visible in New Relic Logging. Since 
+            // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
             _logger.Information("Thanks for visiting, please come back soon!");
         }
-
 
         /// <summary>
         /// This method is responsible for configuring the application's logging.
         /// </summary>
         private static Logger CreateLogger(string folderPath_StandardLogs, string folderPath_NewRelicLogs)
         {
-
             Console.WriteLine($"Standard Logs Folder            : {folderPath_StandardLogs}");
             Console.WriteLine($"New Relic Log Forwarder Source  : {folderPath_NewRelicLogs}");
             Console.WriteLine();
@@ -115,21 +112,18 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
 
             try
             {
-                for(var cnt =0; cnt < 10; cnt++)
+                for (var cnt = 0; cnt < 10; cnt++)
                 {
                     Console.WriteLine("writing message");
                     _logger?.Information("This is log message #{MessageID}", cnt);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger?.Error(ex, "Error has occurred in TestMethod - {testValue}", testVal);
             }
 
             _logger?.Information("Ending TestMethod - {testValue}", testVal);
         }
-
     }
-
-
 }

@@ -9,18 +9,16 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 
-
 namespace NewRelic.LogEnrichers.NLog.Examples
 {
-    static class Program
+    internal static class Program
     {
         private static Logger? _logger;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the New Relic Logging Extentions for NLog");
             Console.WriteLine();
-
 
             if (args.Length == 0)
             {
@@ -43,7 +41,7 @@ namespace NewRelic.LogEnrichers.NLog.Examples
                 folderPath_StandardLogs: folderPath_StandardLogs,
                 folderPath_NewRelicLogs: folderPath_NewRelicLogs);
 
-            // This log information will be visible in New Relic Logging. Since 
+            // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
             _logger.Info("Hello, welcome to the Nlog Logs In Context sample app!");
@@ -61,19 +59,17 @@ namespace NewRelic.LogEnrichers.NLog.Examples
             }
             while (Console.ReadLine() != "Q");
 
-            // This log information will be visible in New Relic Logging. Since 
+            // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
             _logger.Info("Thanks for visiting, please come back soon!");
         }
-
 
         /// <summary>
         /// This method is responsible for configuring the application's logging.
         /// </summary>
         private static Logger CreateLogger(string folderPath_StandardLogs, string folderPath_NewRelicLogs)
         {
-
             Console.WriteLine($"Standard Logs Folder            : {folderPath_StandardLogs}");
             Console.WriteLine($"New Relic Log Forwarder Source  : {folderPath_NewRelicLogs}");
             Console.WriteLine();

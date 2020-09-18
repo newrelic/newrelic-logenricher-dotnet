@@ -15,8 +15,9 @@ namespace NewRelic.LogEnrichers.Log4Net
 
         public NewRelicLayout()
         {
-            base.IgnoresException = false;
+            IgnoresException = false;
         }
+
         public override void ActivateOptions()
         {
         }
@@ -41,7 +42,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LogLevel), loggingEvent.Level);
         }
 
-        private void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent) 
+        private void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent)
         {
             if (loggingEvent.ExceptionObject != null)
             {
@@ -62,7 +63,7 @@ namespace NewRelic.LogEnrichers.Log4Net
         private void SetUserProperties(Dictionary<string, object> dictionary, LoggingEvent e)
         {
             var properties = e.GetProperties();
-            
+
             foreach (var key in properties.GetKeys())
             {
                 if (key != LinkingMetadataKey)
@@ -82,7 +83,5 @@ namespace NewRelic.LogEnrichers.Log4Net
                 }
             }
         }
-
     }
-
 }

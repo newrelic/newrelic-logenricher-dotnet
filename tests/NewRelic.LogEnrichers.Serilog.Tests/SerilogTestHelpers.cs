@@ -21,9 +21,9 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
 
         /// <summary>
         /// Responsible for deserializing the JSON that was built.
-        /// Will ensure that the JSON is well-formed
+        /// Will ensure that the JSON is well-formed.
         /// </summary>
-        public static  Dictionary<string, JsonElement> DeserializeOutputJSON(InputOutputPairing pairing)
+        public static Dictionary<string, JsonElement> DeserializeOutputJSON(InputOutputPairing pairing)
         {
             var resultJSON = pairing.FormattedOutput;
             return TestHelpers.DeserializeOutputJSON(resultJSON);

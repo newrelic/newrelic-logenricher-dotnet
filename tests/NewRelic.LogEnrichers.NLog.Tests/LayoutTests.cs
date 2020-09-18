@@ -1,43 +1,42 @@
 ﻿// Copyright 2020 New Relic, Inc. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-using NUnit.Framework;
-using NLog.Targets;
-using NLog.Config;
-using NLog;
-using System.Threading;
-using System.Diagnostics;
-using NewRelic.Api.Agent;
-using Telerik.JustMock;
-using System.Collections.Generic;
 using System;
-using NLog.Common;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
+using NewRelic.Api.Agent;
+using NLog;
+using NLog.Common;
+using NLog.Config;
 using NLog.Layouts;
+using NLog.Targets;
+using NUnit.Framework;
+using Telerik.JustMock;
 
 namespace NewRelic.LogEnrichers.NLog.Tests
 {
     public class LayoutTests
     {
-        Logger _logger;
-        DebugTarget _target;
-        IAgent _testAgent;
-
         private const string TestErrMsg = "This is a test exception";
         private const string LogMessage = "This is a log message";
         private const string UserPropertiesKey = "Message.Properties";
 
-        private static readonly Dictionary<string,string> linkingMetadataDict = new Dictionary<string, string>
-            {
-                { "trace.id", "trace-id" },
-                { "span.id", "span-id" },
-                { "entity.name", "entity-name" },
-                { "entity.type", "entity-type" },
-                { "entity.guid", "entity-guid" },
-                { "hostname", "host-name" }
-            };
+        private static readonly Dictionary<string, string> LinkingMetadataDict = new Dictionary<string, string>
+        {
+            { "trace.id", "trace-id" },
+            { "span.id", "span-id" },
+            { "entity.name", "entity-name" },
+            { "entity.type", "entity-type" },
+            { "entity.guid", "entity-guid" },
+            { "hostname", "host-name" },
+        };
 
+        private Logger _logger;
+        private DebugTarget _target;
+        private IAgent _testAgent;
 
         [SetUp]
         public void Setup()
@@ -45,7 +44,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             _testAgent = Mock.Create<IAgent>();
             _target = new DebugTarget("testTarget")
             {
-                Layout = new NewRelicJsonLayout(() => _testAgent)
+                Layout = new NewRelicJsonLayout(() => _testAgent),
             };
 
             var config = new LoggingConfiguration();
@@ -68,17 +67,17 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void GetLinkingMetadata_CalledOncePerLogMessage()
         {
-            //Arrange
+            // Arrange
             var rnd = new Random();
             var countLogAttempts = rnd.Next(2, 25);
 
-            //Act
+            // Act
             for (var i = 0; i < countLogAttempts; i++)
             {
                 _logger.Info(LogMessage);
             }
 
-            //Assert
+            // Assert
             Mock.Assert(() => _testAgent.GetLinkingMetadata(), Occurs.Exactly(countLogAttempts));
             Assert.That(_target.Counter, Is.EqualTo(countLogAttempts));
         }
@@ -147,9 +146,9 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
             // Assert
             Assert.That(wasRun, Is.True);
-            Assert.That(internalLogStringWriter.ToString(), Is.EqualTo("")); // I.e. no exception was caught and logged in this case
+            Assert.That(internalLogStringWriter.ToString(), Is.EqualTo(string.Empty)); // I.e. no exception was caught and logged in this case
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key));
             }
@@ -172,7 +171,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             // Assert
             Assert.That(wasRun, Is.True);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key));
             }
@@ -181,21 +180,21 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogMessage_NoAgent_VerifyAttributes()
         {
-            //Arrange
+            // Arrange
 
-            //Act
+            // Act
             _logger.Info(LogMessage);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.LineNumber.GetOutputName()));
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key), "The agent was running and instrumented the test process.");
             }
@@ -204,7 +203,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogMessage_CustomLayoutAttributes_VerifyAttributes()
         {
-            //Arrange
+            // Arrange
             // For this one-off test, need to re-do the logging configuration to override what is done in setup
             var target = new DebugTarget("customAttributeTarget");
             var layout = new NewRelicJsonLayout(() => _testAgent);
@@ -219,20 +218,19 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
             var logger = LogManager.GetLogger("customAttributeLogger");
 
-
-            //Act
+            // Act
             logger.Info(LogMessage);
             var loggedMessage = target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.That(resultsDictionary, Does.ContainKey(NewRelicLoggingProperty.LineNumber.GetOutputName()));
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key), "The agent was running and instrumented the test process.");
             }
@@ -241,34 +239,34 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogMessage_WithAgent_VerifyAttributes()
         {
-            //Arrange
+            // Arrange
             var wasRun = false;
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())
                 .DoInstead(() => { wasRun = true; })
-                .Returns(linkingMetadataDict);
+                .Returns(LinkingMetadataDict);
 
-            //Act
+            // Act
             _logger.Info(LogMessage);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.IsTrue(wasRun);
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
-                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+                Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
             }
         }
 
         [Test]
         public void LogMessageWithUserAttributes_VerifyUserAttributes()
         {
-            //Arrange
+            // Arrange
             var userPropName1 = "UserPropertyName1";
             var userPropVal1 = "UserPropertyValue1";
             var userPropName2 = "UserPropertyName2";
@@ -276,12 +274,12 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             var messageTemplate = "Message with custom attributes: {" + userPropName1 + "}, {" + userPropName2 + "}";
             var formattedMessage = $"Message with custom attributes: \"{userPropVal1}\", \"{userPropVal2}\"";
 
-            //Act
+            // Act
             _logger.Info(messageTemplate, userPropVal1, userPropVal2);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
             Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
@@ -294,18 +292,18 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void IsHandled_NullValue_UserProperty()
         {
-            //Arrange
+            // Arrange
             var userPropName1 = "UserPropertyName1";
             string userPropVal1 = null;
             var messageTemplate = "Message with custom attribute: {" + userPropName1 + "}";
             var formattedMessage = $"Message with custom attribute: NULL";
 
-            //Act
+            // Act
             _logger.Info(messageTemplate, userPropVal1);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
             Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
@@ -317,18 +315,18 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void IsHandled_JSONValue_UserProperty()
         {
-            //Arrange
+            // Arrange
             var userPropName1 = "UserPropertyName1";
             var userPropVal1 = new { foo = "bar", beep = "boop" };
             var messageTemplate = "Message with custom attribute: {@" + userPropName1 + "}";
             var formattedMessage = "Message with custom attribute: {\"foo\":\"bar\", \"beep\":\"boop\"}";
 
-            //Act
+            // Act
             _logger.Info(messageTemplate, userPropVal1);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
             Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
@@ -349,12 +347,12 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             var messageTemplate = "Person = {person}";
             var formattedMessage = "Person = Charlie";
 
-            //Act
+            // Act
             _logger.Info(messageTemplate, charlie);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
             Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
@@ -369,7 +367,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogMessageWithNestedObjects_UserModifiedRecursionLimit()
         {
-            //Arrange
+            // Arrange
             // For this one-off test, need to re-do the logging configuration to override what is done in setup
             var target = new DebugTarget("customAttributeTarget");
             var layout = new NewRelicJsonLayout(() => _testAgent);
@@ -390,12 +388,12 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             var messageTemplate = "Person = {person}";
             var formattedMessage = "Person = Charlie";
 
-            //Act
+            // Act
             logger.Info(messageTemplate, charlie);
             var loggedMessage = target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), formattedMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageTemplate.GetOutputName(), messageTemplate);
             Assert.IsTrue(resultsDictionary.ContainsKey(UserPropertiesKey));
@@ -410,16 +408,15 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogEvent_VerifyTimestamp()
         {
-            //Arrange
-
+            // Arrange
             var logEvent = new LogEventInfo(LogLevel.Info, "testLogger", LogMessage);
 
-            //Act
+            // Act
             _logger.Log(logEvent);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.Timestamp.GetOutputName(), logEvent.TimeStamp.ToUnixTimeMilliseconds());
         }
@@ -427,23 +424,23 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void IsHandled_NullValue_InLinkingMetadata()
         {
-            //Arrange
+            // Arrange
             var wasRun = false;
             var linkingMetadataWithNullValue = new Dictionary<string, string>()
             {
                 { "trace.id", "12345" },
-                { "hostname", null }
+                { "hostname", null },
             };
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())
                 .DoInstead(() => { wasRun = true; })
                 .Returns(linkingMetadataWithNullValue);
 
-            //Act
+            // Act
             _logger.Info(LogMessage);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
@@ -457,38 +454,39 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogErrorWithException_WithAgent_VerifyAttributes()
         {
-            //Arrange
+            // Arrange
             var wasRun = false;
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())
                 .DoInstead(() => { wasRun = true; })
-                .Returns(linkingMetadataDict);
+                .Returns(LinkingMetadataDict);
 
             var testException = new InvalidOperationException(TestErrMsg);
 
-            //Act
+            // Act
             try
             {
                 TestHelpers.CreateStackTracedError(0, testException, 3);
-
             }
             catch (Exception caughtException)
             {
                 _logger.Error(caughtException, LogMessage);
             }
+
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "ERROR");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.IsTrue(wasRun);
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
-                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+                Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
             }
+
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorClass.GetOutputName(), testException.GetType().FullName);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorMessage.GetOutputName(), TestErrMsg);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorStack.GetOutputName(), testException.StackTrace);
@@ -497,38 +495,39 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogErrorWithException_NoExceptionMessage()
         {
-            //Arrange
+            // Arrange
             var wasRun = false;
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())
                 .DoInstead(() => { wasRun = true; })
-                .Returns(linkingMetadataDict);
+                .Returns(LinkingMetadataDict);
 
             var testException = new InvalidOperationException(string.Empty);
 
-            //Act
+            // Act
             try
             {
                 TestHelpers.CreateStackTracedError(0, testException, 3);
-
             }
             catch (Exception caughtException)
             {
                 _logger.Error(caughtException, LogMessage);
             }
+
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "ERROR");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.IsTrue(wasRun);
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
-                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+                Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
             }
+
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorClass.GetOutputName(), testException.GetType().FullName);
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.ErrorMessage.GetOutputName()));
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorStack.GetOutputName(), testException.StackTrace);
@@ -537,41 +536,34 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         [Test]
         public void LogErrorWithException_NoStackTrace()
         {
-            //Arrange
+            // Arrange
             var wasRun = false;
             Mock.Arrange(() => _testAgent.GetLinkingMetadata())
                 .DoInstead(() => { wasRun = true; })
-                .Returns(linkingMetadataDict);
+                .Returns(LinkingMetadataDict);
 
             var testException = new InvalidOperationException(TestErrMsg);
 
-            //Act
+            // Act
             _logger.Error(testException, LogMessage);
             var loggedMessage = _target.LastMessage;
             var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
 
-            //Assert
+            // Assert
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "ERROR");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.IsTrue(wasRun);
-            foreach (var key in linkingMetadataDict.Keys)
+            foreach (var key in LinkingMetadataDict.Keys)
             {
-                Asserts.KeyAndValueMatch(resultsDictionary, key, linkingMetadataDict[key]);
+                Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
             }
+
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorClass.GetOutputName(), testException.GetType().FullName);
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorMessage.GetOutputName(), TestErrMsg);
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.ErrorStack.GetOutputName()));
         }
-    }
-
-    public class Person
-    {
-        public string Name { get; set; }
-        public Person Manager { get; set; }
-
-        public override string ToString() { return Name; }
     }
 }

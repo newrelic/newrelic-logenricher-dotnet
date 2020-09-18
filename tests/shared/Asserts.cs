@@ -39,5 +39,4 @@ namespace NewRelic.LogEnrichers
             }
         }
     }
-
 }

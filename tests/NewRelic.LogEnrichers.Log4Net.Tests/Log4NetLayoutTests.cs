@@ -26,14 +26,14 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
         private ConsoleAppender _childAppender;
 
         [SetUp]
-        public void SetUp() 
+        public void SetUp()
         {
             _testAgent = Mock.Create<IAgent>();
             _testAppender = new NewRelicAppender(() => _testAgent);
             _layout = Mock.Create<NewRelicLayout>();
             _childAppender = new log4net.Appender.ConsoleAppender
             {
-                Layout = _layout
+                Layout = _layout,
             };
             _testAppender.AddAppender(_childAppender);
         }
@@ -49,8 +49,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "key1", "value1" } });
 
-
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, _testAppender);
 
@@ -103,8 +102,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
 
-
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, _testAppender);
 
@@ -138,7 +136,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
             Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
 
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, _testAppender);
 
@@ -180,7 +178,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
             Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
 
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, _testAppender);
 
@@ -221,7 +219,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             LogManager.ShutdownRepository(Assembly.GetEntryAssembly());
             Mock.Arrange(() => _testAgent.GetLinkingMetadata()).Returns(new Dictionary<string, string>() { { "NewRelicFakeMetaDataKey", "NewRelicFakeMetatDaValue" } });
 
-            //Set the the NewRelicAppender at the root logger
+            // Set the the NewRelicAppender at the root logger
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepository, _testAppender);
 
@@ -237,7 +235,6 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             var testException = new Exception(testExceptionMessage);
 
             // Act
-
             testLogger.Error("Something has occurred!!!", testException);
 
             //// Act
@@ -250,32 +247,4 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             Assert.That(deserializedMessage, Does.Not.ContainKey("error.stack"));
         }
     }
-
-    public static class CustomLoggingExtensions
-    {
-        public static void Log(this ILog logger, string level, object message, Exception exception)
-        {
-            switch (level.ToUpper()) 
-            {
-                case "INFO":
-                    logger.Info(message, exception);
-                    break;
-                case "DEBUG":
-                    logger.Debug(message, exception);
-                    break;
-                case "WARN":
-                    logger.Warn(message, exception);
-                    break;
-                case "FATAL":
-                    logger.Fatal(message, exception);
-                    break;
-                case "ERROR":
-                    logger.Error(message, exception);
-                    break;
-                default:
-                    throw new Exception(@$"level:{level} not recognized logging level.");
-            }
-        }
-    }
 }
-

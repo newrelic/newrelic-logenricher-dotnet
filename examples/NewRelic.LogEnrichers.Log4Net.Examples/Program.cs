@@ -9,14 +9,13 @@ using log4net;
 using log4net.Config;
 using NewRelic.Api.Agent;
 
-
 namespace NewRelic.LogEnrichers.Log4Net.Examples
 {
-    static class Program
+    internal static class Program
     {
         private static ILog? _logger;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the New Relic Logging Extentions for Log4Net");
             Console.WriteLine();
@@ -41,16 +40,14 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
             GlobalContext.Properties["NewRelicLogFileName"] = @$"{folderPath_NewRelicLogs}\Log4NetExample.json";
 
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-
             if (logRepository != null)
             {
                 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
             }
 
-
             _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
-            // This log information will be visible in New Relic Logging. Since 
+            // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
             _logger.Info("Hello, welcome to the Log4Net Logs In Context sample app!");
@@ -61,6 +58,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
 
                 // Call example methods that create transactions
                 TestMethod(new object());
+
                 // Pass null as an argument to trigger the method to throw argument null exception
                 TestMethod(null);
 
@@ -68,7 +66,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
             }
             while (Console.ReadLine() != "Q");
 
-            // This log information will be visible in New Relic Logging. Since 
+            // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
             _logger.Info("Thanks for visiting, please come back soon!");

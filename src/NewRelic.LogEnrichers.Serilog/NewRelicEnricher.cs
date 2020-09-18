@@ -13,18 +13,20 @@ namespace NewRelic.LogEnrichers.Serilog
         private const string LinkingMetadataKey = "newrelic.linkingmetadata";
 
         private readonly Lazy<IAgent> _nrAgent;
-        
+
+        public NewRelicEnricher()
+            : this(NewRelic.Api.Agent.NewRelic.GetAgent)
+        {
+        }
+
         /// <summary>
+        /// Initializes a new instance of the <see cref="NewRelicEnricher"/> class.
         /// This constructor is available for testing purposes.
         /// </summary>
         /// <param name="agentFactory"></param>
         internal NewRelicEnricher(Func<IAgent> agentFactory)
         {
             _nrAgent = new Lazy<IAgent>(agentFactory);
-        }
-
-        public NewRelicEnricher() : this(NewRelic.Api.Agent.NewRelic.GetAgent)
-        {
         }
 
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)

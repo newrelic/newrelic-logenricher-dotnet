@@ -10,25 +10,13 @@ using Serilog.Formatting;
 namespace NewRelic.LogEnrichers.Serilog.Tests
 {
     /// <summary>
-    /// This sink lets us examine the results of the enricher and formatter.
-    /// </summary>
-    public class TestSink : ILogEventSink
-    {
-        public readonly List<LogEvent> LogEvents = new List<LogEvent>();
-
-        public void Emit(LogEvent logEvent)
-        {
-            LogEvents.Add(logEvent);
-        }
-    }
-
-    /// <summary>
-    /// Extends the TestSink to accept a formatter.  Captures formatted output
+    /// Extends the TestSink to accept a formatter.  Captures formatted output.
     /// </summary>
     public class TestSinkWithFormatter : ILogEventSink
     {
-        private readonly ITextFormatter _formatter;
         public readonly List<InputOutputPairing> InputsAndOutputs = new List<InputOutputPairing>();
+
+        private readonly ITextFormatter _formatter;
 
         public TestSinkWithFormatter(ITextFormatter formatter)
         {
@@ -47,17 +35,4 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
             }
         }
     }
-
-    public class InputOutputPairing
-    {
-        public LogEvent LogEvent { get; set; }
-        public string FormattedOutput { get; set; }
-
-        public InputOutputPairing(LogEvent logEvent)
-        {
-            LogEvent = logEvent;
-        }
-    }
-
-
 }

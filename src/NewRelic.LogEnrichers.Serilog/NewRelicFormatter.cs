@@ -22,18 +22,17 @@ namespace NewRelic.LogEnrichers.Serilog
 
         private static readonly ScalarValue JsonNull = new ScalarValue(null);
 
-        private readonly JsonValueFormatter _valueFormatter = new JsonValueFormatter();
-
-        private readonly Dictionary<string, string> _propertyMappings = new Dictionary<string, string>();
-
         private static readonly Dictionary<LogEventLevel, string> _cacheLogLevelNames =
             Enum.GetValues(typeof(LogEventLevel))
             .Cast<LogEventLevel>()
             .ToDictionary(x => x, x => x.ToString());
 
+        private readonly JsonValueFormatter _valueFormatter = new JsonValueFormatter();
+        private readonly Dictionary<string, string> _propertyMappings = new Dictionary<string, string>();
+
         /// <summary>
-        /// This formatter already handles these items.  Users should not 
-        /// override their output values
+        /// This formatter already handles these items.  Users should not
+        /// override their output values.
         /// </summary>
         private readonly NewRelicLoggingProperty[] _reservedProperties = new[]
         {
@@ -43,10 +42,10 @@ namespace NewRelic.LogEnrichers.Serilog
             NewRelicLoggingProperty.ErrorStack,
             NewRelicLoggingProperty.MessageText,
             NewRelicLoggingProperty.MessageTemplate,
-            NewRelicLoggingProperty.LogLevel
+            NewRelicLoggingProperty.LogLevel,
         };
-        
-        public NewRelicFormatter() 
+
+        public NewRelicFormatter()
         {
         }
 
@@ -63,8 +62,15 @@ namespace NewRelic.LogEnrichers.Serilog
 
         public void Format(LogEvent logEvent, TextWriter output)
         {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
-            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (logEvent == null)
+            {
+                throw new ArgumentNullException(nameof(logEvent));
+            }
+
+            if (output == null)
+            {
+                throw new ArgumentNullException(nameof(output));
+            }
 
             output.Write(JsonOpen);
 
@@ -122,7 +128,6 @@ namespace NewRelic.LogEnrichers.Serilog
 
         private void WriteUserProperties(LogEvent logEvent, TextWriter output)
         {
-
             foreach (var kvp in logEvent.Properties)
             {
                 var key = kvp.Key;
@@ -137,13 +142,13 @@ namespace NewRelic.LogEnrichers.Serilog
                     continue;
                 }
 
-                //We don't expect to receive any NR properties that have @ in their keys.
+                // We don't expect to receive any NR properties that have @ in their keys.
                 if (key[0] == JsonAtSign && key.Length >= 2 && key[1] != JsonAtSign)
                 {
                     key = JsonAtSign + key;
                 }
 
-                //If a custom property mapping exists, use it.
+                // If a custom property mapping exists, use it.
                 if (_propertyMappings.TryGetValue(key, out var jsonPropName))
                 {
                     WriteFormattedJsonData(jsonPropName, kvp.Value.ToString(), output);

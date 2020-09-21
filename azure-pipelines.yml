@@ -17,6 +17,8 @@ variables:
 
 steps:
 
+
+
 - task: SonarCloudPrepare@1
   displayName: 'SonarCloud - Prepare for Analysis'
   inputs:

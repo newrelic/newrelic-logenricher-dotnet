@@ -22,9 +22,9 @@ jobs:
     env:
       artifact_staging_path: ${{ github.workspace }}\artifactstaging
       solution_file_path: ${{ github.workspace }}\NewRelic.LogEnrichers.sln
-      log4net_path: ${{ github.workspace }}\src\Log4Net\NewRelic.LogEnrichers.Log4Net\bin\Release\
-      nlog_path: ${{ github.workspace }}\src\NLog\NewRelic.LogEnrichers.NLog\bin\Release\
-      serilog_path: ${{ github.workspace }}\src\Serilog\NewRelic.LogEnrichers.Serilog\bin\Release\
+      log4net_path: ${{ github.workspace }}\src\NewRelic.LogEnrichers.Log4Net\bin\Release\
+      nlog_path: ${{ github.workspace }}\src\NewRelic.LogEnrichers.NLog\bin\Release\
+      serilog_path: ${{ github.workspace }}\src\NewRelic.LogEnrichers.Serilog\bin\Release\
       DOTNET_NOLOGO: true
 
     steps:

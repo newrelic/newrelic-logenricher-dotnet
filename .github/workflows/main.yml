@@ -4,6 +4,7 @@ on:
   pull_request:
     branches: [ main ]
   push:
+    branches: [ main ]
     tags:
       - refs/tags/v*.*.*      # v1.0.0
       - refs/tags/v*.*.*-*    # v1.0.0-alpha
@@ -69,27 +70,25 @@ jobs:
           ${{ env.nlog_path }}
           ${{ env.serilog_path }}
 
-      # These two steps will only run on a build of master or a tag is created.
+    # This step will only run on a build of master or a tag is created.
     - name: Publish Packages to MyGet
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags') }}
       run: |
-        nuget setapikey ${{ secrets.MYGET_APIKEY }} -source {{ secrets.MYGET_URL }}
         foreach ($file in Get-ChildItem -Path "${{ env.log4net_path }}\*" -File -Include *.nupkg) {
-          nuget push $file.name -Source ${{ secrets.MYGET_URL }} }
-        foreach ($file in Get-ChildItem -Path "${{ env.nlog_path }}\*" -File -Include *.nupkg) {
-          nuget push $file.name -Source ${{ secrets.MYGET_URL }} }
-        foreach ($file in Get-ChildItem -Path "${{ env.serilog_path }}\*" -File -Include *.nupkg) {
-          nuget push $file.name -Source ${{ secrets.MYGET_URL }} }
-      shell: powershell
+          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
 
-    - name: Publish Symbols to MyGet
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags') }}
-      run: |
-        nuget setapikey ${{ secrets.MYGET_APIKEY }} -source {{ secrets.MYGET_URL_SYMBOLS }}
+        foreach ($file in Get-ChildItem -Path "${{ env.nlog_path }}\*" -File -Include *.nupkg) {
+          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
+        
+        foreach ($file in Get-ChildItem -Path "${{ env.serilog_path }}\*" -File -Include *.nupkg) {
+          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
+
         foreach ($file in Get-ChildItem -Path "${{ env.log4net_path }}\*" -File -Include *.snupkg) {
-          nuget push $file.name -Source ${{ secrets.MYGET_URL_SYMBOLS }} }
+          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v3/index.json }
+
         foreach ($file in Get-ChildItem -Path "${{ env.nlog_path }}\*" -File -Include *.snupkg) {
-          nuget push $file.name -Source ${{ secrets.MYGET_URL_SYMBOLS }} }
+          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v3/index.json }
+
         foreach ($file in Get-ChildItem -Path "${{ env.serilog_path }}\*" -File -Include *.snupkg) {
-          nuget push $file.name -Source ${{ secrets.MYGET_URL_SYMBOLS }} }
+          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v3/index.json }
       shell: powershell

@@ -45,7 +45,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Log4N
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{404DA576-B103-4102-949B-A562FE4DEED7}"
 	ProjectSection(SolutionItems) = preProject
+		build\Common.nonprod.props = build\Common.nonprod.props
+		build\Common.prod.props = build\Common.prod.props
+		build\Common.props = build\Common.props
 		build\Common.ruleset = build\Common.ruleset
+		build\newrelic-icon.png = build\newrelic-icon.png
+		build\NewRelic.LogEnrichers.StrongNameKey.snk = build\NewRelic.LogEnrichers.StrongNameKey.snk
 		build\stylecop.json = build\stylecop.json
 		build\StyleCop.props = build\StyleCop.props
 		build\Versioning.targets = build\Versioning.targets

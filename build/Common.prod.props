@@ -1,0 +1,37 @@
+<Project>
+  <Import Project=".\Common.props" />
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn),1573,1572,1584,1658,1570,1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>New Relic</Authors>
+    <Company>New Relic</Company>
+    <Copyright>Copyright (c) 2008-2020 New Relic, Inc. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/newrelic/newrelic-logenrichers-dotnet</RepositoryUrl>
+    <PackageTags>NewRelic;Observability;Monitoring;Telemetry;Logging</PackageTags>
+    <PackageIcon>newrelic-icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/newrelic/newrelic-logenrichers-dotnet</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)newrelic-icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <PropertyGroup Label="SourceLink">
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+</Project>

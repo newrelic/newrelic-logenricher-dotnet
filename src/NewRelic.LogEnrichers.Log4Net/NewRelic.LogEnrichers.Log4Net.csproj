@@ -6,34 +6,11 @@
     <AssemblyName>NewRelic.LogEnrichers.Log4Net</AssemblyName>
     <Title>New Relic Logging Extension for Log4Net</Title>
     <Description>.NET library for sending logging context data to New Relic</Description>
-    <Authors>newrelic</Authors>
 
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageIcon>avatar-newrelic.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</RepositoryUrl>
     <PackageReleaseNotes>For detailed information see: https://github.com/newrelic/newrelic-logenricher-dotnet/blob/main/CHANGELOG.md</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-
-    <Major>1</Major>
-    <Minor>0</Minor>
-    <Build>0</Build>
-    <Revision>0</Revision>
-    <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
-    <PackageVersion>$(Major).$(Minor).$(Build)</PackageVersion>
-    <AssemblyVersion>$(Major).0.0.0</AssemblyVersion>
-    <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
 
     <GitTagPrefix>Log4Net_v</GitTagPrefix>
 
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,12 +28,6 @@
   <ItemGroup>
     <Compile Include="..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
     <Compile Include="..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-    <None Include="..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
-    <None Include="..\shared\avatar-newrelic.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -8,6 +8,7 @@ using NewRelic.Api.Agent;
 using Serilog;
 using Serilog.Core;
 
+#nullable enable
 namespace NewRelic.LogEnrichers.Serilog.Examples
 {
     internal static class Program

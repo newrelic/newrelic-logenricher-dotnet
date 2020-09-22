@@ -1,0 +1,4 @@
+<Project>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\Common.nonprod.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\StyleCop.props" />
+</Project>

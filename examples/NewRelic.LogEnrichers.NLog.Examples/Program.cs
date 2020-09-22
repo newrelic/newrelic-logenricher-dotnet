@@ -9,6 +9,7 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 
+#nullable enable
 namespace NewRelic.LogEnrichers.NLog.Examples
 {
     internal static class Program

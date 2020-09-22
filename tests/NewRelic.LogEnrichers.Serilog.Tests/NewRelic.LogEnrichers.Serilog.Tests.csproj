@@ -1,19 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <IsPackable>false</IsPackable>
     <AssemblyName>NewRelic.LogEnrichers.Serilog.Tests</AssemblyName>
     <RootNamespace>NewRelic.LogEnrichers.Serilog.Tests</RootNamespace>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <Nullable>disable</Nullable>
-    <AssemblyOriginatorKeyFile>..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\NewRelic.LogEnrichers.StrongNameKey.snk" Link="NewRelic.LogEnrichers.StrongNameKey.snk" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="JustMock" Version="2019.3.910.4" />

@@ -9,6 +9,7 @@ using NLog.Layouts;
 using System;
 using System.Text;
 
+#nullable enable
 namespace NewRelic.LogEnrichers.NLog
 {
     [Layout("newrelic-jsonlayout")]

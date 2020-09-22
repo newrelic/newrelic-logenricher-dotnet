@@ -1,16 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <IsPackable>false</IsPackable>
     <AssemblyName>NewRelic.LogEnrichers.Log4Net.Tests</AssemblyName>
     <RootNamespace>NewRelic.LogEnrichers.Log4Net.Tests</RootNamespace>
-    <Nullable>disable</Nullable>
 
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\NewRelic.LogEnrichers.StrongNameKey.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright (c) 2008-2020 New Relic, Inc.  All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

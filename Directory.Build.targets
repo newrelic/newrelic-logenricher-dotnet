@@ -1,4 +1,0 @@
-<Project InitialTargets="VersionByGitTag">
-  <Import Project="build\Versioning.targets" Condition="Exists('build\Versioning.targets')" />
-  <Import Project="build\StyleCop.props" Condition="Exists('build\StyleCop.props')" />
-</Project>

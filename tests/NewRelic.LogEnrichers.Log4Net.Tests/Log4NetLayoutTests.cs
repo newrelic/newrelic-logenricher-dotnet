@@ -73,8 +73,8 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
 
             // Assert
             Assert.That(deserializedMessage.ContainsKey("log.level"), "log.level not found.");
-            var resultLevel = TestHelpers.DeserializeOutputJSON(deserializedMessage["log.level"].ToString());
-            Assert.That(resultLevel["Name"].ToString() == level, "Incorrect logging level");
+            var logLevel = deserializedMessage["log.level"].ToString();
+            Assert.That(logLevel == level, "Incorrect logging level");
 
             Assert.That(deserializedMessage.ContainsKey("thread.name"), "thread.name not found.");
             var threadName = deserializedMessage["thread.name"].ToString();

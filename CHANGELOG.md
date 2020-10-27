@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Issue #84 is fixed.  This was a problem with how the log message level was being reported to New Relic from the Log4Net layout.
+- [Issue #84](https://github.com/newrelic/newrelic-logenricher-dotnet/issues/84) is fixed.  This was a problem with how the log message level was being reported to New Relic from the Log4Net layout.
 
 ## [Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1] - 2020-03-02
 ### Bugfix release

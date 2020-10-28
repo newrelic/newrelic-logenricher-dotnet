@@ -50,7 +50,8 @@ Configuration of the New Relic extensions for ```log4net``` may be accomplished 
   <appender name="FileAppender" type="log4net.Appender.FileAppender">
     <file type="log4net.Util.PatternString" value="%property{NewRelicLogFileName}" />
     <param name="AppendToFile" value="true" />
-    <encoding type="System.Text.UTF8Encoding, System.Text.Encoding.Extensions"/>
+    <!-- uncomment the next line to get UTF-8 logs if using .NET Framework -->
+    <!-- <encoding type="System.Text.UTF8Encoding"/> -->
     <layout type="NewRelic.LogEnrichers.Log4Net.NewRelicLayout, NewRelic.LogEnrichers.Log4Net">
     </layout>
   </appender>
@@ -81,7 +82,8 @@ The example code below creates a logger based on settings contained in an `App.c
     <appender name="FileAppender" type="log4net.Appender.FileAppender">
       <file type="log4net.Util.PatternString" value="%property{NewRelicLogFileName}" />
       <param name="AppendToFile" value="true" />
-      <encoding type="System.Text.UTF8Encoding, System.Text.Encoding.Extensions"/>
+      <!-- uncomment the next line to get UTF-8 logs if using .NET Framework -->
+      <!-- <encoding type="System.Text.UTF8Encoding"/> -->
       <layout type="NewRelic.LogEnrichers.Log4Net.NewRelicLayout, NewRelic.LogEnrichers.Log4Net">
       </layout>
     </appender>

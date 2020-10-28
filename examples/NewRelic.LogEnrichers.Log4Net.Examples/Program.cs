@@ -18,7 +18,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
 
         private static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the New Relic Logging Extentions for Log4Net");
+            Console.WriteLine("Welcome to the New Relic Logging Extensions for Log4Net");
             Console.WriteLine();
 
             if (args.Length == 0)
@@ -51,7 +51,7 @@ namespace NewRelic.LogEnrichers.Log4Net.Examples
             // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
-            _logger.Info("Hello, welcome to the Log4Net Logs In Context sample app!");
+            _logger.Info("Hello, welcome to the Log4Net Logs In Context sample app!\u00A1");
 
             do
             {

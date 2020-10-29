@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [Log4Net_v1.0.2] - 2020-10-28
+### Bugfix release
 - Fixes [Issue #84](https://github.com/newrelic/newrelic-logenricher-dotnet/issues/84) where the log4net log enricher incorrectly extracts log level value to report to New Relic.
 
 ## [Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1] - 2020-03-02
@@ -34,7 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds sample application
 - Adds implementation documentation.
 
-[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Serilog_v1.0.1...HEAD
+[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.2...HEAD
+[Log4Net_v1.0.2]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.1...Log4Net_v1.0.2
 [Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.0...Serilog_v1.0.1
 [Log4Net_v1.0.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/f354ce5...Log4Net_v1.0.0
 [NLog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/NLog_v1.0.0...NLog_v1.0.1

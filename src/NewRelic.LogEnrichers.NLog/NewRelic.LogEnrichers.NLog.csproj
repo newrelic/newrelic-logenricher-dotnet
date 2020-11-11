@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewRelic.Agent.Api" Version="8.21.34" />
+    <PackageReference Include="NewRelic.Agent.Api" Version="8.35.0" />
     <PackageReference Include="NLog" Version="4.5.11" />
   </ItemGroup>
 

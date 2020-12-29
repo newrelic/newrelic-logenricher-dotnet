@@ -40,6 +40,7 @@ namespace NewRelic.LogEnrichers.Log4Net
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.ThreadName), loggingEvent.ThreadName);
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.MessageText), loggingEvent.RenderedMessage);
             dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LogLevel), loggingEvent.Level.Name);
+            dictionary.Add(LoggingExtensions.GetOutputName(NewRelicLoggingProperty.LoggerName), loggingEvent.LoggerName);
         }
 
         private void SetExceptionData(Dictionary<string, object> dictionary, LoggingEvent loggingEvent)

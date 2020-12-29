@@ -46,6 +46,7 @@ namespace NewRelic.LogEnrichers.NLog
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LogLevel.GetOutputName(), "${level:upperCase=true}", true));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.MessageText.GetOutputName(), "${message}", true));
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.MessageTemplate.GetOutputName(), "${message:raw=true}"));
+            Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.LoggerName.GetOutputName(), "${logger}", true));
 
             // correlation
             Attributes.Add(new JsonAttribute(NewRelicLoggingProperty.ThreadId.GetOutputName(), "${threadid}", true));

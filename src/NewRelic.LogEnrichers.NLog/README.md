@@ -101,6 +101,7 @@ In addition to the linking metadata obtained from the .NET Agent, the ```NewReli
 * Message Text
 * Message Template
 * Log Level
+* Logger Name
 * Thread Id
 * Activity Id
 * Process Id

@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [Log4Net_v1.1.0, NLog_v1.1.0]
 ### Add `logger.name` to NLog and Log4Net
 - A new property named `logger.name` is added to the New Relic layouts for NLog and Log4Net, with the value of the name of the logger that created the log event.
 
@@ -39,7 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds sample application
 - Adds implementation documentation.
 
-[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.2...HEAD
+[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.0...HEAD
+[Log4Net_v1.1.0, NLog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.2...Log4Net_v1.1.0 
 [Log4Net_v1.0.2]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.1...Log4Net_v1.0.2
 [Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.0...Serilog_v1.0.1
 [Log4Net_v1.0.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/f354ce5...Log4Net_v1.0.0

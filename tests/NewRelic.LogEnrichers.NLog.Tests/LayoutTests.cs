@@ -23,6 +23,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
         private const string TestErrMsg = "This is a test exception";
         private const string LogMessage = "This is a log message";
         private const string UserPropertiesKey = "Message.Properties";
+        private const string CustomLoggerName = "CustomLogger";
 
         private static readonly Dictionary<string, string> LinkingMetadataDict = new Dictionary<string, string>
         {
@@ -53,7 +54,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
             LogManager.Configuration = config;
 
-            _logger = LogManager.GetLogger("testLogger");
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         [TearDown]
@@ -192,6 +193,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LoggerName.GetOutputName(), _logger.Name);
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.LineNumber.GetOutputName()));
             foreach (var key in LinkingMetadataDict.Keys)
@@ -216,7 +218,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
             LogManager.Configuration = config;
 
-            var logger = LogManager.GetLogger("customAttributeLogger");
+            var logger = LogManager.GetLogger(CustomLoggerName);
 
             // Act
             logger.Info(LogMessage);
@@ -228,6 +230,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LoggerName.GetOutputName(), logger.Name);
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.That(resultsDictionary, Does.ContainKey(NewRelicLoggingProperty.LineNumber.GetOutputName()));
             foreach (var key in LinkingMetadataDict.Keys)
@@ -255,6 +258,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LoggerName.GetOutputName(), _logger.Name);
             Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
             Assert.IsTrue(wasRun);
             foreach (var key in LinkingMetadataDict.Keys)
@@ -380,7 +384,7 @@ namespace NewRelic.LogEnrichers.NLog.Tests
 
             LogManager.Configuration = config;
 
-            var logger = LogManager.GetLogger("customAttributeLogger");
+            var logger = LogManager.GetLogger(CustomLoggerName);
 
             var alice = new Person { Name = "Alice", Manager = null };
             var bob = new Person { Name = "Bob", Manager = alice };

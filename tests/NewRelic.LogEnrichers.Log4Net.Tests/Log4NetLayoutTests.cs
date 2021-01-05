@@ -87,6 +87,10 @@ namespace NewRelic.LogEnrichers.Log4Net.Tests
             Assert.That(deserializedMessage.ContainsKey("timestamp"), "timestamp not found.");
             var timestamp = deserializedMessage["timestamp"].GetInt64();
             Assert.That(le.TimeStamp.ToUnixTimeMilliseconds(), Is.EqualTo(timestamp));
+
+            Assert.That(deserializedMessage.ContainsKey("logger.name"), "logger.name not found.");
+            var loggerName = deserializedMessage["logger.name"].ToString();
+            Assert.That(le.LoggerName, Is.EqualTo(loggerName));
         }
 
         [Test]

@@ -26,6 +26,7 @@ namespace NewRelic.LogEnrichers
         LineNumber,
         CorrelationId,
         ProcessId,
+        LoggerName,
     }
 
     internal static class LoggingExtensions
@@ -68,6 +69,8 @@ namespace NewRelic.LogEnrichers
                     return "correlation.id";
                 case NewRelicLoggingProperty.ProcessId:
                     return "process.id";
+                case NewRelicLoggingProperty.LoggerName:
+                    return "logger.name";
                 default:
                     throw new KeyNotFoundException($"New Relic Logging Field {property}");
             }

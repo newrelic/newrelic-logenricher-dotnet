@@ -1,16 +1,13 @@
 # Contributing
 
-Contributions are always welcome. Before contributing please read the
-[code of conduct](./CODE_OF_CONDUCT.md) and [search the issue tracker](issues); your issue may have already been discussed or fixed. To contribute,
+Contributions are always welcome. Before contributing please [read the code of conduct](https://opensource.newrelic.com/code-of-conduct/) and [search the issue tracker](https://github.com/newrelic/newrelic-logenricher-dotnet/issues); your issue may have already been discussed or fixed. To contribute,
 [fork](https://help.github.com/articles/fork-a-repo/) this repository, commit your changes, and [send a Pull Request](https://help.github.com/articles/using-pull-requests/).
-
-Note that our [code of conduct](./CODE_OF_CONDUCT.md) applies to all platforms and venues related to this project; please follow it in all your interactions with the project and its participants.
 
 ## Feature Requests
 
-Feature requests should be submitted in the [Issue tracker](../../issues), with a description of the expected behavior & use case, where they’ll remain closed until sufficient interest, [e.g. :+1: reactions](https://help.github.com/articles/about-discussions-in-issues-and-pull-requests/), has been [shown by the community](../../issues?q=label%3A%22votes+needed%22+sort%3Areactions-%2B1-desc).
-Before submitting an Issue, please search for similar ones in the
-[closed issues](../../issues?q=is%3Aissue+is%3Aclosed+label%3Aenhancement).
+Feature requests should be submitted in the [Issue tracker](https://github.com/newrelic/newrelic-logenricher-dotnet/issues), with a description of the expected behavior & use case, where they’ll remain closed until sufficient interest, [e.g. :+1: reactions](https://help.github.com/articles/about-discussions-in-issues-and-pull-requests/), has been [shown by the community](https://github.com/newrelic/newrelic-logenricher-dotnet/issues?q=label%3A%22votes+needed%22+sort%3Areactions-%2B1-desc).
+Before submitting an issue, please search for similar ones in the
+[closed issues](https://github.com/newrelic/newrelic-logenricher-dotnet/issues?q=is%3Aissue+is%3Aclosed).
 
 ## Pull Requests
 

@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions are always welcome. Before contributing please [search the issue tracker](https://github.com/newrelic/newrelic-logenricher-dotnet/issues); your issue may have already been discussed or fixed. To contribute,
+Contributions are always welcome. Before contributing please [read the code of conduct](https://opensource.newrelic.com/code-of-conduct/) and [search the issue tracker](https://github.com/newrelic/newrelic-logenricher-dotnet/issues); your issue may have already been discussed or fixed. To contribute,
 [fork](https://help.github.com/articles/fork-a-repo/) this repository, commit your changes, and [send a Pull Request](https://help.github.com/articles/using-pull-requests/).
 
 ## Feature Requests

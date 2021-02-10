@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [Log4Net_v1.1.1]
 ### Security fix: update log4net package reference to 2.0.10
 - To mitigate a [CVE](https://nvd.nist.gov/vuln/detail/CVE-2018-1285) in log4net versions prior to 2.0.10, the minimum version of log4net required to use the enricher library for log4net has been updated to 2.0.10. 
 
@@ -43,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds sample application
 - Adds implementation documentation.
 
-[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.0...HEAD
+[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.1...HEAD
+[Log4Net_v1.1.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.0...Log4Net_v1.1.1
 [Log4Net_v1.1.0, NLog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.2...Log4Net_v1.1.0 
 [Log4Net_v1.0.2]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.1...Log4Net_v1.0.2
 [Log4Net_v1.0.1, NLog_v1.0.2, Serilog_v1.0.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.0...Serilog_v1.0.1

@@ -58,9 +58,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{404DA576
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Extensions.Logging", "Microsoft.Extensions.Logging", "{C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Microsoft.Extensions.Logging", "src\NewRelic.LogEnrichers.Microsoft.Extensions.Logging\NewRelic.LogEnrichers.Microsoft.Extensions.Logging\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.csproj", "{567E6091-309B-483C-9261-16B97E63F3DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Microsoft.Extensions.Logging", "src\NewRelic.LogEnrichers.Microsoft.Extensions.Logging\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.csproj", "{567E6091-309B-483C-9261-16B97E63F3DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Tests", "tests\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Tests\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Tests.csproj", "{EDE3EA81-1101-498F-8DBC-5BC3E863A096}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Examples", "examples\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Examples\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Examples.csproj", "{CE2485E1-B563-4A22-BC9D-39E122F5D76F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +114,10 @@ Global
 		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE2485E1-B563-4A22-BC9D-39E122F5D76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE2485E1-B563-4A22-BC9D-39E122F5D76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE2485E1-B563-4A22-BC9D-39E122F5D76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2485E1-B563-4A22-BC9D-39E122F5D76F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +134,7 @@ Global
 		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0} = {37DA3549-BF6F-4035-B250-49456744C94B}
 		{567E6091-309B-483C-9261-16B97E63F3DC} = {C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}
 		{EDE3EA81-1101-498F-8DBC-5BC3E863A096} = {C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}
+		{CE2485E1-B563-4A22-BC9D-39E122F5D76F} = {C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C9155C8-199D-48A5-BB57-38EB738FA89D}

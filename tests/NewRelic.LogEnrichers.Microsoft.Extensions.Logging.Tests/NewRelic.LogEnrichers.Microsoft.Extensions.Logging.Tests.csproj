@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>NewRelic.LogEnrichers.Microsoft.Extenstions.Logging.Tests</AssemblyName>
+    <RootNamespace>NewRelic.LogEnrichers.Microsoft.Extenstions.Logging.Tests</RootNamespace>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JustMock" Version="2019.3.910.4" />
+    <PackageReference Include="NewRelic.Agent.Api" Version="8.32.0" />
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\shared\TestHelpers.cs" Link="TestHelpers.cs" />
+    <Compile Include="..\shared\Asserts.cs" Link="Asserts.cs" />
+    <ProjectReference Include="..\..\src\NewRelic.LogEnrichers.Microsoft.Extensions.Logging\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -56,6 +56,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{404DA576
 		build\Versioning.targets = build\Versioning.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Extensions.Logging", "Microsoft.Extensions.Logging", "{C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelic.LogEnrichers.Microsoft.Extensions.Logging", "src\NewRelic.LogEnrichers.Microsoft.Extensions.Logging\NewRelic.LogEnrichers.Microsoft.Extensions.Logging\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.csproj", "{567E6091-309B-483C-9261-16B97E63F3DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Tests", "tests\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Tests\NewRelic.LogEnrichers.Microsoft.Extensions.Logging.Tests.csproj", "{EDE3EA81-1101-498F-8DBC-5BC3E863A096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +104,14 @@ Global
 		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567E6091-309B-483C-9261-16B97E63F3DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567E6091-309B-483C-9261-16B97E63F3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567E6091-309B-483C-9261-16B97E63F3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567E6091-309B-483C-9261-16B97E63F3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE3EA81-1101-498F-8DBC-5BC3E863A096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +126,8 @@ Global
 		{F5D96450-8D7C-40BD-87FC-382A1430983F} = {37DA3549-BF6F-4035-B250-49456744C94B}
 		{08D5269D-E907-4BB9-BE53-17181E3D78F4} = {37DA3549-BF6F-4035-B250-49456744C94B}
 		{CAEBE8D8-BABC-4BF8-8528-DDC393C1F9B0} = {37DA3549-BF6F-4035-B250-49456744C94B}
+		{567E6091-309B-483C-9261-16B97E63F3DC} = {C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}
+		{EDE3EA81-1101-498F-8DBC-5BC3E863A096} = {C1F9D436-C937-4F83-8D2E-07B22C0F8AB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C9155C8-199D-48A5-BB57-38EB738FA89D}

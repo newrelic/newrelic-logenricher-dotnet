@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace NewRelic.LogEnrichers.Microsoft.Extensions.Logging
 {
+    // Container for log message and properties, created in LogEnricherLogger.Log
+    // incomplete properties defined here
+
     public sealed class LogRecord
     {
         internal LogRecord(DateTime timestamp, string categoryName, LogLevel logLevel, EventId eventId, object state, Exception exception)

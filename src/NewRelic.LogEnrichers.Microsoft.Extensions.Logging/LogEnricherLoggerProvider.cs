@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 
 namespace NewRelic.LogEnrichers.Microsoft.Extensions.Logging
 {
+    // Custom LoggerProvider to pass back custom Logger (LogEnricherLogger)
+
     public class LogEnricherLoggerProvider : ILoggerProvider
     {
         private readonly IDictionary<string, ILogger> _loggers;

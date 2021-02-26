@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace NewRelic.LogEnrichers.Microsoft.Extensions.Logging
 {
+    // Custom Logger where Log() override, called by the application, can be
+    // used to create a LogRecord to contain message and Properties
+
     internal class LogEnricherLogger : ILogger
     {
         private readonly string _categoryName;

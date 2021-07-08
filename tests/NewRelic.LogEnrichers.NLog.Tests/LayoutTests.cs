@@ -177,10 +177,6 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             }
         }
 
-        #endregion
-
-        #region No MDC or MDLC
-
         [Test]
         public void LogMessage_NoAgent_VerifyAttributes()
         {

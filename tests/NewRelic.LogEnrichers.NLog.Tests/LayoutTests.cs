@@ -53,7 +53,6 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             config.AddRuleForAllLevels(_target);
 
             LogManager.Configuration = config;
-
             _logger = LogManager.GetCurrentClassLogger();
         }
 
@@ -64,6 +63,8 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             _target = null;
             _testAgent = null;
         }
+
+        #region GetLinkingMetadata Specific
 
         [Test]
         public void GetLinkingMetadata_CalledOncePerLogMessage()
@@ -177,6 +178,10 @@ namespace NewRelic.LogEnrichers.NLog.Tests
                 Assert.That(resultsDictionary, Does.Not.ContainKey(key));
             }
         }
+
+        #endregion
+
+        #region No MDC or MDLC
 
         [Test]
         public void LogMessage_NoAgent_VerifyAttributes()
@@ -569,5 +574,133 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ErrorMessage.GetOutputName(), TestErrMsg);
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.ErrorStack.GetOutputName()));
         }
+
+        #endregion
+
+        #region With MDC and MDLC
+
+        [TestCase(true, true, "name with space", "value with space", "name_with_underscore", "value_with_underscore")]
+        [TestCase(true, true, "name-with-hyphen", "value-with-hyphen", "keyname", "valuename")]
+        [TestCase(true, true, "testing integer mdc", 5, "testing integer mdlc", 10)]
+        [TestCase(true, true, "testing double mdc", 12.3D, "testing double mdlc", 3.12D)]
+        [TestCase(true, true, "testing bool mdc", true, "testing bool mdlc", false)]
+        [TestCase(true, true, "testing empty mdc", "", "testing empty mdlc", "")]
+        [TestCase(true, true, "testing null mdc", null, "testing null mdlc", null)]
+        [TestCase(true, false, "onlymdc", "mdconly", "nomdlc", "nomdlc")]
+        [TestCase(false, true, "nomdc", "nomdc", "onlymdlc", "mdlconly")]
+        public void LogMessage_WithAgent_McdAndMdlc(bool mdcEnabled, bool mdlcEnabled, string mdcKey, object mdcValue, string mdlcKey, object mdlcValue)
+        {
+            // Arrange
+            var target = new DebugTarget("mdcMdlcTarget");
+            var layout = new NewRelicJsonLayout(() => _testAgent);
+            layout.IncludeMdc = mdcEnabled;
+            layout.IncludeMdlc = mdlcEnabled;
+            target.Layout = layout;
+
+            var config = new LoggingConfiguration();
+            config.AddTarget(target);
+            config.AddRuleForAllLevels(target);
+
+            LogManager.Configuration = config;
+
+            var logger = LogManager.GetLogger(CustomLoggerName);
+
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns(LinkingMetadataDict);
+
+            // Act
+            MappedDiagnosticsContext.Set(mdcKey, mdcValue);
+            MappedDiagnosticsLogicalContext.Set(mdlcKey, mdlcValue);
+
+            logger.Info(LogMessage);
+            var loggedMessage = target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            // Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LoggerName.GetOutputName(), logger.Name);
+            Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
+
+            if (mdcEnabled)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, mdcKey, mdcValue);
+            }
+
+            if (mdlcEnabled)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, mdlcKey, mdlcValue);
+            }
+
+            Assert.AreEqual(resultsDictionary.ContainsKey(mdcKey), mdcEnabled);
+            Assert.AreEqual(resultsDictionary.ContainsKey(mdlcKey), mdlcEnabled);
+            Assert.IsTrue(wasRun);
+            foreach (var key in LinkingMetadataDict.Keys)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
+            }
+        }
+
+        [Test]
+        public void LogMessage_WithAgent_McdAndMdlc_NoKeys_NoJson()
+        {
+            // Arrange
+            var target = new DebugTarget("mdcMdlcTarget");
+            var layout = new NewRelicJsonLayout(() => _testAgent);
+            layout.IncludeMdc = true;
+            layout.IncludeMdlc = true;
+            target.Layout = layout;
+
+            var config = new LoggingConfiguration();
+            config.AddTarget(target);
+            config.AddRuleForAllLevels(target);
+
+            LogManager.Configuration = config;
+
+            var logger = LogManager.GetLogger(CustomLoggerName);
+
+            var wasRun = false;
+            Mock.Arrange(() => _testAgent.GetLinkingMetadata())
+                .DoInstead(() => { wasRun = true; })
+                .Returns(LinkingMetadataDict);
+
+            // Act
+            const string testValueA = "testValueA";
+            const string testValueB = "testValueB";
+            MappedDiagnosticsContext.Set(string.Empty, testValueA);
+            MappedDiagnosticsLogicalContext.Set(string.Empty, testValueB);
+
+            logger.Info(LogMessage);
+            var loggedMessage = target.LastMessage;
+            var resultsDictionary = TestHelpers.DeserializeOutputJSON(loggedMessage);
+
+            var resultsDictionaryStrings = new Dictionary<string, string>();
+            foreach (var result in resultsDictionary)
+            {
+                resultsDictionaryStrings.Add(result.Key, result.Value.ToString());
+                Console.WriteLine($"'{result.Key}':'{result.Value.ToString()}'");
+            }
+
+            // Assert
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.MessageText.GetOutputName(), LogMessage);
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LogLevel.GetOutputName(), "INFO");
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ThreadId.GetOutputName(), Thread.CurrentThread.ManagedThreadId.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.ProcessId.GetOutputName(), Process.GetCurrentProcess().Id.ToString());
+            Asserts.KeyAndValueMatch(resultsDictionary, NewRelicLoggingProperty.LoggerName.GetOutputName(), logger.Name);
+            Assert.IsTrue(resultsDictionary.ContainsKey(NewRelicLoggingProperty.Timestamp.GetOutputName()));
+            Assert.IsFalse(resultsDictionaryStrings.ContainsValue(testValueA));
+            Assert.IsFalse(resultsDictionaryStrings.ContainsValue(testValueB));
+            Assert.IsTrue(wasRun);
+            foreach (var key in LinkingMetadataDict.Keys)
+            {
+                Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
+            }
+        }
+
+        #endregion
     }
 }

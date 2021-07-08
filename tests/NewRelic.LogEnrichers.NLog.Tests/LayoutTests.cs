@@ -64,8 +64,6 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             _testAgent = null;
         }
 
-        #region GetLinkingMetadata Specific
-
         [Test]
         public void GetLinkingMetadata_CalledOncePerLogMessage()
         {
@@ -575,10 +573,6 @@ namespace NewRelic.LogEnrichers.NLog.Tests
             Assert.That(resultsDictionary, Does.Not.ContainKey(NewRelicLoggingProperty.ErrorStack.GetOutputName()));
         }
 
-        #endregion
-
-        #region With MDC and MDLC
-
         [TestCase(true, true, "name with space", "value with space", "name_with_underscore", "value_with_underscore")]
         [TestCase(true, true, "name-with-hyphen", "value-with-hyphen", "keyname", "valuename")]
         [TestCase(true, true, "testing integer mdc", 5, "testing integer mdlc", 10)]
@@ -700,7 +694,5 @@ namespace NewRelic.LogEnrichers.NLog.Tests
                 Asserts.KeyAndValueMatch(resultsDictionary, key, LinkingMetadataDict[key]);
             }
         }
-
-        #endregion
     }
 }

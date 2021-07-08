@@ -45,6 +45,7 @@ namespace NewRelic.LogEnrichers.NLog.Examples
             // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
+            // This will not have any MDC or MDLC pairs.
             _logger.Info("Hello, welcome to the Nlog Logs In Context sample app!");
 
             do
@@ -58,11 +59,12 @@ namespace NewRelic.LogEnrichers.NLog.Examples
 
                 Console.WriteLine("Press <ENTER> to continue, Q to exit.");
             }
-            while (Console.ReadLine() != "Q");
+            while (Console.ReadLine().ToUpper() != "Q");
 
             // This log information will be visible in New Relic Logging. Since
             // a transaction has not been started, this log message will not be
             // associated to a specific transaction.
+            // This will not have any MDC or MDLC pairs.
             _logger.Info("Thanks for visiting, please come back soon!");
         }
 
@@ -88,7 +90,13 @@ namespace NewRelic.LogEnrichers.NLog.Examples
             // 2.  Use the NewRelicJsonLayout which will write the output in the format required by NewRelic, as well
             //     as adding the contextual information linking transaction data (if applicable) to log events.
             var newRelicFileTarget = new FileTarget("NewRelicFileTarget");
-            newRelicFileTarget.Layout = new NewRelicJsonLayout();
+            var layout = new NewRelicJsonLayout
+            {
+                IncludeMdc = true,
+                IncludeMdlc = true
+            };
+
+            newRelicFileTarget.Layout = layout;
             newRelicFileTarget.FileName = Path.Combine(folderPath_NewRelicLogs, "NLogExtensions_NewRelicLogging.json");
             loggerConfig.AddTarget(newRelicFileTarget);
 
@@ -109,6 +117,10 @@ namespace NewRelic.LogEnrichers.NLog.Examples
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void TestMethod(string testVal)
         {
+            // Setup the MDC and MDLC pairs
+            MappedDiagnosticsContext.Set("mdcKey", "mdcValue");
+            MappedDiagnosticsLogicalContext.Set("mdlcKey", "mdlcValue");
+
             _logger?.Info("Starting TestMethod - {testValue}", testVal);
 
             try
@@ -125,6 +137,10 @@ namespace NewRelic.LogEnrichers.NLog.Examples
             }
 
             _logger?.Info("Ending TestMethod - {testValue}", testVal);
+
+            // Clean up after the transaction is done
+            MappedDiagnosticsContext.Clear();
+            MappedDiagnosticsLogicalContext.Clear();
         }
     }
 }

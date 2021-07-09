@@ -12,6 +12,13 @@ namespace NewRelic.LogEnrichers
         public static void KeyAndValueMatch(Dictionary<string, JsonElement> resultDic, string key, object value)
         {
             Assert.That(resultDic, Contains.Key(key));
+
+            if (value == null)
+            {
+                Assert.IsTrue(resultDic[key].ValueKind == JsonValueKind.Null);
+                return;
+            }
+
             var valueType = value.GetType();
             if (valueType == typeof(string))
             {
@@ -28,6 +35,10 @@ namespace NewRelic.LogEnrichers
             else if (valueType == typeof(long))
             {
                 Assert.That(resultDic[key].GetInt64(), Is.EqualTo(value));
+            }
+            else if (valueType == typeof(double))
+            {
+                Assert.That(resultDic[key].GetDouble(), Is.EqualTo(value));
             }
             else if (valueType == typeof(JsonValueKind))
             {

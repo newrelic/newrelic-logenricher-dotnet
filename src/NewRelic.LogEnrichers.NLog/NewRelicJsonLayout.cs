@@ -1,6 +1,7 @@
 ﻿// Copyright 2020 New Relic, Inc. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+
 using NLog;
 using NLog.Common;
 using NLog.Config;
@@ -62,10 +63,7 @@ namespace NewRelic.LogEnrichers.NLog
             // that look like message.property.ErrorMessage in the UI.
             _jsonLayoutForMessageProperties = new JsonLayout()
             {
-                // IncludeGdc = false, GDC not supported in NLog 4.5
-                IncludeAllProperties = true,
-                IncludeMdc = false,
-                IncludeMdlc = false,
+                // GDC is not supported in NLog 4.5 - customers can enable it themselves in later versions however
                 RenderEmptyObject = false,
                 SuppressSpaces = true,
                 MaxRecursionLimit = 1, // See https://github.com/newrelic/newrelic-logenricher-dotnet/issues/43

@@ -62,7 +62,8 @@ namespace NewRelic.LogEnrichers.NLog
             // that look like message.property.ErrorMessage in the UI.
             _jsonLayoutForMessageProperties = new JsonLayout()
             {
-                // IncludeGdc = false, GDC not supported in NLog 4.5
+                // GDC is not supported in NLog 4.5
+                // This is an internal attribute that sets up message.properties.  Explicitly excludes MDC/MDLC (and GDC if we ere on new NLog) content since that is handled differently.
                 IncludeAllProperties = true,
                 IncludeMdc = false,
                 IncludeMdlc = false,
@@ -92,7 +93,7 @@ namespace NewRelic.LogEnrichers.NLog
             // to the data, in a similar manner to how they would have added data via custom layout strings.
             // By default we will only support the data directly related to structured logging.
             // Note that any message properties will also be present in the Gdc, Mdc, and Mdlc contexts.
-            // IncludeGdc = false; // GDC not supported in NLog 4.5 - customers can enable it themselves in later versions however
+            // Customers can enable GDC themselves in later versions of NLog
             RenderEmptyObject = false;
             SuppressSpaces = true;
         }

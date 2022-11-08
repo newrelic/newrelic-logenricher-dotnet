@@ -45,8 +45,11 @@ namespace NewRelic.LogEnrichers.Serilog
             NewRelicLoggingProperty.LogLevel,
         };
 
+        private string _userPropertyPrefix;
+
         public NewRelicFormatter()
         {
+            _userPropertyPrefix = LoggingExtensions.UserPropertyPrefix;
         }
 
         public NewRelicFormatter WithPropertyMapping(string propertyName, NewRelicLoggingProperty outputAsNewRelicProperty)
@@ -57,6 +60,12 @@ namespace NewRelic.LogEnrichers.Serilog
             }
 
             _propertyMappings[propertyName] = LoggingExtensions.GetOutputName(outputAsNewRelicProperty);
+            return this;
+        }
+
+        public NewRelicFormatter WithUserPropertyPrefix(string userPropertyPrefix)
+        {
+            _userPropertyPrefix = userPropertyPrefix;
             return this;
         }
 
@@ -155,7 +164,7 @@ namespace NewRelic.LogEnrichers.Serilog
                 }
                 else
                 {
-                    WriteFormattedJsonData(LoggingExtensions.UserPropertyPrefix + key, kvp.Value, output);
+                    WriteFormattedJsonData(_userPropertyPrefix + key, kvp.Value, output);
                 }
             }
         }

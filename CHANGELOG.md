@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [Serilog_v1.0.1] - 2022-11-29
+## [Serilog_v1.1.0] - 2022-11-29
 ### Features
 - Adds an option to change the user property prefix from the default of "Message.Properties." to a custom prefix. Thank you to @NiklasArbin for contribution! [#131](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/131)
 
@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds implementation documentation.
 
 [Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.1...HEAD
-[Serilog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Serilog_v1.0.0...Serilog_v1.0.1
+[Serilog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Serilog_v1.0.0...Serilog_v1.1.0
 [Log4Net_v1.1.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.0...Log4Net_v1.1.1
 [Log4Net_v1.1.0, NLog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.2...Log4Net_v1.1.0 
 [Log4Net_v1.0.2]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.1...Log4Net_v1.0.2

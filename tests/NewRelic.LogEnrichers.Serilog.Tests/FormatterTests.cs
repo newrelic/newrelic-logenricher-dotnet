@@ -95,6 +95,33 @@ namespace NewRelic.LogEnrichers.Serilog.Tests
         }
 
         /// <summary>
+        /// LogEvent User Property has custom prefix.
+        /// </summary>
+        [Test]
+        public void Output_UserProperty_CustomPrefix()
+        {
+            // Arrange
+            const string customPrefix = "Custom.Prefix.";
+            var testEnricher = new TestEnricher()
+                .WithUserPropValue(IntegerTestKey, IntegerTestValue)
+                .WithNewRelicMetadataValue(new Dictionary<string, string>());
+            var testOutputSink = new TestSinkWithFormatter(new NewRelicFormatter().WithUserPropertyPrefix(customPrefix));
+            var testLogger = SerilogTestHelpers.GetLogger(testOutputSink, testEnricher);
+
+            // Act
+            testLogger.Warning(LogMessage);
+
+            // Assert
+            AssertNoSerilogErrorsAndCountOutputs(_testRunDebugLogs, testOutputSink.InputsAndOutputs, LogMessage);
+
+            var resultDic = SerilogTestHelpers.DeserializeOutputJSON(testOutputSink.InputsAndOutputs[0]);
+
+            AssertThatPropertyCountsMatch(testEnricher, CountIntrinsicProperties, resultDic);
+            Asserts.KeyAndValueMatch(resultDic, customPrefix + IntegerTestKey, IntegerTestValue);
+            Assert.That(resultDic, Does.Not.ContainKey(customPrefix + LinkingMetadataKey));
+        }
+
+        /// <summary>
         /// Entry in NR dictionary has null value.
         /// </summary>
         [Test]

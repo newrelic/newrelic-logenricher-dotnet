@@ -16,10 +16,10 @@
 
   <PropertyGroup>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/newrelic/newrelic-logenrichers-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</RepositoryUrl>
     <PackageTags>NewRelic;Observability;Monitoring;Telemetry;Logging</PackageTags>
     <PackageIcon>newrelic-icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/newrelic/newrelic-logenrichers-dotnet</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/newrelic/newrelic-logenricher-dotnet</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>

@@ -5,7 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Update icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
+
+## [Log4Net_v1.2.0] - 2023-06-26
+### Security fix: update Newtonsoft.Json package reference to 13.0.3
+- Mitigates a [security vulnerability](https://security.snyk.io/vuln/SNYK-DOTNET-NEWTONSOFTJSON-2774678) in Newtonsoft.Json versions prior to 13.0.1.
+### Features
+- Updates icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
+- Updates Nuget package version references. Updates build targets to currently supported versions (`net462` and `net7.0`). [#142](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/142)
+
+## [NLog_v1.3.0] - 2023-06-26
+## [Serilog_v1.2.0]
+### Features
+- Updates icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
+- Updates Nuget package version references. Updates build targets to currently supported versions (`net462` and `net7.0`). [#142](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/142)
 
 ## [Serilog_v1.1.0] - 2022-11-29
 ### Features
@@ -55,7 +67,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds sample application
 - Adds implementation documentation.
 
-[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.1...HEAD
+[Unreleased]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.2.0...HEAD
+[Log4Net_v1.2.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.1...Log4Net_v1.2.0
+[Serilog_v1.2.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Serilog_v1.1.0...Serilog_v1.2.0
+[NLog_v1.3.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/NLog_v1.2.1...NLog_v1.3.0
 [Serilog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Serilog_v1.0.0...Serilog_v1.1.0
 [Log4Net_v1.1.1]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.1.0...Log4Net_v1.1.1
 [Log4Net_v1.1.0, NLog_v1.1.0]: https://github.com/newrelic/newrelic-logenricher-dotnet/compare/Log4Net_v1.0.2...Log4Net_v1.1.0 

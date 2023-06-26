@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
 ## [Log4Net_v1.2.0] - 2023-06-26
 ### Security fix: update Newtonsoft.Json package reference to 13.0.3
 - Mitigates a [security vulnerability](https://security.snyk.io/vuln/SNYK-DOTNET-NEWTONSOFTJSON-2774678) in Newtonsoft.Json versions prior to 13.0.1.
@@ -14,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updates Nuget package version references. Updates build targets to currently supported versions (`net462` and `net7.0`). [#142](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/142)
 
 ## [NLog_v1.3.0] - 2023-06-26
-## [Serilog_v1.2.0]
+## [Serilog_v1.2.0] - 2023-06-26
 ### Features
 - Updates icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
 - Updates Nuget package version references. Updates build targets to currently supported versions (`net462` and `net7.0`). [#142](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/142)

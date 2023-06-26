@@ -17,7 +17,7 @@ namespace NewRelic.LogEnrichers.Serilog.Examples
 
         private static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the New Relic Logging Extentions for Serilog");
+            Console.WriteLine("Welcome to the New Relic Logging Extensions for Serilog");
             Console.WriteLine();
 
             if (args.Length == 0)

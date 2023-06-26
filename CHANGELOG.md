@@ -5,7 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Update icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
+## [Log4Net_vx.x.x]
+### Security fix: update Newtonsoft.Json package reference to 13.0.3
+- Mitigates a [security vulnerability](https://security.snyk.io/vuln/SNYK-DOTNET-NEWTONSOFTJSON-2774678) in Newtonsoft.Json versions prior to 13.0.1.
+### Features
+- Updates icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
+- Updates Nuget package version references. Updates build targets to currently supported versions (`net462` and `net7.0`). [#142](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/142)
+## [NLog_vx.x.x, Serilog_vx.x.x]
+### Features
+- Updates icon and project url for nuget packages [#135](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/135)
+- Updates Nuget package version references. Updates build targets to currently supported versions (`net462` and `net7.0`). [#142](https://github.com/newrelic/newrelic-logenricher-dotnet/pull/142)
 
 ## [Serilog_v1.1.0] - 2022-11-29
 ### Features

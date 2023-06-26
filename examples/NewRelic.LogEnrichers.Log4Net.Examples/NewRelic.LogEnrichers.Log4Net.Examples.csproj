@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Logging.Log4Net.Examples</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewRelic.Agent.Api" Version="8.32.0" />
+    <PackageReference Include="NewRelic.Agent.Api" Version="10.11.0" />
   </ItemGroup>
 
   <ItemGroup>

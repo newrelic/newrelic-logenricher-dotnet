@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <RootNamespace>NewRelic.LogEnrichers.NLog</RootNamespace>
     <AssemblyName>NewRelic.LogEnrichers.NLog</AssemblyName>
     <Title>New Relic Logging Extension for NLog</Title>
@@ -27,6 +27,13 @@
   <ItemGroup>
     <Compile Include="..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
     <Compile Include="..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

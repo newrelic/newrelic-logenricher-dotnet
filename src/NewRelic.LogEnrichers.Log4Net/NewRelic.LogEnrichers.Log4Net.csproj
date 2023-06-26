@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <RootNamespace>NewRelic.LogEnrichers.Log4Net</RootNamespace>
     <AssemblyName>NewRelic.LogEnrichers.Log4Net</AssemblyName>
     <Title>New Relic Logging Extension for Log4Net</Title>
@@ -16,7 +16,7 @@
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.10" />
     <PackageReference Include="NewRelic.Agent.Api" Version="8.32.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +28,13 @@
   <ItemGroup>
     <Compile Include="..\shared\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
     <Compile Include="..\shared\LoggingExtensions.cs" Link="LoggingExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

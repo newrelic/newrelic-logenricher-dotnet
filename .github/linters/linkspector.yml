@@ -1,0 +1,9 @@
+dirs:
+  - .
+ignorePatterns:
+  - pattern: '^http://example.net'
+  - pattern: '^http://localhost'
+replacementPatterns:
+    - pattern: '^/'
+      replacement: '{{BASEURL}}/'
+aliveStatusCodes: [200, 206, 403]

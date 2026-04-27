@@ -12,6 +12,14 @@ on:
       - refs/tags/*_v*.*.*-*  # SomePrefix_v1.0.0-alpha
   workflow_dispatch: # Allows team members to manually kick off a build
 
+# only allow one instance of this workflow to be running per PR or branch, cancels any that are already running
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
 
   build-test:
@@ -28,19 +36,24 @@ jobs:
       DOTNET_NOLOGO: true
 
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         fetch-depth: 0
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v3
+      uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3.0.0
 
     - name: Setup Nuget Add to Path
-      uses: nuget/setup-nuget@v3
+      uses: nuget/setup-nuget@b26b823c478ee115be5c9403e62c90b0bf943843 # v3.1.0
       with:
-        nuget-version: '6.x'  
-    
+        nuget-version: '6.x'
+
     - name: Restore
       run:  dotnet restore ${{ env.solution_file_path }}
       shell: powershell
@@ -60,9 +73,9 @@ jobs:
     - name: Unit Tests - Serilog
       run:  dotnet test ${{ github.workspace }}\tests\NewRelic.LogEnrichers.Serilog.Tests --no-build --no-restore --configuration Release --logger trx
       shell: powershell
-         
+
     - name: Archive the artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: my-artifact-${{ github.run_id }}
         path: |
@@ -79,7 +92,7 @@ jobs:
 
         foreach ($file in Get-ChildItem -Path "${{ env.nlog_path }}\*" -File -Include *.nupkg) {
           nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
-        
+
         foreach ($file in Get-ChildItem -Path "${{ env.serilog_path }}\*" -File -Include *.nupkg) {
           nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
 

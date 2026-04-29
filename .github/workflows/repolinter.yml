@@ -8,24 +8,40 @@ name: Repolinter Action
 # filtered in the "Test Default Branch" step.
 on: [push, workflow_dispatch]
 
+# only allow one instance of this workflow to be running per PR or branch, cancels any that are already running
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   repolint:
     name: Run Repolinter
     runs-on: ubuntu-latest
+
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
       - name: Test Default Branch
         id: default-branch
-        uses: actions/github-script@v7
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const data = await github.rest.repos.get(context.repo)
             return data.data && data.data.default_branch === context.ref.split('/').slice(-1)[0]
       - name: Checkout Self
         if: ${{ steps.default-branch.outputs.result == 'true' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Run Repolinter
         if: ${{ steps.default-branch.outputs.result == 'true' }}
-        uses: newrelic/repolinter-action@v1.7.0
+        uses: newrelic/repolinter-action@3f4448f855c351e9695b24524a4111c7847b84cb # v1.7.0
         with:
           config_url: https://raw.githubusercontent.com/newrelic/.github/main/repolinter-rulesets/community-plus.yml
           output_type: issue

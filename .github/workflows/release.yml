@@ -1,0 +1,145 @@
+name: Release to NuGet
+
+# Publishes one log enricher package to nuget.org when its GitHub release is published.
+# The release tag picks the package: Serilog_v1.2.3, NLog_v1.2.3 or Log4Net_v1.2.3.
+#
+# The publish job runs in the protected "release" environment and authenticates with
+# nuget.org trusted publishing (a short-lived key minted from the job's OIDC token), so
+# no long-lived NuGet API key is stored anywhere.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish, e.g. Serilog_v1.2.3'
+        required: true
+        type: string
+      deploy:
+        description: 'Push to nuget.org. If false, build and validate only.'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+    name: Build and validate
+    runs-on: windows-2025
+
+    outputs:
+      package: ${{ steps.resolve.outputs.package }}
+      version: ${{ steps.resolve.outputs.version }}
+
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
+      with:
+        egress-policy: audit
+
+    - name: Resolve the package from the release tag
+      id: resolve
+      env:
+        TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.tag }}
+      run: |
+        if ($env:TAG -notmatch '^(Serilog|NLog|Log4Net)_v(\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?)$') {
+          Write-Error "Tag '$env:TAG' is not a log enricher release tag (Serilog_vX.Y.Z, NLog_vX.Y.Z or Log4Net_vX.Y.Z)."
+          exit 1
+        }
+        "package=NewRelic.LogEnrichers.$($Matches[1])" >> $env:GITHUB_OUTPUT
+        "version=$($Matches[2])" >> $env:GITHUB_OUTPUT
+        "ref=refs/tags/$env:TAG" >> $env:GITHUB_OUTPUT
+      shell: pwsh
+
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        ref: ${{ steps.resolve.outputs.ref }}
+        fetch-depth: 0 # versioning reads the tags
+
+    - name: Require the tagged commit to be on main
+      run: |
+        git merge-base --is-ancestor HEAD origin/main
+        if ($LASTEXITCODE -ne 0) {
+          Write-Error "The tagged commit is not on main. Only reviewed commits on main are released."
+          exit 1
+        }
+      shell: pwsh
+
+    - name: Build and test
+      env:
+        PACKAGE: ${{ steps.resolve.outputs.package }}
+      run: |
+        dotnet build "src\$env:PACKAGE" --configuration Release
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        dotnet test "tests\$env:PACKAGE.Tests" --configuration Release
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      shell: pwsh
+
+    # The package version comes from the newest tag with the package's prefix (build/Versioning.targets).
+    # Refuse to publish if that isn't exactly the release tag's version.
+    - name: Stage the package
+      env:
+        PACKAGE: ${{ steps.resolve.outputs.package }}
+        VERSION: ${{ steps.resolve.outputs.version }}
+      run: |
+        $bin = "src\$env:PACKAGE\bin\Release"
+        $nupkg = Join-Path $bin "$env:PACKAGE.$env:VERSION.nupkg"
+        $snupkg = Join-Path $bin "$env:PACKAGE.$env:VERSION.snupkg"
+        if (-not (Test-Path $nupkg) -or -not (Test-Path $snupkg)) {
+          Write-Error "Expected $nupkg and $snupkg. Found: $((Get-ChildItem $bin -Filter *.*nupkg).Name -join ', ')"
+          exit 1
+        }
+        New-Item -ItemType Directory -Path staging | Out-Null
+        Copy-Item $nupkg, $snupkg staging
+        Get-FileHash staging\* -Algorithm SHA256 | Format-Table Hash, Path -AutoSize | Out-String -Width 300
+      shell: pwsh
+
+    - name: Upload the package
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      with:
+        name: release-package
+        path: staging
+        if-no-files-found: error
+
+  publish:
+    name: Publish to nuget.org
+    needs: build
+    if: ${{ github.event_name == 'release' || inputs.deploy }}
+    runs-on: windows-2025
+    environment: release
+    permissions:
+      id-token: write # nuget.org trusted publishing
+
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
+      with:
+        egress-policy: audit
+
+    - name: Download the package
+      uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        name: release-package
+        path: staging
+
+    - name: NuGet login (OIDC to short-lived API key)
+      uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+      id: login
+      with:
+        user: ${{ secrets.NUGET_TRUSTED_PUBLISH_POLICY_USER }}
+
+    # dotnet nuget push also pushes the matching .snupkg from the same folder.
+    - name: Push to nuget.org
+      env:
+        NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        PACKAGE: ${{ needs.build.outputs.package }}
+        VERSION: ${{ needs.build.outputs.version }}
+      run: |
+        dotnet nuget push "staging\$env:PACKAGE.$env:VERSION.nupkg" --api-key "$env:NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      shell: pwsh

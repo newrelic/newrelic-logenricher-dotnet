@@ -49,11 +49,6 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3.0.0
 
-    - name: Setup Nuget Add to Path
-      uses: nuget/setup-nuget@b26b823c478ee115be5c9403e62c90b0bf943843 # v3.1.0
-      with:
-        nuget-version: '6.x'
-
     - name: Restore
       run:  dotnet restore ${{ env.solution_file_path }}
       shell: powershell
@@ -83,25 +78,3 @@ jobs:
           ${{ env.nlog_path }}
           ${{ env.serilog_path }}
 
-    # This step will only run on a build of master or a tag is created.
-    - name: Publish Packages to MyGet
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags') }}
-      run: |
-        foreach ($file in Get-ChildItem -Path "${{ env.log4net_path }}\*" -File -Include *.nupkg) {
-          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
-
-        foreach ($file in Get-ChildItem -Path "${{ env.nlog_path }}\*" -File -Include *.nupkg) {
-          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
-
-        foreach ($file in Get-ChildItem -Path "${{ env.serilog_path }}\*" -File -Include *.nupkg) {
-          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v2/package -NoSymbols }
-
-        foreach ($file in Get-ChildItem -Path "${{ env.log4net_path }}\*" -File -Include *.snupkg) {
-          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v3/index.json }
-
-        foreach ($file in Get-ChildItem -Path "${{ env.nlog_path }}\*" -File -Include *.snupkg) {
-          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v3/index.json }
-
-        foreach ($file in Get-ChildItem -Path "${{ env.serilog_path }}\*" -File -Include *.snupkg) {
-          nuget push $file.fullname -ApiKey ${{ secrets.MYGET_APIKEY }} -Source https://www.myget.org/F/newrelic/api/v3/index.json }
-      shell: powershell

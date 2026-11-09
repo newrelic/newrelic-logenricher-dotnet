@@ -33,7 +33,7 @@ The Log Forwarder monitors an output folder and incrementally sends New Relic fo
 
 ## Configuration
 
-Configuration of the New Relic extensions for ```log4net``` may be accomplished via ```log4net``` configuration files.  Complete documentation of what ```log4net``` configuration information can be found <a href="http://logging.apache.org/log4net/release/manual/configuration.html" target="_blank">here</a>.
+Configuration of the New Relic extensions for ```log4net``` may be accomplished via ```log4net``` configuration files.  Complete documentation of what ```log4net``` configuration information can be found <a href="https://logging.apache.org/log4net/manual/configuration.html" target="_blank">here</a>.
 
 ```XML
 <log4net>

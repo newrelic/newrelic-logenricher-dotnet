@@ -22,10 +22,18 @@ jobs:
 
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-    - name: Run linkspector
-      uses: umbrelladocs/action-linkspector@37c85bcde51b30bf929936502bac6bfb7e8f0a4d # v1.4.1
+    # lychee-action pulls in no other actions, so it works with the repository's
+    # "require actions pinned to a full commit SHA" setting.
+    - name: Run markdown link check
+      uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        config_file: .github/linters/linkspector.yml
-        fail_on_error: true
-        filter_mode: nofilter
+        fail: true
+        args: >-
+          --max-retries 3
+          --retry-wait-time 5
+          --timeout 60
+          --no-progress
+          --accept '100..=103,200..=299,403'
+          --exclude '^http://example\.net'
+          --exclude '^http://localhost'
+          './**/*.md'

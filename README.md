@@ -25,7 +25,7 @@ For the latest information, please see the [New Relic docs](https://docs.newreli
 
 Should you need assistance with New Relic products, you are in good hands with several support diagnostic tools and support channels.
 
-This [troubleshooting framework](https://discuss.newrelic.com/t/troubleshooting-frameworks/108787) steps you through common troubleshooting questions. 
+This [troubleshooting framework](https://knowledge.newrelic.com/s/article/Net-Troubleshooting-Framework) steps you through common troubleshooting questions. 
 
 If the issue has been confirmed as a bug or is a Feature request, please file a Github issue.
 

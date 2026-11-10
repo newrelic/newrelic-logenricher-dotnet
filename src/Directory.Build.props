@@ -1,4 +1,12 @@
 <Project>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\Common.prod.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'NewRelic.LogEnrichers.sln'))\build\StyleCop.props" />
+
+  <!-- Pin the full dependency graph of every shipping package (transitive packages and content hashes included) in
+       packages.lock.json. CI restores in locked mode and fails if a lock file is out of date. After changing a package
+       reference, run `dotnet restore NewRelic.LogEnrichers.sln` locally and commit the updated lock files. -->
+  <PropertyGroup>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true' Or '$(GITHUB_ACTIONS)' == 'true'">true</RestoreLockedMode>
+  </PropertyGroup>
 </Project>

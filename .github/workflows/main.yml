@@ -46,6 +46,14 @@ jobs:
       with:
         fetch-depth: 0
 
+    # Installs exactly the SDK pinned in global.json. skip-lts-prepass stops setup-dotnet
+    # from also installing the newest LTS runtime, which isn't pinned.
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+      with:
+        global-json-file: global.json
+        skip-lts-prepass: true
+
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3.0.0
 

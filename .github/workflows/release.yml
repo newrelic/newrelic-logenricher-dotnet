@@ -61,6 +61,14 @@ jobs:
         ref: ${{ steps.resolve.outputs.ref }}
         fetch-depth: 0 # versioning reads the tags
 
+    # Installs exactly the SDK pinned in global.json. skip-lts-prepass stops setup-dotnet
+    # from also installing the newest LTS runtime, which isn't pinned.
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+      with:
+        global-json-file: global.json
+        skip-lts-prepass: true
+
     - name: Require the tagged commit to be on main
       run: |
         git merge-base --is-ancestor HEAD origin/main

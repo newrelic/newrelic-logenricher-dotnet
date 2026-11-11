@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Keeps the SDK pinned in global.json current. Major versions are bumped by hand,
+  # since a new major SDK can change build behavior and target framework support.
+  - package-ecosystem: dotnet-sdk
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps):"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

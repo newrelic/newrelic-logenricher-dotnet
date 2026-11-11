@@ -11,3 +11,36 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+
+  # Keeps the SHA-pinned actions in .github/workflows current.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps):"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Test-framework packages only. The enricher projects' own dependencies
+  # (log4net, NLog, Serilog, NewRelic.Agent.Api, Newtonsoft.Json) set the
+  # minimum version customers can use, so they're bumped by hand.
+  - package-ecosystem: nuget
+    directories:
+      - /tests/NewRelic.LogEnrichers.Log4Net.Tests
+      - /tests/NewRelic.LogEnrichers.NLog.Tests
+      - /tests/NewRelic.LogEnrichers.Serilog.Tests
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps):"
+    groups:
+      nuget-tests:
+        patterns:
+          - "*"
+    allow:
+      - dependency-name: "JustMock"
+      - dependency-name: "Microsoft.NET.Test.Sdk"
+      - dependency-name: "NUnit*"

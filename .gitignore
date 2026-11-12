@@ -331,3 +331,6 @@ ASALocalRun/
 
 # Claude Code
 .claude/
+
+# The CI-only .NET SDK pin (.github/dotnet-sdk/global.json) is copied here during CI jobs
+/global.json

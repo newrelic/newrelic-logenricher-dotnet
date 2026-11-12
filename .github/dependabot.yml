@@ -1,0 +1,48 @@
+version: 2
+updates:
+  # Keeps the SHA-pinned actions in .github/workflows current, including the shared
+  # setup-pinned-dotnet action from newrelic/newrelic-dotnet-agent.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps):"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # The exact .NET SDK that CI builds, tests and packs with (see the setup-pinned-dotnet
+  # step in the workflows). A new major SDK is a deliberate, manual bump.
+  - package-ecosystem: dotnet-sdk
+    directory: /.github/dotnet-sdk
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps):"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Test-framework packages in the test projects only. The enricher projects under src/
+  # are not covered: their dependencies (log4net, NLog, Serilog, NewRelic.Agent.Api,
+  # Newtonsoft.Json) set the minimum versions customers can use, so they're bumped by
+  # hand. The examples don't ship, so they aren't covered either.
+  - package-ecosystem: nuget
+    directories:
+      - /tests/NewRelic.LogEnrichers.Log4Net.Tests
+      - /tests/NewRelic.LogEnrichers.NLog.Tests
+      - /tests/NewRelic.LogEnrichers.Serilog.Tests
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps):"
+    allow:
+      - dependency-name: "NUnit*"
+      - dependency-name: "Microsoft.NET.Test.Sdk"
+      - dependency-name: "JustMock"
+    groups:
+      nuget-tests:
+        patterns:
+          - "*"

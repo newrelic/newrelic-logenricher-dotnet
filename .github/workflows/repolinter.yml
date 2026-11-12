@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         with:
           disable-sudo: true
           egress-policy: audit
@@ -38,7 +38,7 @@ jobs:
             return data.data && data.data.default_branch === context.ref.split('/').slice(-1)[0]
       - name: Checkout Self
         if: ${{ steps.default-branch.outputs.result == 'true' }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Run Repolinter
         if: ${{ steps.default-branch.outputs.result == 'true' }}
         uses: newrelic/repolinter-action@3f4448f855c351e9695b24524a4111c7847b84cb # v1.7.0

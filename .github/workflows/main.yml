@@ -46,6 +46,11 @@ jobs:
       with:
         fetch-depth: 0
 
+    # Installs exactly the SDK in .github/dotnet-sdk/global.json (the CI-only pin, which
+    # Dependabot keeps current) and makes it the only SDK and runtime on the dotnet path.
+    - name: Set up pinned .NET SDK
+      uses: newrelic/newrelic-dotnet-agent/.github/actions/setup-pinned-dotnet@737248486372c4392525082d3d57611d667d4990 # main (pre-release); move to the first newrelic-dotnet-agent release tag that contains it. Dependabot then follows agent release tags.
+
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3.0.0
 

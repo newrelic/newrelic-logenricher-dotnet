@@ -70,6 +70,24 @@ jobs:
         }
       shell: pwsh
 
+    # Builds use the SDK pinned in .github/dotnet-sdk/global.json. Tags created before
+    # that pin existed don't contain it, so take the pin from main for those. A tag that
+    # has its own pin keeps it, so a release is rebuilt with the SDK it was tagged with.
+    - name: Use main's SDK pin if the tag has none
+      run: |
+        $pin = '.github/dotnet-sdk/global.json'
+        if (Test-Path -LiteralPath $pin) {
+          Write-Output "Using the tag's own SDK pin: $pin"
+        } else {
+          git restore --source=origin/main --worktree -- $pin
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Output "The tag has no SDK pin; using $pin from origin/main"
+        }
+      shell: pwsh
+
+    - name: Set up pinned .NET SDK
+      uses: newrelic/newrelic-dotnet-agent/.github/actions/setup-pinned-dotnet@737248486372c4392525082d3d57611d667d4990 # main (pre-release); move to the first newrelic-dotnet-agent release tag that contains it. Dependabot then follows agent release tags.
+
     - name: Build and test
       env:
         PACKAGE: ${{ steps.resolve.outputs.package }}

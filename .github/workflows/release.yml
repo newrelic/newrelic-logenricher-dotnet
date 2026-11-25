@@ -86,7 +86,7 @@ jobs:
       shell: pwsh
 
     - name: Set up pinned .NET SDK
-      uses: newrelic/newrelic-dotnet-agent/.github/actions/setup-pinned-dotnet@c3b9aa3d8a11b1b4588fd65326b20eb5fad4fdeb # main (pre-release); move to the first newrelic-dotnet-agent release tag that contains it. Dependabot then follows agent release tags.
+      uses: newrelic/newrelic-dotnet-agent/.github/actions/setup-pinned-dotnet@ecc0d483d83beead7d594370da14fd53141fea08 # v10.58.0
 
     - name: Build and test
       env:
